@@ -1,0 +1,86 @@
+% Template authors: Bogumił Kamiński and Michał Jakubczyk
+
+\documentclass[12pt,a4paper,twoside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{indentfirst}
+\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{natbib}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{todonotes}
+\usepackage{verbatim}
+\setlist{itemsep=0pt}
+\setlist{nolistsep}
+\frenchspacing
+\linespread{1.3}
+\addto\captionspolish{%
+\renewcommand*\listtablename{Spis tabel}
+\renewcommand*\tablename{Tabela}
+}
+\usepackage{titlesec}
+\titlelabel{\thetitle.\quad}
+
+\frenchspacing
+
+\begin{document}
+
+\begin{center}
+\includegraphics[scale=0.3]{sgh_full.png}
+
+\vspace{1cm}
+
+% tu i dalej fbox należy usunąć i wpisać odpowiednią wartość
+Studium magisterskie
+\end{center}
+
+\vspace{1cm}
+
+\noindent Kierunek: Analiza danych - Big Data
+
+\noindent Specjalność: \vphantom{I}\dots
+
+\vspace{1cm}
+
+{
+\leftskip=10cm\noindent
+Aleksander Wojnarowicz\newline
+Nr albumu: 77438
+
+}
+
+\vspace{2cm}
+
+\title{Wzór pracy dyplomowej SGH}
+\makeatletter
+
+\begin{center}
+\LARGE\bf
+\fbox{\@title}
+\end{center}
+
+\vspace{2cm}
+
+{
+\leftskip=8cm\noindent
+Praca magisterska\newline 
+napisana w~Instytucie Statystyki i Demografii\newline
+pod kierunkiem naukowym\newline
+dr. Sebastiana Zająca
+
+}
+
+\vfill
+
+\begin{center}
+Warszawa, \the\year
+\end{center}
+
+
+\end{document}
