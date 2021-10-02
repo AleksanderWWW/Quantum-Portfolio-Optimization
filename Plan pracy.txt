@@ -1,0 +1,27 @@
+Zawartość poszczególnych rozdziałów
+
+---------------------------------------------------------------
+Wstęp
+
+Rozdział 1
+- Upadek determinizmu
+- Mocna kwantowa teza Churcha-Turinga
+- Tunelowanie kwantowe vs. współczesne tranzystory
+- Model bramkowy vs. quantum annealer
+- Funkcja falowa i notacja Pauliego
+- Współczesne zastosowania komputerów kwantowych
+
+Rozdział 2
+- Teoria portfolio
+- Teoria grafów
+- Klasyczne rozwiązanie problemu
+
+Rozdział 3
+- Kwantowe rozwiązanie problemu grafów
+- Budowa optymalnego portfolio
+
+Rozdział 4
+- Analiza i porównanie wyników
+
+Podsumowanie
+---------------------------------------------------------------
