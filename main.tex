@@ -1,0 +1,329 @@
+% Template authors: Bogumił Kamiński and Michał Jakubczyk
+
+\documentclass[12pt,a4paper,twoside,openany]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{indentfirst}
+\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{natbib}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{todonotes}
+\usepackage{verbatim}
+\setlist{itemsep=0pt}
+\setlist{nolistsep}
+\frenchspacing
+\linespread{1.3}
+\addto\captionspolish{%
+\renewcommand*\listtablename{Spis tabel}
+\renewcommand*\tablename{Tabela}
+}
+\usepackage{titlesec}
+\titlelabel{\thetitle.\quad}
+
+\frenchspacing
+
+\begin{document}
+
+\begin{center}
+\includegraphics[scale=0.3]{sgh_full.png}
+
+\vspace{1cm}
+
+% tu i dalej fbox należy usunąć i wpisać odpowiednią wartość
+Studium magisterskie
+\end{center}
+
+\vspace{1cm}
+
+\noindent Kierunek: Analiza danych - big data
+
+\noindent Specjalność: \fbox{\vphantom{I}\dots}
+
+\vspace{1cm}
+
+{
+\leftskip=10cm\noindent
+Aleksander Wojnarowicz\newline
+Nr albumu: 77438
+
+}
+
+\vspace{2cm}
+
+\title{Wzór pracy dyplomowej SGH}
+\makeatletter
+
+\begin{center}
+\LARGE\bf
+\fbox{\@title}
+\end{center}
+
+\vspace{2cm}
+
+{
+\leftskip=10cm\noindent
+Praca magisterska
+napisana w~Instytucie Ekonometrii\newline
+pod kierunkiem naukowym\newline
+\fbox{promotor}
+
+}
+
+\vfill
+
+\begin{center}
+Warszawa, \the\year
+\end{center}
+\thispagestyle{empty}
+
+\clearpage
+\thispagestyle{empty}
+\mbox{}
+% druga strona będzie pusta, ponieważ drukujemy dwustronnie
+% a mbox jest po to, żeby ta strona się pokazała
+% od procenta robimy komentarze
+\clearpage
+
+\tableofcontents
+
+\clearpage
+
+\chapter*{Uwagi techniczne, skasuj rozdział po uwzględnieniu}
+
+Wymagane jest wgranie pracy do systemu Overleaf (\url{https://www.overleaf.com/}) i udostępnienie promotorowi z~prawem zmian.
+
+Pytania do promotora w~tekście proszę zadawać \todo[inline]{o tak}, tj.~stosując \verb!\todo[inline]{o tak}!.
+
+Po kropkach niekończących zdania (np.~po `np.', `tj.', `itd.', itd.) stawiamy znak tyldy, tj.~\verb!~! (żeby zmniejszyć odstęp). Wykorzystujemy także tyldę między odwołaniem i~numerem, np.~`Tabela~3' (oczywiście odwołanie robione automatycznie przez \verb!\ref{}!). I wreszcie, stosujemy tyldę po pojedynczych literach (np.~`i', `a'), bo to niełamliwa spacja i~gwarantuje brak takich liter na końcu linii.
+
+Przykłady odwołań źrółowych:
+\begin{itemize}
+\item \citep{dolan2000}, \citet{dolan2000}, \defcitealias{dolan2000}{Dolana (2000)}\citetalias{dolan2000};
+\item \citep{wakker1999}, \citet{wakker1999}, \defcitealias{wakker1999}{Wakkera i Zhanka (2000)}\citetalias{wakker1999};
+\item \citep{drummond1997}, \citet{drummond1997}, \defcitealias{drummond1997}{Drummonda et al.~(2000)}\citetalias{drummond1997}.
+\end{itemize}
+
+Co warto przeczytać o~\LaTeX:
+\begin{enumerate}
+\footnotesize % tak zmieniamy rozmiar fontu
+\item \url{http://www.tex.ac.uk/ctan/info/gentle/gentle.pdf},
+\item \url{ftp://sunsite.icm.edu.pl/pub/CTAN/info/lshort/english/lshort.pdf},
+\item \url{http://paws.wcu.edu/tsfoguel/tikzpgfmanual.pdf},
+\item \url{https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-1}.
+\end{enumerate}
+
+\chapter{Wprowadzenie}
+
+Nierelatywistyczna fizyka klasyczna stanowi podstawę obrazu świata, postrzeganego oczami ludzkiej wyobraźni. Umysł homo sapiens wyewoluował w otoczeniu obiektów makroskopowych, a ponadto nigdy nie doświadczył (ani nawet nie był w stanie sobie wyobrazić) prędkości choć trochę zbliżonych do prędkości światła. Z tychże powodów, dwa wielkie osiągnięcia współczesnej fizyki – mechanika kwantowa oraz teoria względności (zarówno ogólna, jak i szczególna) – są tak nieintuicyjne. Tymczasem płynące z nich wnioski i wyniki stanowią podstawę dzisiejszej cywilizacji. Dylatacja czasu jest istotnym czynnikiem, jaki muszą uwzględniać precyzyjne systemy nawigacyjne GPS. Tranzystor z kolei – podstawowy budulec układów scalonych, a zatem również wszechobecnej dziś elektroniki – powstał i był doskonalony dzięki badaniom nad kwantowymi własnościami materii w nanoskali.
+
+\section{Cel pracy}
+Celem niniejszej pracy jest zbadanie oraz przeanalizowanie pewnego interesującego zastosowania fizyki mikroświata w dziedzinie finansów, a konkretnie - budowie portfela inwestycyjnego. Poza oceną samych rezultatów opisanej w kolejnych rozdziałach procedury istotne jest też porównanie ich do wyników jakie można otrzymać, stosując rozwiązania klasyczne tj. zaimplementowane na komputerze niekwantowym, który ponadto nie symuluje komputera kwantowego.
+
+Quantum Computing (QC) ...
+\section{Granice klasycznej informatyki}
+
+\subsection{Tranzystory i elektronika}
+Podstawą działania nie tylko komputerów, ale w zasadzie niemal całej współczesnej elektroniki są tranzystory – mikroskopijne „przełączniki”, które, w zależności od stanu w jakim się znajdują, mogą albo przepuszczać, albo zatrzymywać elektrony płynące przez obwody elektryczne. Te dwa stany koduje się jako 0 (przełącznik nie przepuszczający elektronów) oraz 1 (przełącznik przepuszczający elektrony). Takie podejście stanowi bazę kodu binarnego, na którym oparte jest działanie komputerów.
+Na bazie tranzystorów konstruowane są bramki logiczne, które z kolei pozwalają na przeprowadzanie podstawowych operacji arytmetycznych, wykonywanych na wyżej wspomnianym kodzie binarnym. Poprzez składanie ze sobą wielu różnych tego typu operacji otrzymujemy pożądane zachowania maszyn elektronicznych – obliczenia naukowe, grafikę komputerową, komunikację internetową etc.
+	Celem zwiększenia mocy obliczeniowych maszyny elektronicznej, konieczne jest zwiększenie liczby tranzystorów, które zawiera w sobie ta maszyna. Istotne jest jednak, aby nie wpłynęło to zbytnio na rozmiar urządzenia – powinno być najmocniejsze jak to tylko możliwe, będąc przy tym najmniejsze jak to tylko możliwe. Z tego względu na przestrzeni lat następował konsekwentny spadek rozmiaru tranzystora (patrz. Tabela 1).
+	
+
+
+\begin{table}[h]
+\centering
+\caption{Tranzystory na przestrzeni lat}
+\label{tab:przyklad}
+\footnotesize
+\begin{tabular}{|l|r|}
+\hline
+Rok & Rozmiar\\
+\hline
+1971 & 10000  \\
+1974 & 6000  \\
+1977 & 3000 \\
+1981 & 1500 \\
+1984 & 1000 \\
+1987 & 800 \\
+1990 & 600 \\
+1993 & 350 \\
+1996 & 250 \\
+1999 & 180 \\
+2001 & 130 \\
+2003 & 90 \\
+2005 & 65 \\
+2007 & 45 \\
+2009 & 32 \\
+2012 & 22 \\
+2014 & 14 \\
+2016 & 10 \\
+2018 & 7 \\
+2020 & 5 \\
+
+\hline
+\end{tabular} 
+\end{table}
+
+\subsection{Tunelowanie kwantowe}
+
+Ten postępujący wzrost mocy obliczeniowej ma jednak granicę, wyznaczoną przez prawa fizyki kwantowej. W miarę jak tranzystory kurczą się coraz bardziej do rozmiarów porównywalnych z rozmiarami atomów, coraz istotniejszą rolę gra zjawisko tunelowania kwantowego. Z pewnym prawdopodobieństwem, które rośnie odwrotnie do rozmiarów „przełącznika”, elektron jest w stanie pokonać barierę potencjału, nawet przy braku odpowiedniej ilości energii, której wymaga do tego fizyka klasyczna. Innymi słowy, istnieje zawsze niezerowe prawdopodobieństwo, że pomimo iż tranzystor będzie w stanie 0, to elektrony i tak będą mogły się przez niego przedostać . Oczywistą konsekwencją tego zjawiska jest niepoprawne działanie elektroniki – wyniki pracy maszyn nabrałyby charakteru probabilistycznego, a zatem nie można by było na nich polegać.
+	
+Prawdopodobieństwo zajścia kwantowego tunelowania zadane jest, przy pewnych założeniach , przez wzór :
+\begin{equation}
+e^{-\frac{4a\pi}{h}\sqrt{2m(V - E)}}
+\end{equation}
+gdzie: \\
+\indent a – grubość bariery (w naszym przypadku – rozmiar tranzystora) \\
+\indent h – stała Planka ($ \approx 6.626 \cdots 10^{-34}  kg  \cdot m^2 / s$) \\
+\indent m – masa cząstki (dla elektronu $m \approx 9,109 3837015 \cdot 10^{-31} kg$) \\
+\indent V – energia potencjalna bariery \\ 
+\indent E – energia kinetyczna cząsteczki ( dla zjawiska tunelowania kwantowego E < V) \\
+
+Podstawiając za wartość energii elektronu 4.5 eV, a za wartość energii potencjalnej bariery 5 eV otrzymamy prawdopodobieństwo przejścia elektronu przez barierę o rozmiarze 5nm wynoszące około 2 x 10-16. To bardzo mała wartość, jednak jeśli zmniejszymy rozmiar bariery do 0.5 nm (500 pm) – prawdopodobieństwo to przekroczy już 0.25 – wartość zdecydowanie nieakceptowalna z punktu widzenia praktycznych zastosowań. Jest więc wyraźnie widoczne, że już w niedalekiej przyszłości przestanie być możliwe zwiększanie mocy obliczeniowej komputerów w sposób, w jaki odbywa się to obecnie. Pojawia się zatem potrzeba zbadania alternatywnych metod, które pozwoliłyby ulepszać pracę urządzeń elektrycznych, bez nadwątlania rzetelności zwracanych przez nie rezultatów.
+
+
+
+\chapter{Kolejny rozdział}
+
+Wstępik, tj.~co jest w tym rozdziale.
+
+\section{Podrozdział}
+
+
+
+\chapter{I następny}
+\label{sec:nast}
+
+Bieżący rozdział (czyli rozdział~\ref{sec:nast}) zawiera odwołanie do samego siebie. Stosujmy odwołania automatyczne.
+
+Dodatkowo w niniejszym rozdziale zamieszczono przykładową tabelę (uwaga --- \LaTeX\ umiejscawia ją dynamicznie).
+
+% warto w kodzie poniżej zwrócić uwagę na prawidłowy sposób formatowania liczb z przecinkiem jako znakiem dziesiętnym
+% a dodatkowo na wyrównywanie liczb ułatwiające porównywanie
+
+
+\begin{table}[h]
+\centering
+\caption{Przykładowa tabela.}
+\label{tab:przyklad}
+\footnotesize
+\begin{tabular}{|l|r|r|}
+\hline
+Wariant & $N=5$ & $N=10$\\
+\hline
+A & $2$ & $3\phantom{{,}1}$ \\
+B & $5$ & $3{,}1$ \\
+
+\hline
+\end{tabular} 
+\end{table}
+
+\clearpage
+
+\chapter{Matematyka}
+
+Wzory proste umieszczamy w tekście $a^2+b^2=c^2$, wzory bardziej skomplikowane --- poza nim:
+\begin{equation}
+\sum_{n=1}^{+\infty}\frac{1}{n^2}=\frac{\pi^2}{6}.
+\end{equation}
+
+\section{Pierwszy podrozdział}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[scale=4]
+    \draw[->] (0,0) -- (1.4,0) node[anchor=west] {$n$};
+    \draw[->] (0,0) -- (0,1.35) node[anchor=south] {Iloraz};
+    \foreach \y in {0, 0.25,0.5,0.75,1, 1.25}
+      \draw (0.03, \y) -- (-0.03, \y) node[anchor=east] {$\y$};
+     \foreach \x in {0, 2, 4, 6, 8, 10, 12}
+       \draw ({\x/10}, 0.03) -- ({\x/10}, -0.03) node[anchor=north] {$\x$};
+
+       \draw (0.200000,1.164983) circle[radius=0.02];
+       \draw (0.300000,1.176768) circle[radius=0.02];
+       \draw (0.400000,0.877412) circle[radius=0.02];
+       \draw (0.500000,0.456929) circle[radius=0.02];
+       \draw (0.600000,0.351427) circle[radius=0.02];
+       \draw (0.700000,0.294229) circle[radius=0.02];
+       \draw (0.800000,0.246016) circle[radius=0.02];
+       \draw (0.900000,0.224231) circle[radius=0.02];
+       \draw (1.000000,0.168351) circle[radius=0.02];
+       \draw (1.100000,0.191722) circle[radius=0.02];
+       \draw (1.200000,0.173029) circle[radius=0.02];
+       \draw (1.300000,0.176309) circle[radius=0.02];
+
+       \fill (0.200000,1.225646) circle[radius=0.02];
+       \fill (0.300000,0.986035) circle[radius=0.02];
+       \fill (0.400000,0.945566) circle[radius=0.02];
+       \fill (0.500000,0.688660) circle[radius=0.02];
+       \fill (0.600000,0.556635) circle[radius=0.02];
+       \fill (0.700000,0.483555) circle[radius=0.02];
+       \fill (0.800000,0.443744) circle[radius=0.02];
+       \fill (0.900000,0.413361) circle[radius=0.02];
+       \fill (1.000000,0.344671) circle[radius=0.02];
+       \fill (1.100000,0.374543) circle[radius=0.02];
+       \fill (1.200000,0.358811) circle[radius=0.02];
+       \fill (1.300000,0.362736) circle[radius=0.02];
+  \end{tikzpicture}
+  \caption{Oto przykładowy, skomplikowany rysunek. Często będzie łatwiej. \label{fig:algcomparison}}
+\end{figure}
+
+Każdy rysunek przywołujemy w tekście, także rysunek \ref{fig:algcomparison}. Można też ładować obrazy, jak pokazano na stronie tytułowej.
+
+\section{Drugi}
+
+\section{Trzeci}
+
+\clearpage
+
+\chapter{Podsumowanie}
+
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliografia}
+\begin{thebibliography}{99}
+\setlength{\itemsep}{0pt}%
+\bibitem[Dolan(2000)]{dolan2000} Dolan P.~(2000), The Measurement of (...), w: A.J.~Culyer, J.P.~Newhouse (ed.), Handbook of Health Economics, Volume 1B, Elsevier, s.~1723--1760
+\bibitem[Wakker i Zhank(1999)]{wakker1999} Wakker P., H.~Zank (1999), A Unified Derivation (...), \textit{Journal of  Mathematical Economics}, 32, s.~1-19
+\bibitem[Drummond et al.(1997)]{drummond1997} Drummond M.F., B.J.~O'Brien, G.L.~Stoddart, G.W.~Torrance (1997), Methods for Economic Evaluation (...), Oxford University Press
+\end{thebibliography}
+
+\clearpage
+\addcontentsline{toc}{chapter}{Spis rysunków}
+\listoffigures
+
+\clearpage
+\listoftables
+\addcontentsline{toc}{chapter}{Spis tabel}
+
+\appendix
+\chapter*{Kody źródłowe}
+\addcontentsline{toc}{chapter}{Kody źródłowe}
+
+\section*{Analiza 1}
+\begin{verbatim}
+x <- 1:10
+y <- x + rnorm(10)
+summary(lm(y ~ x))
+\end{verbatim}
+
+\section*{Analiza 2}
+\begin{verbatim}
+x <- rnorm(10000)
+plot(density(x))
+\end{verbatim}
+
+\clearpage
+
+\chapter*{Streszczenie}
+\addcontentsline{toc}{chapter}{Streszczenie}
+
+Tutaj piszemy streszczenie. Między 200 a 350 słów. Nie jest omówieniem struktury pracy. Zawiera cel, metodę, dane, wyniki, wnioski. Nie ma odwołań źródłowych, list, wykresów, tabel. Ma być zrozumiałe dla osoby nieczytającej pracy.
+
+\end{document}
+
