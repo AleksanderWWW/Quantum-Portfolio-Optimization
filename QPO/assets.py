@@ -16,14 +16,6 @@ class Status:
         self.current_flag = val
 
 
-class UrlFactory:
-    root: str
-
-    @abstractmethod
-    def build_url(self, *args) -> str:
-        pass
-
-
 class PreparedData:
     def __init__(self, df):
         self.df = df

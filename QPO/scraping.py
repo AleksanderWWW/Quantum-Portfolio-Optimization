@@ -1,10 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas_datareader as pdr
-from QPO.assets import UrlFactory
 
 
-class StooqUrlFactory(UrlFactory):
+class StooqUrlFactory:
     root = "https://stooq.pl/"
 
     def build_url(self, *parts):
@@ -16,7 +15,7 @@ class TickerPage:
     url_components: list = ["q", "i", "?s=^spx&l="]
 
     def __init__(self, factory=StooqUrlFactory()):
-        self.factory: UrlFactory = factory
+        self.factory: StooqUrlFactory = factory
         self._tickers: list = []
 
     def __str__(self):
@@ -26,14 +25,11 @@ class TickerPage:
     def tickers(self):
         return self._tickers
 
-    def build_url(self):
-        return self.factory.build_url(*self.url_components)
-
     def add_tickers(self, new_tickers):
         self._tickers += new_tickers
 
     def get_html(self, index) -> str:
-        url = self.build_url() + str(index)
+        url = self.factory.build_url(*self.url_components) + str(index)
         response = requests.get(url, verify=False)
         return response.text
 
