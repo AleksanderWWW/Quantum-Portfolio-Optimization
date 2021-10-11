@@ -52,6 +52,24 @@ class TickerPage:
         return tickers
 
 
+class ContextManager:
+    """Object that interfaces TickerPage to automatically generate tickers without explicitly checking for the number
+    of available pages"""
+    tp = TickerPage()
+
+    def gen_tickers(self) -> list:
+        i = 1
+        while True:
+
+            ticker_list = self.tp.retrieve_tickers(i)
+            if not ticker_list:
+                break  # no more tickers to scrape
+            self.tp.add_tickers(new_tickers=ticker_list)
+            i += 1
+
+        return self.tp.tickers
+
+
 class TimeSeriesDownloader:
     def __init__(self, start, end):
         self.start = start
