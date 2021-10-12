@@ -8,7 +8,7 @@ Rozdział 1
 - Mocna kwantowa teza Churcha-Turinga
 - Tunelowanie kwantowe vs. współczesne tranzystory
 - Model bramkowy vs. quantum annealer
-- Funkcja falowa i notacja Pauliego
+- Funkcja falowa i notacja Diraca
 - Współczesne zastosowania komputerów kwantowych
 
 Rozdział 2
