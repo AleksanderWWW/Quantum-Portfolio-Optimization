@@ -68,7 +68,8 @@ Nr albumu: 77438
 {
 \leftskip=10cm\noindent
 Praca magisterska
-napisana w~Instytucie Ekonometrii\newline
+napisana w\newline
+Instytucie Ekonometrii\newline
 pod kierunkiem naukowym\newline
 dr Sebastiana Zająca
 
@@ -124,6 +125,19 @@ Nierelatywistyczna fizyka klasyczna stanowi podstawę obrazu świata, postrzegan
 \section{Cel pracy}
 Celem niniejszej pracy jest zbadanie oraz przeanalizowanie pewnego interesującego zastosowania fizyki mikroświata w dziedzinie finansów, a konkretnie - budowie portfela inwestycyjnego opartego o indeks giełdowy S\&P 500. Poza oceną samych rezultatów opisanej w kolejnych rozdziałach procedury istotne jest też porównanie ich do wyników jakie można otrzymać, stosując rozwiązania klasyczne tj. zaimplementowane na komputerze niekwantowym, który ponadto nie symuluje komputera kwantowego. Porównanie to dotyczy nie tylko wydajności procedur, czy też tego, jakie komponenty indeksu zostaną wskazane, ale także ocenioną a posteriori stopą zwrotu z wygenerowanych portfeli.
 
+\chapter{Współczesna teoria portfela inwestycyjnego}
+
+\chapter{Dywersyfikacja portfolio w ujęciu teorii grafów}
+Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania zadania dywersyfikacji portfolio nie są jedynymi możliwymi. Stanowią raczej interesującą alternatywę dla tradycyjnych metod doboru spółek do portfela, jakimi są m.in. \textit{Tutaj wymieniam kilka popularnych, niegrafowych sposobów na dywersyfikację portfolio, wraz z przypisami}
+
+\section{Wprowadzenie do teorii grafów}
+
+\section{Dywersyfikacja jako problem \textit{MIS}}
+
+\section{Klasyczne rozwiązania problemu \textit{MIS}}
+
+\chapter{Mechanika kwantowa i algorytm \textit{Quantum Annealing}}
+
 Quantum Computing (QC) to stosunkowo młody obszar badań naukowych, zajmujący się wykorzystaniem maszyn cyfrowych, które przetwarzają informacje używając tzw. \textit{qubitów}. Aby zrozumieć potencjał tych urządzeń dla współczesnej informatyki, niezbędne jest wprowadzenie pojęć \textit{superpozycji} oraz \textit{splątania kwantowego} - tematy zostaną poruszone w dalszej części rozdziału. Ogólnie jednak przewaga komputerów kwantowych zasadza się w głównej mierze na dwóch aspektach. Pierwszy z nich, polega na tym, że zjawiska kwantowe pozwalają takiemu komputerowi przeprowadzać wiele różnych obliczeń \textit{jednocześnie} na tej samej porcji pamięci (nie jest to więc to samo, co \textit{parallel computing}, czy nawet \textit{multithreading}). Druga zaś kwestia dotyczy szerokiej klasy problemów, które nie mogą być rozwiązane na komputerze klasycznym (lub przynajmniej nie w rozsądnym przedziale czasu), za to posiadają efektywną i naturalną implementacje na komputerach kwantowych\footnote{Przykładem takiego problemu jest m.in symulacja systemów molekularnych.}. Niniejsza praca skupiać się będzie tylko i wyłącznie na zbadaniu pierwszego z wymienionych aspektów.
 
 W następnej sekcji poruszony zostanie także temat ograniczeń, jakie prawa fizyki nakładają na klasyczne maszyny cyfrowe, a w szczególności na skalowalność ich mocy obliczeniowej. Istnienie tych restrykcji dostarcza dodatkowych powodów, dla których badania w obszarze kwantowej informatyki stanowić będą jeden z kluczowych zagadnień w rozwoju nowoczesnej technologii.
@@ -177,7 +191,7 @@ Rok & Rozmiar [nm]\\
 
 Ten postępujący wzrost mocy obliczeniowej ma jednak granicę, wyznaczoną przez prawa fizyki kwantowej. W miarę jak tranzystory kurczą się coraz bardziej do rozmiarów porównywalnych z rozmiarami atomów, coraz istotniejszą rolę gra zjawisko \textit{tunelowania kwantowego}. Z pewnym prawdopodobieństwem, które rośnie odwrotnie do rozmiarów „przełącznika”, elektron jest w stanie pokonać barierę potencjału, nawet przy braku odpowiedniej ilości energii, której wymaga do tego fizyka klasyczna. Innymi słowy, istnieje zawsze niezerowe prawdopodobieństwo, że pomimo iż tranzystor będzie w stanie 0, to elektrony i tak będą mogły się przez niego przedostać . Oczywistą konsekwencją tego zjawiska jest niepoprawne działanie elektroniki – wyniki pracy maszyn nabrałyby charakteru probabilistycznego, a zatem nie można by było na nich polegać.
 	
-Prawdopodobieństwo zajścia kwantowego tunelowania zadane jest, przy pewnych założeniach\footnote{Te założenia to...}, przez wzór :
+Prawdopodobieństwo zajścia kwantowego tunelowania zadane jest, przy pewnych założeniach, przez wzór\footnote{V. Silva, \textit{Practical Quantum Computing For Developers}, Apress 2018} :
 \begin{equation}
 e^{-\frac{4a\pi}{h}\sqrt{2m(V - E)}}
 \end{equation}
@@ -191,16 +205,50 @@ gdzie: \\
 Podstawiając za wartość energii elektronu 4.5 eV, a za wartość energii potencjalnej bariery 5 eV otrzymamy prawdopodobieństwo przejścia elektronu przez barierę o rozmiarze 5nm wynoszące około $ 2 \cdot 10^{-16} $. To bardzo mała wartość, jednak jeśli zmniejszymy rozmiar bariery do 0.5 nm (500 pm) – prawdopodobieństwo to przekroczy już 0.25 – wartość zdecydowanie nieakceptowalna z punktu widzenia praktycznych zastosowań. Jest więc wyraźnie widoczne, że już w niedalekiej przyszłości przestanie być możliwe zwiększanie mocy obliczeniowej komputerów w sposób, w jaki odbywa się to obecnie. Pojawia się zatem potrzeba zbadania alternatywnych metod, które pozwoliłyby ulepszać pracę urządzeń elektrycznych, bez nadwątlania rzetelności zwracanych przez nie rezultatów.
 
 
+\section{Fizyka kwantów w ujęciu algebry liniowej}
 
-\chapter{Kolejny rozdział}
+Fizykę kwantową można ogólnie sformułować w dwóch, ekwiwalentnych postaciach matematycznych - postaci macierzowej\footnote{Heisenberg 1925} albo w postaci różniczkowej\footnote{Schrodinger 1926}. Dla celów niniejszej pracy wygodniejsza będzie pierwsza z nich. Celem niniejszego podrozdziału jest wprowadzenie pojęć niezbędnych do zrozumienia działania algorytmu \textit{Quantum Annealing} (przy czym, jak z wieloma procedurami zaimplementowanymi programistycznie w bibliotekach, nie jest to niezbędne do \textit{używania} tego algorytmu, szczególnie przy prostych problemach). 
 
-Wstępik, tj.~co jest w tym rozdziale.
+\subsection{Przestrzeń liniowa}
 
-\section{Podrozdział}
+\subsection{Notacja Diraca}
+
+\subsection{Operatory liniowe}
+
+\section{Fundamentalne zjawiska w informatyce kwantowej}
+
+U podstaw informatyki kwantowej leżą dwa, zupełnie sprzeczne z intuicją zjawiska - superpozycji i splątania. Pierwsze z nich pozwala na wykładnicze przyspieszenie obliczeń przeprowadzanych na komputerach kwantowych, drugie zaś jest niezbędne do konstrukcji maszyn operujących na układach tzw. \textit{qubitów} (kwantowych bitów). Przed omówieniem tych zjawisk konieczne jest jednak wyjaśnienie najpierw pojęcia \textit{qubitu} oraz jego reprezentacji matematycznej.
+
+\subsection{Stan kwantowy jako wektor w przestrzeni Hilberta}
+
+\subsection{Superpozycja stanów kwantowych}
+
+\subsection{Zjawisko kwantowego splątania}
+
+\section{Procedura \textit{Quantum Annealing} na maszynie \textit{D-Wave}}
+
+\subsection{Model Isinga}
+
+\subsection{Problemy klasy QUBO}
+
+\subsection{Zagadnienie \textit{MIS} w ujęciu \textit{QUBO}}
+
+\subsection{Implementacja algorytmu za pomocą solvera HSSv2}
 
 
 
-\chapter{I następny}
+
+\chapter{Zastosowanie algorytmu \textit{QA} do problemu dywersyfikacji portfela}
+
+\section{Architektura projektu}
+
+\subsection{Załadowanie danych}
+
+\subsection{Przygotowanie danych wejściowych}
+
+\subsection{Uruchomienie procedury i wizualizacja wyników}
+
+\section{Ostateczne wyniki procedury}
 \label{sec:nast}
 
 Bieżący rozdział (czyli rozdział~\ref{sec:nast}) zawiera odwołanie do samego siebie. Stosujmy odwołania automatyczne.
@@ -229,7 +277,7 @@ B & $5$ & $3{,}1$ \\
 
 \clearpage
 
-\chapter{Matematyka}
+\chapter{Analiza rezultatów}
 
 Wzory proste umieszczamy w tekście $a^2+b^2=c^2$, wzory bardziej skomplikowane --- poza nim:
 \begin{equation}
