@@ -2,6 +2,7 @@
 
 \documentclass[12pt,a4paper,twoside,openany]{book}
 \usepackage[T1]{fontenc}
+\usepackage{amsfonts}
 \usepackage[utf8]{inputenc}
 \usepackage[polish]{babel}
 \usepackage{graphicx}
@@ -207,9 +208,42 @@ Podstawiając za wartość energii elektronu 4.5 eV, a za wartość energii pote
 
 \section{Fizyka kwantów w ujęciu algebry liniowej}
 
-Fizykę kwantową można ogólnie sformułować w dwóch, ekwiwalentnych postaciach matematycznych - postaci macierzowej\footnote{Heisenberg 1925} albo w postaci różniczkowej\footnote{Schrodinger 1926}. Dla celów niniejszej pracy wygodniejsza będzie pierwsza z nich. Celem niniejszego podrozdziału jest wprowadzenie pojęć niezbędnych do zrozumienia działania algorytmu \textit{Quantum Annealing} (przy czym, jak z wieloma procedurami zaimplementowanymi programistycznie w bibliotekach, nie jest to niezbędne do \textit{używania} tego algorytmu, szczególnie przy prostych problemach). 
+Fizykę kwantową można ogólnie sformułować w dwóch, ekwiwalentnych postaciach matematycznych - postaci macierzowej\footnote{Heisenberg 1925} albo w postaci różniczkowej\footnote{Schrodinger 1926}. Dla celów niniejszej pracy wygodniejsza będzie pierwsza z nich. Celem niniejszego podrozdziału jest wprowadzenie pojęć niezbędnych do zrozumienia działania algorytmu \textit{Quantum Annealing} (przy czym nie jest to niezbędne do \textit{używania} tego algorytmu, szczególnie przy prostych problemach). 
 
-\subsection{Przestrzeń liniowa}
+\subsection{Przestrzeń liniowa oraz przestrzeń unitarna}
+
+Przestrzeń liniowa $\mathbb{V}$ jest do zbiór obiektów (\textbf{a}, \textbf{b}, \textbf{c}, ...) dla których zdefiniowano operacje dodawania (\textbf{a} + \textbf{b}) oraz mnożenia przez tzw. skalar (\textit{a}, \textit{b}, \textit{c}, ...), przy czym: \newline
+\begin{itemize}
+    \item wyniki tych działań również są elementami tej przestrzeni, i.e. $\textbf{a} + \textbf{b} \in \mathbb{V}$ oraz $\textit{a}\textbf{a} \in \mathbb{V}$ (przestrzeń jest zamknięta ze względu na te działania) \newline
+    \item mnożenie elementów przestrzeni przez skalar jest:
+    \begin{itemize}
+        \item rozdzielne względem dodawania elementów: \newline
+         $\textit{a}(\textbf{a} + \textbf{b}) = \textit{a}\textbf{a} + \textit{a}\textbf{b}$
+         \item rozdzielne względem dodawania skalarów: \newline
+         $(\textit{a} + \textit{b})\textbf{a} = \textit{a}\textbf{a} + \textit{b}\textbf{a}$
+         \item łączne: \newline
+         $\textit{a}(\textit{b}\textbf{a}) = \textit{a}\textit{b}\textbf{a}$ \newline
+         
+    \end{itemize}
+    \item dodawanie elementów przestrzeni jest:
+    \begin{itemize}
+        \item przemienne: \newline
+        \textbf{a} + \textbf{b} = \textbf{b} + \textbf{a}
+        \item łączne: \newline
+        \textbf{a} + (\textbf{b} + \textbf{c}) = (\textbf{a} + \textbf{b}) + \textbf{c} \newline
+    \end{itemize}
+    \item istnieje element $\textbf{0}\in\mathbb{V}$ taki, że \newline $\forall(\textbf{a}\in\mathbb{V})$  $\textbf{a} + \textbf{0} = \textbf{a}$ \newline
+    \item dla każdego elementu \textbf{a} istnieje element przeciwny \textbf{-a} taki, że \newline $\forall(\textbf{a}\in\mathbb{V})$  $\textbf{a} + \textbf{-a} = \textbf{0}$ \newline
+\end{itemize}
+
+Pewnym szczególnie istotnym z punktu widzenia niniejszej pracy zbiorem przestrzeni liniowych, będą takie, dla których zdefiniowano dodatkowo \textit{iloczyn skalarny}.\newline
+
+Iloczyn skalarny definiowany jest jako funkcja $f: \mathbb{V}\times\mathbb{V}\to\mathbb{C}$, która dowolnej parze wektorów $\textbf{a}, \textbf{b} \in \mathbb{V}$ przyporządkowuje liczbę $f(\textbf{a}, \textbf{b})\equiv\langle\textbf{a},\textbf{b}\rangle\in\mathbb{C}$. Funkcja ta musi spełniać następujące warunki:
+\begin{itemize}
+    \item $\langle\textbf{a},\textbf{b}\rangle = \langle\textbf{b},\textbf{a}\rangle ^\ast$  (warunek sprzężonej symetrii)
+\end{itemize}
+
+Takie przestrzenie liniowe z iloczynem skalarnym nazywane są \textit{przestrzeniami unitarnymi}. Obliczenia kwantowe przeprowadza się na tzw. przestrzeniach Hilberta. Na potrzeby niniejszej pracy przez przestrzeń Hilberta będzie rozumiana skończono-wymiarowa przestrzeń unitarna, określona nad ciałem liczb zespolonych. Elementy takiej przestrzeni nazywane są \textit{wektorami}.
 
 \subsection{Notacja Diraca}
 
@@ -239,6 +273,11 @@ U podstaw informatyki kwantowej leżą dwa, zupełnie sprzeczne z intuicją zjaw
 
 
 \chapter{Zastosowanie algorytmu \textit{QA} do problemu dywersyfikacji portfela}
+
+\section{Instalacja i konfiguracja biblioteki \textit{dwave-ocean-sdk}}
+\subsection{Instalacja}
+
+\subsection{Konfiguracja i wybór solvera}
 
 \section{Architektura projektu}
 
