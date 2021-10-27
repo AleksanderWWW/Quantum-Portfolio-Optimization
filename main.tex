@@ -241,6 +241,8 @@ Pewnym szczególnie istotnym z punktu widzenia niniejszej pracy zbiorem przestrz
 Iloczyn skalarny definiowany jest jako funkcja $f: \mathbb{V}\times\mathbb{V}\to\mathbb{C}$, która dowolnej parze wektorów $\textbf{a}, \textbf{b} \in \mathbb{V}$ przyporządkowuje liczbę $f(\textbf{a}, \textbf{b})\equiv\langle\textbf{a},\textbf{b}\rangle\in\mathbb{C}$. Funkcja ta musi spełniać następujące warunki:
 \begin{itemize}
     \item $\langle\textbf{a},\textbf{b}\rangle = \langle\textbf{b},\textbf{a}\rangle ^\ast$  (warunek sprzężonej symetrii)
+    \item $\langle\textbf{a},\textbf{a}\rangle \geq 0$ (równość zachodzi wtedy i tylko wtedy, gdy $\textbf{a} = \textbf{0}$)
+    \item $\langle\textbf{a},k\textbf{b} + l\textbf{c}\rangle = k\langle\textbf{a},\textbf{b}\rangle + l\langle\textbf{a},\textbf{c}\rangle$
 \end{itemize}
 
 Takie przestrzenie liniowe z iloczynem skalarnym nazywane są \textit{przestrzeniami unitarnymi}. Obliczenia kwantowe przeprowadza się na tzw. przestrzeniach Hilberta. Na potrzeby niniejszej pracy przez przestrzeń Hilberta będzie rozumiana skończono-wymiarowa przestrzeń unitarna, określona nad ciałem liczb zespolonych. Elementy takiej przestrzeni nazywane są \textit{wektorami}.
@@ -378,7 +380,7 @@ Każdy rysunek przywołujemy w tekście, także rysunek \ref{fig:algcomparison}.
 \addcontentsline{toc}{chapter}{Bibliografia}
 \begin{thebibliography}{99}
 \setlength{\itemsep}{0pt}%
-\bibitem[Dolan(2000)]{dolan2000} Dolan P.~(2000), The Measurement of (...), w: A.J.~Culyer, J.P.~Newhouse (ed.), Handbook of Health Economics, Volume 1B, Elsevier, s.~1723--1760
+\bibitem[Shankar R.(2006)]{shankar2006} Shankar R.(2006), Mechanika Kwantowa, Wydawnictwo Naukowe PWN SA, s.~19--29
 \bibitem[Wakker i Zhank(1999)]{wakker1999} Wakker P., H.~Zank (1999), A Unified Derivation (...), \textit{Journal of  Mathematical Economics}, 32, s.~1-19
 \bibitem[Drummond et al.(1997)]{drummond1997} Drummond M.F., B.J.~O'Brien, G.L.~Stoddart, G.W.~Torrance (1997), Methods for Economic Evaluation (...), Oxford University Press
 \end{thebibliography}
