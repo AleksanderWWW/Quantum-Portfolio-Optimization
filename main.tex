@@ -3,6 +3,7 @@
 \documentclass[12pt,a4paper,twoside,openany]{book}
 \usepackage[T1]{fontenc}
 \usepackage{amsfonts}
+\usepackage{physics}
 \usepackage[utf8]{inputenc}
 \usepackage[polish]{babel}
 \usepackage{graphicx}
@@ -246,8 +247,53 @@ Iloczyn skalarny definiowany jest jako funkcja $f: \mathbb{V}\times\mathbb{V}\to
 \end{itemize}
 
 Takie przestrzenie liniowe z iloczynem skalarnym nazywane są \textit{przestrzeniami unitarnymi}. Obliczenia kwantowe przeprowadza się na tzw. przestrzeniach Hilberta. Na potrzeby niniejszej pracy przez przestrzeń Hilberta będzie rozumiana skończono-wymiarowa przestrzeń unitarna, określona nad ciałem liczb zespolonych. Elementy takiej przestrzeni nazywane są \textit{wektorami}.
+Wyróżniamy ponadto tzw. przestrzenie dualne, będące izomorficzne z przestrzeniami Hilberta. Pomimo tego ich wprowadzenie jest, z punktu widzenia matematycznego formalizmu, niezbędne do umieszczonego w następnej sekcji opisu notacji Diraca. 
 
-\subsection{Notacja Diraca}
+\subsection{Notacja Diraca i bazy ortonormalne}
+
+Niech $\mathcal{H}$ oznacza n-wymiarową przestrzeń Hilberta, zaś $\mathcal{H}^\ast$ - n-wymiarową przestrzeń dualną. \textit{Ketem} określa się wektor kolumnowy $\ket{V}\in\mathcal{H}$. Z kolei przez \textit{bra} rozumiany jest wektor \textit{wierszowy} $\bra{W}\in\mathcal{H}^\ast$. W klasycznej notacji \textit{bra} i \textit{ket} oznaczają listy liczb rozmiaru n, ułożone odpowiednio w pojedynczy wiersz i kolumnę (gwiazdka oznacza sprzężenie zespolone).
+~\newline
+~\newline
+\begin{center}
+    
+
+$\ket{V} = \begin{bmatrix}
+           w_{1} \\
+           w_{2} \\
+           \vdots \\
+           w_{n}
+           \end{bmatrix}, \;\;\; \bra{W} = \begin{bmatrix}
+           v_{1}^\ast \; 
+           v_{2}^\ast \;
+           \hdots \;
+           v_{n}^\ast
+           \end{bmatrix}$
+\end{center}
+
+Wektor \textit{bra} z przestrzeni $\mathcal{H}^\ast$ otrzymujemy poprzez transpozycję oraz sprzężenie zespolone wektora \textit{ket} z przestrzeni $\mathcal{H}$.\newline
+
+Iloczyn skalarny dla przestrzeni Hilberta jest zdefiniowany, jako:
+\begin{center}
+$\bra{W}\ket{V} = \sum_{i=1}^{n} w^\ast \cdot v$
+\end{center}
+Analogicznie definiujemy iloczyn skalarny w przestrzeni dualnej\footnote{Istotnie, także dalsze stwierdzenia na temat przestrzeni Hilberta będą prawdziwe dla przestrzeni dualnej, ze względu na izomorfizm tych przestrzeni}.\newline
+
+Widać więc, że dla każdego $\ket{A}\in\mathcal{H}$, długość wektora $|\ket{A}|$ równa jest:
+\begin{center}
+    $|\ket{A}| = \sqrt{\braket{A}}$
+\end{center}
+
+Bazą ortonormalną w n-wymiarowej przestrzeni Hilberta nazywamy każdy zbiór elementów tej przestrzeni $\{\ket{1}, \ket{2}, \hdots, \ket{n}\}$, dla których:
+\begin{center}
+    $\bra{i}\ket{j} = \delta_{ij}$
+\end{center}
+gdzie $\delta_{ij}$ jest \textit{deltą Kroneckera}\footnote{Dla wartości i, j \textit{delta Kroneckera} przyjmuje wartość 1, gdy $i = j$, oraz 0 - w przeciwnym przypadku}.
+
+Każdy wektor w przestrzeni Hilberta można zapisać jako kombinację liniową elementów bazy ortonormalnej tej przestrzeni:
+\begin{center}
+    $\forall_{\ket{V}\in\mathcal{H}}\ket{V} = \sum_{i=1}^{n}k_{i}\ket{i}$
+\end{center}
+gdzie $k_{i}$ jest liczbą (w ogólności zespoloną).
 
 \subsection{Operatory liniowe}
 
