@@ -28,14 +28,14 @@ class TickerPage:
     def add_tickers(self, new_tickers):
         self._tickers += new_tickers
 
-    def get_html(self, index) -> str:
+    def _get_html(self, index) -> str:
         url = self.factory.build_url(*self.url_components) + str(index)
         response = requests.get(url, verify=False)
         return response.text
 
     def retrieve_tickers(self, index, parser="lxml") -> list:
         tickers = []
-        html_content = self.get_html(index)
+        html_content = self._get_html(index)
         soup = BeautifulSoup(html_content, parser)
         table = soup.find("table", {"id": "fth1"}).find("tbody")
 
