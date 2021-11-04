@@ -207,7 +207,7 @@ gdzie: \\
 Podstawiając za wartość energii elektronu 4.5 eV, a za wartość energii potencjalnej bariery 5 eV otrzymamy prawdopodobieństwo przejścia elektronu przez barierę o rozmiarze 5nm wynoszące około $ 2 \cdot 10^{-16} $. To bardzo mała wartość, jednak jeśli zmniejszymy rozmiar bariery do 0.5 nm (500 pm) – prawdopodobieństwo to przekroczy już 0.25 – wartość zdecydowanie nieakceptowalna z punktu widzenia praktycznych zastosowań. Jest więc wyraźnie widoczne, że już w niedalekiej przyszłości przestanie być możliwe zwiększanie mocy obliczeniowej komputerów w sposób, w jaki odbywa się to obecnie. Pojawia się zatem potrzeba zbadania alternatywnych metod, które pozwoliłyby ulepszać pracę urządzeń elektrycznych, bez nadwątlania rzetelności zwracanych przez nie rezultatów.
 
 
-\section{Fizyka kwantów w ujęciu algebry liniowej}
+\section{Algebra liniowa jako język teorii kwantów}
 
 Fizykę kwantową można ogólnie sformułować w dwóch, ekwiwalentnych postaciach matematycznych - postaci macierzowej\footnote{Heisenberg 1925} albo w postaci różniczkowej\footnote{Schrodinger 1926}. Dla celów niniejszej pracy wygodniejsza będzie pierwsza z nich. Celem niniejszego podrozdziału jest wprowadzenie pojęć niezbędnych do zrozumienia działania algorytmu \textit{Quantum Annealing} (przy czym nie jest to niezbędne do \textit{używania} tego algorytmu, szczególnie przy prostych problemach). 
 
@@ -299,11 +299,27 @@ gdzie $k_{i}$ jest liczbą (w ogólności zespoloną).
 
 \section{Fundamentalne zjawiska w informatyce kwantowej}
 
-U podstaw informatyki kwantowej leżą dwa, zupełnie sprzeczne z intuicją zjawiska - superpozycji i splątania. Pierwsze z nich pozwala na wykładnicze przyspieszenie obliczeń przeprowadzanych na komputerach kwantowych, drugie zaś jest niezbędne do konstrukcji maszyn operujących na układach tzw. \textit{qubitów} (kwantowych bitów). Przed omówieniem tych zjawisk konieczne jest jednak wyjaśnienie najpierw pojęcia \textit{qubitu} oraz jego reprezentacji matematycznej.
+U podstaw informatyki kwantowej leżą dwa, wymykające się intuicji życia codziennego zjawiska - superpozycji i splątania. Pierwsze z nich pozwala na wykładnicze przyspieszenie obliczeń przeprowadzanych na komputerach kwantowych, drugie zaś jest niezbędne do konstrukcji maszyn operujących na układach tzw. \textit{qubitów} (kwantowych bitów). Przed omówieniem tych zjawisk konieczne jest jednak wyjaśnienie najpierw pojęcia samego \textit{qubitu} oraz jego reprezentacji matematycznej.
 
 \subsection{Stan kwantowy jako wektor w przestrzeni Hilberta}
 
+Podstawową jednostką danych w klasycznej informatyce jest bit. Fizyczną realizacją bitu jest każdy układ, który może w danej chwili znajdować się w jednym z dwóch stanów. W konwencjonalnych komputerach rolę bitów pełnią tranzystory - mogą one znajdować się w stanie niskiego (kodowanego jako 0) lub wysokiego (kodowanego jako 1) napięcia elektrycznego.
+
+W komputerach kwantowych analogiczną do bitu rolę pełnią \textit{kwantowe bity} (\textit{quantum bits}) - w skrócie \textit{qubity}. Ich fizyczną realizacją również są układy mogące przyjmować jeden z dwóch różnych stanów, nazywanych stanami bazowymi. Przykładem tego jest spin elektronu, który przyjmuje jedną z dwóch wartości (spin "w górę" ~albo spin "w dół"\footnote{tutaj napisz coś o tym spinie}). To co je odróżnia, a co jednocześnie przesądza o ich niezwykłej użyteczności w teorii informacji, jest fakt, że stan \textit{qubitu} może być także dowolną \textit{kombinacją liniową} jego stanów bazowych.
+
+W języku algebry liniowej oznacza to, że kwantowy bit można przedstawić, jako wektor w 2-wymiarowej przestrzeni Hilberta, a stany bazowe są wektorami bazy ortonormalnej tejże przestrzeni.
+\begin{center}
+    $\mathcal{H} \ni \ket{\textit{qubit}} = \alpha\ket{0} + \beta\ket{1}$
+\end{center}
+gdzie $\alpha, \beta \in \mathbb{Z}$.
+
+Powyższe równianie interpretuje się w następujący sposób: \textbf{Stan kwantowego bitu}, wyrażony jako wektor w (2-wymiarowej) przestrzeni Hilberta, jest kombinacją liniową \textbf{stanu bazowego} $\ket{1}$ oraz \textbf{stanu bazowego} $\ket{2}$.
+
 \subsection{Superpozycja stanów kwantowych}
+
+Opisane powyżej algebraiczne wyrażenie stanu \textit{qubitu} jest czymś więcej, niż tylko zapisem matematycznym. Istotnie, fizyczna realizacja kwantowego bitu może się znajdować w stanie \textit{superpozycji kwantowej} - być jednocześnie w obu stanach bazowych. Elektron może mieć spin \textit{jednocześnie} "w górę" i "w dół". Jednakowoż, w momencie pomiaru spinu elektronu, eksperyment wskażę dokładnie jedną z tych dwóch wartości - nic pomiędzy. Wykonawszy ten eksperyment na dużej ilości elektronów otrzyma się pewną ilość wyników "góra" i pewną ilość "dół". W szczególności, dla stanu elektronu opisanego kombinacją liniową z poprzedniego podrozdziału, $|\alpha|^2$ elektronów będzie miało spin "w górę", a $|\beta|^2$ elektronów - "w dół". Współczynniki $\alpha$ oraz $\beta$ przy stanach bazowych interpretuje się jako amplitudy prawdopodobieństwa, natomiast kwadraty ich modułów - jako prawdopodobieństwa, że w momencie pomiaru stan \textit{qubitu} dozna \textit{kolapsu} do danego stanu bazowego.
+
+Kolaps zachodzi zawsze - nie można wprost zaobserwować superpozycji stanów kwantowych. Powstaje zatem pytanie, czy zjawisko to rzeczywiście ma miejsce. Być może pozorna losowość otrzymywanych wyników eksperymentów jest jedynie pozorna, wynika z chaotyczności generowanej przez \textit{zmienne ukryte} (jak to jest na przykład w przypadku rzutu monetą - pozorna losowość wyniku wiąże się ze zmiennymi, takimi jak opór powietrza, siła przyłożona do monety w momencie rzutu itp.). 
 
 \subsection{Zjawisko kwantowego splątania}
 
@@ -336,87 +352,11 @@ U podstaw informatyki kwantowej leżą dwa, zupełnie sprzeczne z intuicją zjaw
 \subsection{Uruchomienie procedury i wizualizacja wyników}
 
 \section{Ostateczne wyniki procedury}
+
+\chapter{Analiza rezultatów}
 \label{sec:nast}
 
 Bieżący rozdział (czyli rozdział~\ref{sec:nast}) zawiera odwołanie do samego siebie. Stosujmy odwołania automatyczne.
-
-Dodatkowo w niniejszym rozdziale zamieszczono przykładową tabelę (uwaga --- \LaTeX\ umiejscawia ją dynamicznie).
-
-% warto w kodzie poniżej zwrócić uwagę na prawidłowy sposób formatowania liczb z przecinkiem jako znakiem dziesiętnym
-% a dodatkowo na wyrównywanie liczb ułatwiające porównywanie
-
-
-\begin{table}[h]
-\centering
-\caption{Przykładowa tabela.}
-\label{tab:przyklad}
-\footnotesize
-\begin{tabular}{|l|r|r|}
-\hline
-Wariant & $N=5$ & $N=10$\\
-\hline
-A & $2$ & $3\phantom{{,}1}$ \\
-B & $5$ & $3{,}1$ \\
-
-\hline
-\end{tabular} 
-\end{table}
-
-\clearpage
-
-\chapter{Analiza rezultatów}
-
-Wzory proste umieszczamy w tekście $a^2+b^2=c^2$, wzory bardziej skomplikowane --- poza nim:
-\begin{equation}
-\sum_{n=1}^{+\infty}\frac{1}{n^2}=\frac{\pi^2}{6}.
-\end{equation}
-
-\section{Pierwszy podrozdział}
-
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}[scale=4]
-    \draw[->] (0,0) -- (1.4,0) node[anchor=west] {$n$};
-    \draw[->] (0,0) -- (0,1.35) node[anchor=south] {Iloraz};
-    \foreach \y in {0, 0.25,0.5,0.75,1, 1.25}
-      \draw (0.03, \y) -- (-0.03, \y) node[anchor=east] {$\y$};
-     \foreach \x in {0, 2, 4, 6, 8, 10, 12}
-       \draw ({\x/10}, 0.03) -- ({\x/10}, -0.03) node[anchor=north] {$\x$};
-
-       \draw (0.200000,1.164983) circle[radius=0.02];
-       \draw (0.300000,1.176768) circle[radius=0.02];
-       \draw (0.400000,0.877412) circle[radius=0.02];
-       \draw (0.500000,0.456929) circle[radius=0.02];
-       \draw (0.600000,0.351427) circle[radius=0.02];
-       \draw (0.700000,0.294229) circle[radius=0.02];
-       \draw (0.800000,0.246016) circle[radius=0.02];
-       \draw (0.900000,0.224231) circle[radius=0.02];
-       \draw (1.000000,0.168351) circle[radius=0.02];
-       \draw (1.100000,0.191722) circle[radius=0.02];
-       \draw (1.200000,0.173029) circle[radius=0.02];
-       \draw (1.300000,0.176309) circle[radius=0.02];
-
-       \fill (0.200000,1.225646) circle[radius=0.02];
-       \fill (0.300000,0.986035) circle[radius=0.02];
-       \fill (0.400000,0.945566) circle[radius=0.02];
-       \fill (0.500000,0.688660) circle[radius=0.02];
-       \fill (0.600000,0.556635) circle[radius=0.02];
-       \fill (0.700000,0.483555) circle[radius=0.02];
-       \fill (0.800000,0.443744) circle[radius=0.02];
-       \fill (0.900000,0.413361) circle[radius=0.02];
-       \fill (1.000000,0.344671) circle[radius=0.02];
-       \fill (1.100000,0.374543) circle[radius=0.02];
-       \fill (1.200000,0.358811) circle[radius=0.02];
-       \fill (1.300000,0.362736) circle[radius=0.02];
-  \end{tikzpicture}
-  \caption{Oto przykładowy, skomplikowany rysunek. Często będzie łatwiej. \label{fig:algcomparison}}
-\end{figure}
-
-Każdy rysunek przywołujemy w tekście, także rysunek \ref{fig:algcomparison}. Można też ładować obrazy, jak pokazano na stronie tytułowej.
-
-\section{Drugi}
-
-\section{Trzeci}
 
 \clearpage
 
