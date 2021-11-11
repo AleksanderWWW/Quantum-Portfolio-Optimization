@@ -57,12 +57,12 @@ Nr albumu: 77438
 
 \vspace{2cm}
 
-\title{Wzór pracy dyplomowej SGH}
+\title{Zastosowanie Teorii Grafów oraz Algorytmu Quantum Annealing w Optymalizacji Portfela Inwestycyjnego}
 \makeatletter
 
 \begin{center}
 \LARGE\bf
-\fbox{\@title}
+{\@title}
 \end{center}
 
 \vspace{2cm}
@@ -130,7 +130,7 @@ Celem niniejszej pracy jest zbadanie oraz przeanalizowanie pewnego interesujące
 \chapter{Współczesna teoria portfela inwestycyjnego}
 
 \chapter{Dywersyfikacja portfolio w ujęciu teorii grafów}
-Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania zadania dywersyfikacji portfolio nie są jedynymi możliwymi. Stanowią raczej interesującą alternatywę dla tradycyjnych metod doboru spółek do portfela, jakimi są m.in. \textit{Tutaj wymieniam kilka popularnych, niegrafowych sposobów na dywersyfikację portfolio, wraz z przypisami}
+Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania zadania dywersyfikacji portfolio nie są jedynymi możliwymi. Stanowią raczej interesującą alternatywę dla tradycyjnych metod doboru spółek do portfela, jakimi są m.in. algorytmy klasteryzujące\footnote{\textit{https://www.sciencedirect.com/science/article/pii/S187705091730772X} (data dostępu: 5.11.2021}, algorytm \textit{branch-and-bound}\footnote{\textit{https://scholarship.rice.edu/handle/1911/19140} (data dostępu: 5.11.2021)}, czy też algorytmy genetyczne\footnote{A. Kabundi \& , J, W Muteba Mwamba (2012). \textit{Applying a genetic algorithm to international diversification of equity portfolios: A South African investor perspective.} South African Journal of Economics. 80. 10.1111/j.1813-6982.2011.01288.x.}.
 
 \section{Wprowadzenie do teorii grafów}
 
@@ -276,7 +276,7 @@ Iloczyn skalarny dla przestrzeni Hilberta jest zdefiniowany, jako:
 \begin{center}
 $\bra{W}\ket{V} = \sum_{i=1}^{n} w^\ast \cdot v$
 \end{center}
-Analogicznie definiujemy iloczyn skalarny w przestrzeni dualnej\footnote{Istotnie, także dalsze stwierdzenia na temat przestrzeni Hilberta będą prawdziwe dla przestrzeni dualnej, ze względu na izomorfizm tych przestrzeni}.\newline
+Analogicznie definiujemy iloczyn skalarny w przestrzeni dualnej\footnote{Istotnie, także dalsze stwierdzenia na temat przestrzeni Hilberta będą prawdziwe dla przestrzeni dualnej, ze względu na izomorfizm tych przestrzeni.}.\newline
 
 Widać więc, że dla każdego $\ket{A}\in\mathcal{H}$, długość wektora $|\ket{A}|$ równa jest:
 \begin{center}
@@ -297,9 +297,12 @@ gdzie $k_{i}$ jest liczbą (w ogólności zespoloną).
 
 \subsection{Operatory liniowe}
 
+
+
 \section{Fundamentalne zjawiska w informatyce kwantowej}
 
-U podstaw informatyki kwantowej leżą dwa, wymykające się intuicji życia codziennego zjawiska - superpozycji i splątania. Pierwsze z nich pozwala na wykładnicze przyspieszenie obliczeń przeprowadzanych na komputerach kwantowych, drugie zaś jest niezbędne do konstrukcji maszyn operujących na układach tzw. \textit{qubitów} (kwantowych bitów). Przed omówieniem tych zjawisk konieczne jest jednak wyjaśnienie najpierw pojęcia samego \textit{qubitu} oraz jego reprezentacji matematycznej.
+U podstaw informatyki kwantowej leżą dwa, wymykające się intuicji życia codziennego zjawiska fizyki mikroświata. Ich inteligentne zastosowanie pozwala na budowanie maszyn obliczeniowych operujących na układach tzw. \textit{qubitów} (kwantowych bitów). Te \textit{kwantowe komputery} pozwalają osiągnąć wykładnicze przyspieszenie w rozwiązywaniu różnego typu zadań (nie są to jednak komputery \textit{general purpose} - klasa problemów jaki tany rodzaj komputera kwantowego może rozwiązać jest zadana z góry, a ponadto z reguły względnie wąska\footnote{Dla przykładu, komputer kwantowy użyty do celów niniejszej pracy potrafi rozwiązywać tylko problemy optymalizacyjne.}).
+Przed omówieniem tych zjawisk konieczne jest jednak wyjaśnienie najpierw pojęcia samego \textit{qubitu} oraz jego reprezentacji matematycznej.
 
 \subsection{Stan kwantowy jako wektor w przestrzeni Hilberta}
 
@@ -321,18 +324,51 @@ Opisane powyżej algebraiczne wyrażenie stanu \textit{qubitu} jest czymś więc
 
 Kolaps zachodzi zawsze - nie można wprost zaobserwować superpozycji stanów kwantowych. Powstaje zatem pytanie, czy zjawisko to rzeczywiście ma miejsce. Być może pozorna losowość otrzymywanych wyników eksperymentów jest jedynie pozorna, wynika z chaotyczności generowanej przez \textit{zmienne ukryte} (jak to jest na przykład w przypadku rzutu monetą - pozorna losowość wyniku wiąże się ze zmiennymi, takimi jak opór powietrza, siła przyłożona do monety w momencie rzutu itp.). 
 
+Istotnie, losowość towarzysząca pomiarom stanów kwantowych jest \textit{prawdziwą losowością}. W 1964 roku irlandzki fizyk John S. Bell wykazał, że jeśli faktycznie istniałyby ukryte zmienne, to pewne eksperymenty, oparte na opisanym w następnej sekcji zjawisku splątania kwantowego, musiałyby dawać wyniki spełniające pewne, zadane przez Bella nierówności\footnote{https://arxiv.org/pdf/quant-ph/0701071v1.pdf (data dostępu: 9.11.2021)}. Przeprowadzone doświadczenia\footnote{M.in. https://phys.org/news/2017-05-violation-bell-inequality-frequency-bin-entangled.html (data dostępu: 9.11.2021)} wykazały rezultaty istotnie łamiące podane nierówności, co wyeliminowało teorię zmiennych ukrytych.
+
 \subsection{Zjawisko kwantowego splątania}
 
-\section{Procedura \textit{Quantum Annealing} na maszynie \textit{D-Wave}}
+Kwantowe bity mogą zostać wprowadzone w stan splątania kwantowego (\textit{ang. quantum entanglement}). Oznacza to, że bez względu na odległość dzielącą dwie cząsteczki, dokonanie pomiaru stanu jednej z nich \textit{natychmiast} powoduje zmianę stanu drugiej z nich. Zjawisko to przysporzyło wiele problemów fizyce kwantowej na wczesnych etapach rozwoju - z pozory zdawało się zaprzeczać rezultatom szczególnej teorii względności Einsteina, sugerując możliwość istnienia \textit{komunikacji superluminalnej} (szybszej od światła). Nie jest to jednak prawdą - taka komunikacja jest niemożliwa, a kwantowe splątanie w żadnym wypadku tego faktu nie podważa\footnote{por. C. Bernhardt, \textit{Obliczenia kwantowe dla każdego, s. 63-64}, PWN,
+Warszawa, 2020}.
 
-\subsection{Model Isinga}
+Poniżej opisany został pokrótce model matematyczny kwantowego splątania na przykładzie układu dwóch bitów kwantowych. W praktyce obecne komputery kwantowe mogą dokonywać splątania setek, a nawet tysięcy \textit{qubitów}.
 
-\subsection{Problemy klasy QUBO}
+Układ dwóch \textit{qubitów} można opisać, jako kombinacja liniowa wektorów bazowych w przestrzeni Hilberta, będącą iloczynem tensorowym przestrzeni stanów dla tychże dwóch \textit{qubitów}:
 
-\subsection{Zagadnienie \textit{MIS} w ujęciu \textit{QUBO}}
+\begin{center}
+    $\mathcal{H} = \mathcal{H}_1 \otimes \mathcal{H}_2$
+\end{center}
 
-\subsection{Implementacja algorytmu za pomocą solvera HSSv2}
+Niech $\ket{0}_1, \ket{1}_1$ oznaczają wektory bazy ortonormalnej przestrzeni $\mathcal{H}_1$, zaś $\ket{0}_2, \ket{1}_2$ - wektory bazy ortonormalnej przestrzeni $\mathcal{H}_2$. Wektory bazy ortonormalnej przestrzeni $\mathcal{H}$ zapiszemy, jako: 
+\begin{center}
+    $\{\ket{00}, \ket{01}, \ket{10}, \ket{11}\}$
+\end{center}
+gdzie $\ket{ij} = \ket{i}_1 \otimes \ket{j}_2$ jest iloczynem tensorowym \textit{i}-tego wektora z pierwszej bazy i \textit{j}-tego wektora drugiej bazy.
+Układ dwóch \textit{qubitów} może, zgodnie z zasadą superpozycji, występować w stanie zadanym przez dowolną (z zachowaniem warunku o amplitudach prawdopodobieństwa) kombinację liniową:
+\begin{center}
+    $\ket{\Psi} = \sum_{ij} \textit{c}_{ij}\ket{ij}$
+\end{center}
 
+Taki stan będzie \textbf{stanem splątanym}, wtedy i tylko wtedy, gdy \textbf{nie jest możliwe} zapisanie go jako iloczyn tensorowy:
+\begin{center}
+    $\ket{\Psi} = \ket{\alpha}_1 \otimes \ket{\beta}_2$
+\end{center}
+gdzie $\ket{\alpha}_1 \in \mathcal{H}_1$ oraz $\ket{\beta}_2 \in \mathcal{H}_2$ są stanami kwantowymi (niekoniecznie bazowymi - mogą one reprezentować też superpozycje stanów bazowych odpowiednich przestrzeni)\footnote{G. Benenti, G. Casati, G. Strini, \textit{Principles of Quantum Computation
+and Information, Volume I}, World Scientific Publishing, 2004}.
+Jeśli stan $\ket{\Psi}$ można zapisać jak wyżej, to stan ten nie jest stanem splątanym - pomiar jednego z \textit{qubitów} - dla prostoty niech będzie to \textit{qubit} z pierwszej przestrzeni - nie powoduje zmiany stanu drugiego \textit{qubitu}, zatem stan $\ket{\alpha}_1$ zapada się do jednego ze stanów bazowych ($\ket{0}$ lub $\ket{1}$), natomiast stan $\ket{\beta}_2$ pozostaje bez zmian (\textit{ceteris paribus}).
+
+
+
+
+\chapter{Algorytm \textit{Quantum Annealing}}
+
+\section{Model Isinga}
+
+\section{Problemy klasy QUBO}
+
+\section{Zagadnienie \textit{MIS} w ujęciu \textit{QUBO}}
+
+\section{Implementacja algorytmu za pomocą solvera HSSv2}
 
 
 
