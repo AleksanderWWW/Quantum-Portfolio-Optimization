@@ -130,7 +130,7 @@ Celem niniejszej pracy jest zbadanie oraz przeanalizowanie pewnego interesujące
 \chapter{Współczesna teoria portfela inwestycyjnego}
 
 \chapter{Dywersyfikacja portfolio w ujęciu teorii grafów}
-Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania zadania dywersyfikacji portfolio nie są jedynymi możliwymi. Stanowią raczej interesującą alternatywę dla tradycyjnych metod doboru spółek do portfela, jakimi są m.in. algorytmy klasteryzujące\footnote{\textit{https://www.sciencedirect.com/science/article/pii/S187705091730772X} (data dostępu: 5.11.2021}, algorytm \textit{branch-and-bound}\footnote{\textit{https://scholarship.rice.edu/handle/1911/19140} (data dostępu: 5.11.2021)}, czy też algorytmy genetyczne\footnote{A. Kabundi \& , J, W Muteba Mwamba (2012). \textit{Applying a genetic algorithm to international diversification of equity portfolios: A South African investor perspective.} South African Journal of Economics. 80. 10.1111/j.1813-6982.2011.01288.x.}.
+Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania zadania dywersyfikacji portfolio nie są jedynymi możliwymi. Stanowią raczej interesującą alternatywę dla tradycyjnych metod doboru spółek do portfela, jakimi są m.in. algorytmy klasteryzujące\footnote{\textit{https://www.sciencedirect.com/science/article/pii/S187705091730772X} (data dostępu: 5.11.2021)}, algorytm \textit{branch-and-bound}\footnote{\textit{https://scholarship.rice.edu/handle/1911/19140} (data dostępu: 5.11.2021)}, czy też algorytmy genetyczne\footnote{A. Kabundi \& , J, W Muteba Mwamba (2012). \textit{Applying a genetic algorithm to international diversification of equity portfolios: A South African investor perspective.} South African Journal of Economics. 80. 10.1111/j.1813-6982.2011.01288.x.}.
 
 \section{Wprowadzenie do teorii grafów}
 
@@ -138,9 +138,9 @@ Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania 
 
 \section{Klasyczne rozwiązania problemu \textit{MIS}}
 
-\chapter{Mechanika kwantowa i algorytm \textit{Quantum Annealing}}
+\chapter{Elementy teorii kwantów}
 
-Quantum Computing (QC) to stosunkowo młody obszar badań naukowych, zajmujący się wykorzystaniem maszyn cyfrowych, które przetwarzają informacje używając tzw. \textit{qubitów}. Aby zrozumieć potencjał tych urządzeń dla współczesnej informatyki, niezbędne jest wprowadzenie pojęć \textit{superpozycji} oraz \textit{splątania kwantowego} - tematy zostaną poruszone w dalszej części rozdziału. Ogólnie jednak przewaga komputerów kwantowych zasadza się w głównej mierze na dwóch aspektach. Pierwszy z nich, polega na tym, że zjawiska kwantowe pozwalają takiemu komputerowi przeprowadzać wiele różnych obliczeń \textit{jednocześnie} na tej samej porcji pamięci (nie jest to więc to samo, co \textit{parallel computing}, czy nawet \textit{multithreading}). Druga zaś kwestia dotyczy szerokiej klasy problemów, które nie mogą być rozwiązane na komputerze klasycznym (lub przynajmniej nie w rozsądnym przedziale czasu), za to posiadają efektywną i naturalną implementacje na komputerach kwantowych\footnote{Przykładem takiego problemu jest m.in symulacja systemów molekularnych.}. Niniejsza praca skupiać się będzie tylko i wyłącznie na zbadaniu pierwszego z wymienionych aspektów.
+Quantum Computing (QC) to stosunkowo młody obszar badań naukowych\footnote{P. Benioff, \textit{The computer as a physical system: A microscopic quantum mechanical Hamiltonian model of computers as represented by Turing machines}, Journal of Statistical Physics. 22 (5): 563–591, 1980.}, zajmujący się wykorzystaniem maszyn cyfrowych, które przetwarzają informacje używając tzw. \textit{qubitów}. Aby zrozumieć potencjał tych urządzeń dla współczesnej informatyki, niezbędne jest wprowadzenie pojęć \textit{superpozycji} oraz \textit{splątania kwantowego} - tematy te zostaną poruszone w dalszej części rozdziału. Ogólnie jednak przewaga komputerów kwantowych zasadza się w głównej mierze na dwóch aspektach. Pierwszy z nich polega na tym, że zjawiska kwantowe pozwalają takiemu komputerowi przeprowadzać wiele różnych obliczeń \textit{jednocześnie} na tej samej porcji pamięci. Druga zaś kwestia dotyczy szerokiej klasy problemów, które nie mogą być rozwiązane na komputerze klasycznym (lub przynajmniej nie w rozsądnym przedziale czasu), za to posiadają efektywną i naturalną implementacje na komputerach kwantowych\footnote{M.in symulowanie układów cząstek w nanoskali, znajdujące zastosowania w chemii oraz nanotechnologii.}. Niniejsza praca skupiać się będzie tylko i wyłącznie na zbadaniu pierwszego z wymienionych aspektów.
 
 W następnej sekcji poruszony zostanie także temat ograniczeń, jakie prawa fizyki nakładają na klasyczne maszyny cyfrowe, a w szczególności na skalowalność ich mocy obliczeniowej. Istnienie tych restrykcji dostarcza dodatkowych powodów, dla których badania w obszarze kwantowej informatyki stanowić będą jeden z kluczowych zagadnień w rozwoju nowoczesnej technologii.
 
@@ -209,21 +209,21 @@ Podstawiając za wartość energii elektronu 4.5 eV, a za wartość energii pote
 
 \section{Algebra liniowa jako język teorii kwantów}
 
-Fizykę kwantową można ogólnie sformułować w dwóch, ekwiwalentnych postaciach matematycznych - postaci macierzowej\footnote{Heisenberg 1925} albo w postaci różniczkowej\footnote{Schrodinger 1926}. Dla celów niniejszej pracy wygodniejsza będzie pierwsza z nich. Celem niniejszego podrozdziału jest wprowadzenie pojęć niezbędnych do zrozumienia działania algorytmu \textit{Quantum Annealing} (przy czym nie jest to niezbędne do \textit{używania} tego algorytmu, szczególnie przy prostych problemach). 
+Fizykę kwantową można ogólnie sformułować w dwóch, ekwiwalentnych postaciach matematycznych - postaci macierzowej\footnote{W. Heisenberg, \textit{Quantum-mechanical re-interpretation of kinematic and mechanical relations}, Z. Phys. 33, 879-893 (1925).} albo w postaci różniczkowej\footnote{E.  Schrodinger, \textit{An Undulatory Theory of the Mechanics of Atoms and Molecules}, The Physical Review, Vol. 28, No. 6, 1926.}. Dla celów niniejszej pracy wygodniejsza będzie pierwsza z nich. Celem niniejszego podrozdziału jest wprowadzenie pojęć niezbędnych do zrozumienia działania algorytmu \textit{Quantum Annealing} (przy czym nie jest to niezbędne do \textit{używania} tego algorytmu, szczególnie przy prostych problemach). 
 
 \subsection{Przestrzeń liniowa oraz przestrzeń unitarna}
 
-Przestrzeń liniowa $\mathbb{V}$ jest do zbiór obiektów (\textbf{a}, \textbf{b}, \textbf{c}, ...) dla których zdefiniowano operacje dodawania (\textbf{a} + \textbf{b}) oraz mnożenia przez tzw. skalar (\textit{a}, \textit{b}, \textit{c}, ...), przy czym: \newline
+Przestrzeń liniowa $\mathbb{V}$ jest do zbiór obiektów (\textbf{a}, \textbf{b}, \textbf{c}, ...) dla których zdefiniowano operacje dodawania (\textbf{a} + \textbf{b}) oraz mnożenia przez tzw. skalar ($\alpha$, $\beta$, $\gamma$, ...), przy czym: \newline
 \begin{itemize}
-    \item wyniki tych działań również są elementami tej przestrzeni, i.e. $\textbf{a} + \textbf{b} \in \mathbb{V}$ oraz $\textit{a}\textbf{a} \in \mathbb{V}$ (przestrzeń jest zamknięta ze względu na te działania) \newline
+    \item wyniki tych działań również są elementami tej przestrzeni, i.e. $\textbf{a} + \textbf{b} \in \mathbb{V}$ oraz $\alpha\textbf{a} \in \mathbb{V}$ (przestrzeń jest zamknięta ze względu na te działania) \newline
     \item mnożenie elementów przestrzeni przez skalar jest:
     \begin{itemize}
         \item rozdzielne względem dodawania elementów: \newline
-         $\textit{a}(\textbf{a} + \textbf{b}) = \textit{a}\textbf{a} + \textit{a}\textbf{b}$
+         $\alpha(\textbf{a} + \textbf{b}) = \alpha\textbf{a} + \alpha\textbf{b}$
          \item rozdzielne względem dodawania skalarów: \newline
-         $(\textit{a} + \textit{b})\textbf{a} = \textit{a}\textbf{a} + \textit{b}\textbf{a}$
+         $(\alpha + \beta)\textbf{a} = \alpha\textbf{a} + \beta\textbf{a}$
          \item łączne: \newline
-         $\textit{a}(\textit{b}\textbf{a}) = \textit{a}\textit{b}\textbf{a}$ \newline
+         $\alpha(\beta{b}\textbf{a}) = \alpha\beta\textbf{a}$ \newline
          
     \end{itemize}
     \item dodawanie elementów przestrzeni jest:
@@ -296,8 +296,60 @@ Każdy wektor w przestrzeni Hilberta można zapisać jako kombinację liniową e
 gdzie $k_{i}$ jest liczbą (w ogólności zespoloną).
 
 \subsection{Operatory liniowe}
+Przez operator liniowy określane będzie każde przekształcenie $\Omega$, które dowolnemu wektorowi $\ket{V} \in \mathcal{H}$ przyporządkowuje wektor $\ket{V'}$, który również należy do tej samej przestrzeni Hilberta. Takie przekształcenie spełnia ponadto warunki liniowości:
+\begin{center}
+    $\Omega\textit{a}\ket{V} = \textit{a}\Omega\ket{V}$ \\
+    $\Omega(\textit{a}\ket{V} + \textit{b}\ket{W}) = \textit{a}\Omega\ket{V} + \textit{b}\Omega\ket{W}$ \\
+    $\bra{V}\textit{a}\Omega = \bra{V}\Omega\textit{a}$ \\
+    $(\bra{V}\textit{a} + \bra{W}\textit{b})\Omega = \textit{a}\bra{V}\Omega + \textit{b}\bra{W}\Omega$
+\end{center}
 
+Operator liniowy w n-wymiarowej przestrzeni Hilberta można przedstawić jako macierz o rozmiarach $n\times n$. Odpowiednie elementy macierzowe operatora można poznać, analizując w jaki sposób działa on na wektory bazowe. Na przykład, operator $R(\dfrac{1}{2}\pi\textbf{i})$ (obrót o kąt prosty wokół wektora jednostkowego \textbf{i}) działa następująco:
+\begin{center}
+    $R(\dfrac{1}{2}\pi\textbf{i})\ket{1} = \ket{1}$ \\
+    $R(\dfrac{1}{2}\pi\textbf{i})\ket{2} = \ket{3}$ \\
+    $R(\dfrac{1}{2}\pi\textbf{i})\ket{3} = -\ket{2}$
+\end{center}
 
+Stąd wynika, że
+\begin{center}
+    $R(\dfrac{1}{2}\pi\textbf{i}) = \begin{bmatrix}
+1 & 0 & 0\\
+0 & 0 & -1\\
+0 & 1 & 0
+\end{bmatrix}$
+\end{center}
+
+Bardzo ważne w mechanice kwantowej są \textit{operatory sprzężone}. Ich istotność polega na tym, że jeśli dla jakiegoś równania w którym obecne są operatory liniowe konieczne jest znalezienie równania sprzężonego, to w tymże sprzężonym do wyjściowego równaniu oryginalne operatory zastępowane są właśnie swoimi sprzężonymi odpowiednikami. Dla przykładu, równaniem sprzężonym do równania
+\begin{center}
+    $\Omega\ket{V} = \alpha\ket{V}$
+\end{center}
+będzie równanie
+\begin{center}
+    $\bra{V}\Omega^\dagger = \bra{V}\alpha^*$
+\end{center}
+Warto zwrócić również uwagę na pewną ogólną regułę, która wyłania się z tego prostego przykładu. Aby otrzymać równianie sprzężone, należy odwrócić kolejność wszystkich czynników, zamienić operatory na operatory sprzężone, a wektory ket (bra) na wektory bra (ket).
+
+Operator sprzężony otrzymuje się poprzez transpozycję, a następnie sprzężenie zespolone wyjściowego operatora. Jeśli przez $\Omega_{ji}$ oznaczony zostanie element w j-tym rzędzie i i-tej kolumnie operatora $\Omega$, to można zapisać:
+\begin{center}
+    $\Omega^\dagger_{ij} = \Omega^*_{ji}$
+\end{center}
+
+Jeśli zachodzi tożsamość:
+\begin{center}
+    $\Omega^\dagger = \Omega$
+\end{center}
+to operator $\Omega$ nazywamy \textit{operatorem hermitowskim}.
+~\\
+Jeśli zachodzi natomiast:
+\begin{center}
+    $\Omega^\dagger\Omega = \textit{I}$
+\end{center}
+to operator $\Omega$ nazywamy \textit{operatorem unitarnym}.
+~\\
+
+Istotność operatorów hermitowskich polega na tym, że ich wartości własne są zawsze liczbami rzeczywistymi. W mechanice kwantowej operator związany z przeprowadzaniem pomiaru stanu kwantowego jest zawsze operatorem hermitowskim, a jego wartości własne są \textit{de facto} rezultatami pomiaru.
+Z kolei operatory unitarne reprezentują transformacje, jakim poddawane są układy kwantowe. Cechą operatorów unitarnych jest to, że nie zmieniają one długości wektorów na których działają. Dzięki temu wektor opisujący stan kwantowy (jak opisane zostanie poniżej, wektory takie są wektorami jednostkowymi) po zadziałaniu operatora unitarnego pozostanie wektorem jednostkowym - a zatem będzie wciąż mógł reprezentować (przekształcony) stan kwantowy.
 
 \section{Fundamentalne zjawiska w informatyce kwantowej}
 
@@ -308,7 +360,7 @@ Przed omówieniem tych zjawisk konieczne jest jednak wyjaśnienie najpierw poję
 
 Podstawową jednostką danych w klasycznej informatyce jest bit. Fizyczną realizacją bitu jest każdy układ, który może w danej chwili znajdować się w jednym z dwóch stanów. W konwencjonalnych komputerach rolę bitów pełnią tranzystory - mogą one znajdować się w stanie niskiego (kodowanego jako 0) lub wysokiego (kodowanego jako 1) napięcia elektrycznego.
 
-W komputerach kwantowych analogiczną do bitu rolę pełnią \textit{kwantowe bity} (\textit{quantum bits}) - w skrócie \textit{qubity}. Ich fizyczną realizacją również są układy mogące przyjmować jeden z dwóch różnych stanów, nazywanych stanami bazowymi. Przykładem tego jest spin elektronu, który przyjmuje jedną z dwóch wartości (spin "w górę" ~albo spin "w dół"\footnote{tutaj napisz coś o tym spinie}). To co je odróżnia, a co jednocześnie przesądza o ich niezwykłej użyteczności w teorii informacji, jest fakt, że stan \textit{qubitu} może być także dowolną \textit{kombinacją liniową} jego stanów bazowych.
+W komputerach kwantowych analogiczną do bitu rolę pełnią \textit{kwantowe bity} (\textit{quantum bits}) - w skrócie \textit{qubity}. Ich fizyczną realizacją również są układy mogące przyjmować jeden z dwóch różnych stanów, nazywanych stanami bazowymi. Przykładem tego jest spin elektronu, który przyjmuje jedną z dwóch wartości (spin "w górę" ~albo spin "w dół"\footnote{Spin jest to wielkość fizyczna określająca moment pędu cząstki, który wynika z jej kwantowej natury, a nie jak w fizyce klasycznej z ruchu obrotowego.}). To co je odróżnia, a co jednocześnie przesądza o ich niezwykłej użyteczności w teorii informacji, jest fakt, że stan \textit{qubitu} może być także dowolną \textit{kombinacją liniową} jego stanów bazowych.
 
 W języku algebry liniowej oznacza to, że kwantowy bit można przedstawić, jako wektor w 2-wymiarowej przestrzeni Hilberta, a stany bazowe są wektorami bazy ortonormalnej tejże przestrzeni.
 \begin{center}
@@ -349,12 +401,12 @@ Układ dwóch \textit{qubitów} może, zgodnie z zasadą superpozycji, występow
     $\ket{\Psi} = \sum_{ij} \textit{c}_{ij}\ket{ij}$
 \end{center}
 
-Taki stan będzie \textbf{stanem splątanym}, wtedy i tylko wtedy, gdy \textbf{nie jest możliwe} zapisanie go jako iloczyn tensorowy:
+Taki stan będzie \textbf{stanem splątanym}, wtedy i tylko wtedy, gdy \textbf{nie jest możliwe} zapisanie go w postaci iloczynu tensorowego:
 \begin{center}
     $\ket{\Psi} = \ket{\alpha}_1 \otimes \ket{\beta}_2$
 \end{center}
 gdzie $\ket{\alpha}_1 \in \mathcal{H}_1$ oraz $\ket{\beta}_2 \in \mathcal{H}_2$ są stanami kwantowymi (niekoniecznie bazowymi - mogą one reprezentować też superpozycje stanów bazowych odpowiednich przestrzeni)\footnote{G. Benenti, G. Casati, G. Strini, \textit{Principles of Quantum Computation
-and Information, Volume I}, World Scientific Publishing, 2004}.
+and Information, Volume I}, World Scientific Publishing, 2004.}.
 Jeśli stan $\ket{\Psi}$ można zapisać jak wyżej, to stan ten nie jest stanem splątanym - pomiar jednego z \textit{qubitów} - dla prostoty niech będzie to \textit{qubit} z pierwszej przestrzeni - nie powoduje zmiany stanu drugiego \textit{qubitu}, zatem stan $\ket{\alpha}_1$ zapada się do jednego ze stanów bazowych ($\ket{0}$ lub $\ket{1}$), natomiast stan $\ket{\beta}_2$ pozostaje bez zmian (\textit{ceteris paribus}).
 
 
