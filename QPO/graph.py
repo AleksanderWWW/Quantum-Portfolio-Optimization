@@ -1,14 +1,14 @@
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
-from QPO.assets import PreparedData
+from .assets import PreparedData
 
 
 class GraphBuilder(PreparedData):
 
     def __init__(self, in_data_frame: pd.DataFrame):
         super().__init__(in_data_frame)
-        self.G = nx.Graph()
+        self.graph = nx.Graph()
         self.chosen_sub_graph = None
         self.not_chosen_sub_graph = None
         self.considered = set()
@@ -26,7 +26,7 @@ class GraphBuilder(PreparedData):
             for j in assets:
                 if i != j:
                     corr = self.corr_matrix.loc[i, j]
-                    if corr >= corr_threshold:  # łączymy węzły, jeśli ich korelacja przekracza próg
+                    if corr >= corr_threshold:  # connect to vertices if their correlation exceeds threshold
                         pair = (i, j)
                         self.considered.add(i)
                         self.considered.add(j)
@@ -35,20 +35,20 @@ class GraphBuilder(PreparedData):
         return nodes
 
     def build_graph(self, nodes):
-        self.G.add_edges_from(nodes)
+        self.graph.add_edges_from(nodes)
         return self
 
     def color_graph(self, chosen):
-        not_chosen = list(set(self.G.nodes()) - set(chosen))
-        self.not_chosen_sub_graph = self.G.subgraph(not_chosen)
-        self.chosen_sub_graph = self.G.subgraph(chosen)
+        not_chosen = list(set(self.graph.nodes()) - set(chosen))
+        self.not_chosen_sub_graph = self.graph.subgraph(not_chosen)
+        self.chosen_sub_graph = self.graph.subgraph(chosen)
 
         return self
 
     def show_graph(self):
-        pos = nx.spring_layout(self.G)
+        pos = nx.spring_layout(self.graph)
         plt.figure()
-        nx.draw(self.G, pos=pos)
+        nx.draw(self.graph, pos=pos)
         nx.draw(self.chosen_sub_graph, pos=pos, node_color="yellow")
         nx.draw(self.not_chosen_sub_graph, pos=pos, node_color="black")
         plt.show()

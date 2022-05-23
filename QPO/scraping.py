@@ -76,9 +76,9 @@ class TimeSeriesDownloader:
         self.end = end
 
     def get_time_series(self, ticker: str):
-        """Dla danego tickera funkcja pobierze notowania na zadany w konstruktorze okres czasu"""
+        """Get data for a given ticker for a given time frame. Returns 'adjusted close' column"""
         df = pdr.DataReader(ticker, 'yahoo', self.start, self.end)
-        df = df["Adj Close"]  # bierzemy tylko kolumnę Adjusted Close
+        df = df["Adj Close"]
         df = df.rename(ticker)
         return df
 

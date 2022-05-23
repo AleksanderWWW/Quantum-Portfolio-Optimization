@@ -18,6 +18,13 @@
 \usepackage{url}
 \usepackage{todonotes}
 \usepackage{verbatim}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{minted}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
 \setlist{itemsep=0pt}
 \setlist{nolistsep}
 \frenchspacing
@@ -73,7 +80,7 @@ Praca magisterska
 napisana w\newline
 Instytucie Ekonometrii\newline
 pod kierunkiem naukowym\newline
-dr Sebastiana Zająca
+dra Sebastiana Zająca
 
 }
 
@@ -120,92 +127,272 @@ Co warto przeczytać o~\LaTeX:
 \item \url{https://www.overleaf.com/latex/learn/free-online-introduction-to-latex-part-1}.
 \end{enumerate}
 
-\chapter{Wprowadzenie}
+\chapter*{Wprowadzenie}
+\addcontentsline{toc}{chapter}{Wprowadzenie}
 
-Nierelatywistyczna fizyka klasyczna stanowi podstawę obrazu świata, postrzeganego oczami ludzkiej wyobraźni. Umysł homo sapiens wyewoluował w otoczeniu obiektów makroskopowych, a ponadto nigdy nie doświadczył (ani nawet nie był w stanie sobie wyobrazić) prędkości choć trochę zbliżonych do prędkości światła. Z tychże powodów, dwa wielkie osiągnięcia współczesnej fizyki – mechanika kwantowa oraz teoria względności (zarówno ogólna, jak i szczególna) – są tak nieintuicyjne. Tymczasem płynące z nich wnioski i wyniki stanowią podstawę dzisiejszej cywilizacji. Dylatacja czasu jest istotnym czynnikiem, jaki muszą uwzględniać precyzyjne systemy nawigacyjne GPS. Tranzystor z kolei – podstawowy budulec układów scalonych, a zatem również wszechobecnej dziś elektroniki – powstał i był doskonalony dzięki badaniom nad kwantowymi własnościami materii w nanoskali.
+Nierelatywistyczna fizyka klasyczna do dziś stanowi podstawę wyobrażenia obrazu świata, postrzeganego ludzkimi oczami. 
+Umysł homo sapiens wyewoluował w~otoczeniu obiektów makroskopowych, a~ponadto nigdy nie doświadczył (ani nawet nie był w~stanie sobie wyobrazić) prędkości choć trochę zbliżonych do prędkości światła. 
+Z~tychże powodów, dwa wielkie osiągnięcia współczesnej fizyki – mechanika kwantowa oraz teoria względności (zarówno ogólna, jak i~szczególna) – są tak ,,nieintuicyjne''. 
+Tymczasem płynące z~nich wnioski i~wyniki stanowią podstawę dzisiejszej cywilizacji. 
+Dylatacja czasu jest istotnym czynnikiem, jaki muszą uwzględniać precyzyjne systemy nawigacyjne GPS. 
+Tranzystor z~kolei – podstawowy budulec układów scalonych, a~zatem również wszechobecnej dziś elektroniki – powstał i~był doskonalony dzięki badaniom nad kwantowymi własnościami materii w~nanoskali.
 
 \section{Cel pracy}
-Celem niniejszej pracy jest zbadanie oraz przeanalizowanie pewnego interesującego zastosowania fizyki mikroświata w dziedzinie finansów, a konkretnie - budowie portfela inwestycyjnego opartego o indeks giełdowy S\&P 500. Poza oceną samych rezultatów opisanej w kolejnych rozdziałach procedury istotne jest też porównanie ich do wyników jakie można otrzymać, stosując rozwiązania klasyczne tj. zaimplementowane na komputerze niekwantowym, który ponadto nie symuluje komputera kwantowego. Porównanie to dotyczy nie tylko wydajności procedur, czy też tego, jakie komponenty indeksu zostaną wskazane, ale także ocenioną a posteriori stopą zwrotu z wygenerowanych portfeli.
+Konstrukcja portfolio inwestycyjnego stanowi być może najczęściej powtarzający się problem w finansach.
+Zarządzający aktywami inwestycyjnymi na co dzień mierzą się z zadaniem doboru aktywów do portfela, który łączył będzie zarówno odzwierciedlenia ich własnych poglądów na świat, jak i rezultaty prognoz dotyczących potencjalnych zwrotów z inwestycji, jak i też towarzyszących im ryzyk.
+W latach 50 XX wieku, amerykański ekonomista Harry Markowitz opublikował pracę naukową, w której usiłował udzielić odpowiedzi na pytanie, dotyczące najbardziej efektywnego modelu budowy portfolio. 
 
-\chapter{Współczesna teoria portfela inwestycyjnego}
+Celem niniejszej pracy jest zastosowanie modelu Markowitza oraz połączenie go z elementami teorii grafów, która oferuje nowe, niekonwencjonalne spojrzenie na problem dywersyfikacji portfela inwestycyjnego.
+Dodatkowo, zbadany zostanie potencjał jaki oferuje stosunkowo nowa dziedzina nauki - obliczenia kwantowe (ang. \textit{quantum computing}) - by przyspieszyć proces doboru aktywów.
+Algorytm kwantowego wyżarzania zostanie zaimplementowany do zadania konstrukcji optymalnie zdywersyfikowanego portfela inwestycyjnego, opartego o indeks giełdowy \textit{Dow Jones Industrial Average}.
+Następnie wykorzystana zostanie metoda \textit{Efficient Frontier} aby dobrać proporcje aktywów w portfelu tak, aby zoptymalizować przewidywany stosunek zwrotu do ryzyka.
+
+Kolejnym celem pracy jest analiza porównawcza efektywności kwantowego algorytmu optymalizacyjnego, do jego klasycznego odpowiednika - wyżarzania symulowanego.
+Porównanie to dotyczy nie tylko wydajności procedur, czy też jakości wygenerowanych rozwiązań, ale także ocenioną a~posteriori stopą zwrotu z~wygenerowanych portfeli.
+
+\chapter{Teoria portfela inwestycyjnego}
+\label{sec:ntp}
+
+Pionierem nowoczesnej teorii portfela (ang. \textit{modern portfolio theory}) jest amerykański ekonomista Harry Markowitz. 
+Za swoją pracę otrzymał nagrodę Nobla\footnote{https://www.nobelprize.org/prizes/economic-sciences/1990/press-release/}.
+Teoria ta dostarczyła ram poznawczych do praktyki konstruowania portfela inwestycyjnego. 
+Pozwala ona maksymalizować spodziewany zwrot z~inwestycji, przy uwzględnieniu akceptowalnego poziomu ryzyka. 
+Fundamentem tej teorii jest dywersyfikacja aktywów, która będzie również tematem przewodnim rozdziałów dotyczących zastosowania teorii grafów oraz obliczeń kwantowych w~optymalizacji portfela. 
+\todo[inline]{tutaj dopisać więcej info i dać cytowania}
+
+\section{Pojęcie dywersyfikacji portfela inwestycyjnego}
+
+Dywersyfikacja w~nawiązaniu do portfela inwestycyjnego oznacza taki dobór jego składników, aby pochodziły one z~różnych klas aktywów. 
+Praktyka ta ma na celu optymalizację pod kontem ryzyka - inwestycja w~zróżnicowane aktywa pozwala zapobiec nagłemu spadkowi wartości portfolio wywołanego losowymi zmianami na rynku.
+
+Ryzyko towarzyszące inwestycji w~papiery wartościowe można podzielić na dwie kategorie  - ryzyko systematyczne (zewnętrzne) i~ryzyko niesystematyczne (wewnętrzne). 
+Pierwsze z~nich jest poza kontrolą pojedynczego podmiotu dokonującego inwestycji.
+W~jego skład wchodzi m.in ryzyko stopy procentowej, czy ryzyko walutowe. 
+Ryzyko niesystematyczne natomiast związane jest z~aktywami w~które dany podmiot inwestuje. 
+W~miarę dodawania nowych papierów ryzyko to będzie maleć - w~idealnych warunkach zmaleje do zera i~ryzyko systematyczne pozostanie jedynym składnikiem ryzyka inwestycji.
+Oznacza to, że kluczowa dla nowoczesnej teorii portfela praktyka dywersyfikacji pozwala podmiotom zmniejszać ryzyko swoich inwestycji.
+
+\todo[inline]{sekcja nie moze byc taka krótka - może subsection ?? }
+
+\section{Dobór instrumentów}
+
+Samo dodawanie instrumentów na ogół nie wystarcza, by otrzymać odpowiednio zdywersyfikowany portfel.
+Istotne jest, aby zmienność tych instrumentów nie wykazywała zbyt dużej współzależności.
+W~przeciwnym wypadku może wystąpić sytuacja, w~której portfel co prawda zawiera w~sobie wiele papierów, jednak praktycznie (i.~e.~ ilościowo) można do pewnego stopnia traktować ten portfel tak, jakby w~istocie składał się tylko z~niewielkiej liczby aktywów.
+
+Aby tego uniknąć, potrzebna jest w~pierwszej kolejności miara, za pomocą której można ocenić tę współzależność. 
+W~niniejszej pracy wybrana została do tego celu wielkość statystyczna jaką jest korelacja, w~szczególności zaś współczynnik korelacji \textit{$r^2$ Pearsona}. 
+Zmieniającą się zaś wielkością dla instrumentu logarytm (dziesiętny) z~dziennych zwrotów.
+Matematycznie jest to wyrażone w~następujący sposób:
+\begin{equation}
+    R_t = \frac{S_t - S_{t-1}}{S_{t-1}}
+\end{equation}
+
+\begin{equation}
+    r_t  = \log(1 + R_t)  = \log(\frac{S_t}{S_{t-1}})
+\end{equation}
+
+We wzorach tych $t$ oznacza dany dzień, $t-1$ zaś -- dzień poprzedni.
+$R_t$ to dzienna stopa zwrotu.
+Na jego bazie obliczany jest logarytm z~dziennego zwrotu $r_t$ (dodanie 1~zapewnia wykonywalność działania logarytmowania).
+Użycie logarytmów w~praktyce inwestycyjnej ma tę m.~in.~ zaletę, że zapewnia addytywność zwrotów, co ma duże znaczenie np.~przy obliczeniach dotyczących szeregu operacji na przestrzeni czasu.
+Z~punktu widzenia problematyki pracy przekształcenie to nie ma znaczenia i~równie dobrze można by przeprowadzić wszystkie opisane w~dalszym ciągu działania przy użyciu $R_t$. 
+Aby jednak trzymać się jak najbliżej rzeczywistej ekonometrii giełdowej, postanowiono dokonać transformacji logarytmicznej na etapie obliczania dziennych zwrotów z~inwestycji.
+
+Konstrukcja optymalnie zdywersyfikowanego portfela opiera się zatem na takim doborze aktywów, aby korelacja pomiędzy zmiennościami żadnej ich pary nie przekraczała pewnego, preferencyjnie niskiego, progu wartości. 
+Nie tylko uchroni to portfel przed słabym \textit{performancem} pojedynczego papieru (dla współczynników korelacji od 0~do zadanego progu), ale nawet może zapewnić inwestycji lepszy rezultat, w~przypadku aktywów negatywnie skorelowanych.
+
+Próg nałożony na współczynnik korelacji jest w~tym modelu parametrem egzogenicznym.
+W~związku z~tym oprócz opracowania rozwiązania pozwalającego wygenerować zdywersyfikowany portfel istotne będzie zbadanie również jego wrażliwości na zmianę tego parametru.
+Ponadto należy mieć na uwadze, że sam dobór spółek nie kończy procesu konstrukcji portfela.
+Konieczne jest także znalezienie odpowiedniego zestawu wag dla każdego z~jego składników.
+
+\section{Optymalizacja pod kątem zwrotu i ryzyka}
+
+Optymalizacja jest to proces znajdowania minimalnej wartości zadanej w~problemie optymalizacyjnym funkcji, zwanej funkcją celu.
+W~przypadku portfela inwestycyjnego, który ma być optymalizowany pod kątem zwrotu i~ryzyka jako funkcję celu wybiera się często \textit{Sharpe ratio} - metrykę opisującą stosunek przeciętnego zwrotu powyżej stopy wolnej od ryzyka (ang. \textit{risk-free rate}) $r_p - r_f$ do całkowitego ryzyka portfela $\sigma_p$.
+Ryzyko to mierzone jest za pomocą odchylenia standardowego zwrotu powyżej $r_f$.
+\begin{equation}
+    sr = \frac{r_p - r_f}{\sigma_p}
+\end{equation}
+\textit{Sharpe ratio} jest wielkością pozwalającą porównać ze sobą dwa portfele inwestycyjne.
+Portfel o~wyższym wyniku będzie miał wyższy stosunek zwrotu do ryzyka, a~zatem będzie preferowaną inwestycją.
+Jednym z~założeń Markowitza jest, iż dywersyfikacja portfolio pozwala zmniejszać ryzyko bez poświęcania (przynajmniej w~tym samym stopniu) oczekiwanych zwrotów.
+
+Zatem gdy zadanie wyłonienia odpowiednio zdywersyfikowanych aktywów zostanie spełnione, docelowy model powinien znaleźć sposób na dobór wag w portfelu maksymalizujący \textit{Sharpe ratio} tego zestawu. 
+Ponieważ algorytmy optymalizacyjne rozwiązują problem minimalizacji, to funkcją celu w tym przypadku będzie $-1 * sr(\textbf{x})$, gdzie $\textbf{x}$ jest wektorem wag przypisanych papierom w portfelu.
+Uwaga ta nie dotyczy oczywiście podejścia optymalizacyjnego wykorzystującego prostą symulację - wygenerowania dużej ilości możliwych portfeli a następnie wybrania najlepszego.
+
+\section{Krytyka MPT}
+W nowoczesnej teorii portfela ryzyko jest scharakteryzowane przez wariancję zwrotów portfela. 
+Oznacza to, że dwa portfele o takiej samej wariancji i takim samym przeciętnym zwrocie będą oceniane tak samo, bez względu na ich wewnętrzną strukturę.
+Wariancja jednego z nich może wynikać z wielokrotnie odnoszonych, ale małych strat, drugiego - z rzadkich, ale wysokich.
+Dla inwestora lepszy byłby prawdopodobnie ten pierwszy, nie wynika to jednak z samej teorii.
+Zastrzeżenia można sformułować także w stosunku do \textit{Sharpe ratio}.
+Przyjmowanie dłuższego horyzonty czasowego może obniżyć zmienność portfela, sprawiając wrażenie jego lepszości, w porównaniu do innych.
+Ponadto, powiązanie ryzyka z odchyleniem standardowym ma ten sam efekt, co ogólnie w przypadku MPT.
+
+O ile pierwsza uwaga nie jest istotna z punktu widzenia pracy - optymalizacja portfela będzie opierać się na jednym, ustalonym z góry horyzoncie czasowym - o tyle nie da się odmówić słuszności drugiemu założeniu.
+Tym niemniej, nowoczesna teoria portfela wciąż jest powszechnie stosowaną koncepcją inwestycyjną, a także podstawą rozważań niniejszej pracy magisterskiej.
+
 
 \chapter{Dywersyfikacja portfolio w ujęciu teorii grafów}
-Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania zadania dywersyfikacji portfolio nie są jedynymi możliwymi. Stanowią raczej interesującą alternatywę dla tradycyjnych metod doboru spółek do portfela, jakimi są m.in. algorytmy klasteryzujące\footnote{\textit{https://www.sciencedirect.com/science/article/pii/S187705091730772X} (data dostępu: 5.11.2021)}, algorytm \textit{branch-and-bound}\footnote{\textit{https://scholarship.rice.edu/handle/1911/19140} (data dostępu: 5.11.2021)}, czy też algorytmy genetyczne\footnote{A. Kabundi \& , J, W Muteba Mwamba (2012). \textit{Applying a genetic algorithm to international diversification of equity portfolios: A South African investor perspective.} South African Journal of Economics. 80. 10.1111/j.1813-6982.2011.01288.x.}.
+Zaprezentowane w poniższym rozdziale sposoby patrzenia na, oraz rozwiązywania zadania dywersyfikacji portfolio nie są jedynymi możliwymi. Stanowią raczej interesującą alternatywę dla tradycyjnych metod doboru spółek do portfela, jakimi są m.in. algorytmy klasteryzujące\footnote{\textit{https://www.sciencedirect.com/science/article/pii/S187705091730772X} (data dostępu: 5.11.2021)}, algorytm \textit{branch-and-bound}\footnote{\textit{https://scholarship.rice.edu/handle/1911/19140} (data dostępu: 5.11.2021)}, czy też algorytmy genetyczne\footnote{A. Kabundi \& , J, W Muteba Mwamba (2012). \textit{Applying a genetic algorithm to international diversification of equity portfolios: A South African investor perspective.} South African Journal of Economics. 80. 10.1111/j.1813-6982.2011.01288.x.}. 
+Alternatywa ta o tyle warta jest zbadania, gdyż stwarza pole do zastosowania obecnie dostępnej technologii kwantowej optymalizacji. 
 
 \section{Wprowadzenie do teorii grafów}
+
+\textit{Teoria grafów} to dział matematyki zajmujący się opisem własności grafów. 
+Dział ten znajduje szerokie zastosowanie w~wielu dziedzinach, również poza matematyką. 
+
+Z~punktu widzenia naszej pracy wskazane zostanie zastosowanie teorii grafów do dywersyfikacji portfela inwestycyjnego.
+W~rozdziale tym wprowadzone zostaną podstawowe definicje i~twierdzenia wykorzystywane w~dalszej części pracy. 
+
+
+Teoria grafów jest narzędziem matematycznym które, szczególnie w~ostatnich latach, znalazło wiele pożytecznych zastosowań w szerokim i~różnorodnym gronie nauk. 
+Wyniki badań nad nią wykorzystywane są w dziedzinach pozornie tak odrębnych, jak np. inżynieria elektryczna i~lingwistyka. 
+W poniższej sekcji podane zostały definicje i twierdzenia istotne z punktu widzenia analiz przeprowadzonych w rozdziałach dotyczących dywersyfikacji portfela inwestycyjnego za pomocą metod grafowych.
+
+
+\subsection{Definicje matematyczne}
+
+Graf $\mathcal{G}$ to obiekt składający się ze skończonego zbioru \textbf{wierzchołków} $\mathcal{V} (\mathcal{G})$ oraz rodziny \textbf{krawędzi} $\mathcal{E}(\mathcal{G})$ \cite{}. 
+Krawędzie tworzą nieuporządkowane pary elementów ze zbioru $\mathcal{V} (\mathcal{G})$.
+Grafy najczęściej przedstawia się w~postaci:
+
+\begin{minted}{python}
+import networkx as nx
+import matplotlib.pyplot as plt
+
+edges: list =  [('a', 'b'), ('c', 'b'), ('b', 'd'), 
+
+('d', 'f'), ('d', 'e'), ('e', 'f'), ('e', 'g'), ('f', 'g'), 
+
+('g', 'h'), ('h', 'i'), ('h', 'j'), ('j', 'k'), ('j', 'l'), 
+
+('j', 'm'), ('l', 'm')]
+
+graph = nx.Graph()
+graph.add_edges_from(edges)
+
+nx.draw(graph, with_labels=True)
+plt.show()
+
+\end{minted}
+\begin{figure}[h]
+\centering 
+\caption{Graficzna reprezentacja grafu} 
+\label{rys3.1} 
+\vskip0.1cm
+\includegraphics[]{Example_Graph.png}
+\centerline{\scriptsize Źródło: Opracowanie własne.}
+\end{figure}
+
+
+W~ogólności, dowolne dwa wierzchołki grafu mogą być połączone więcej niż jedną krawędzią (stąd termin \textbf{rodzina} krawędzi w~definicji).
+Ponadto krawędź może łączyć wierzchołek sam ze sobą. 
+Niniejsza praca ogranicza się jedynie do tzw. grafów prostych, tj. takich, dla których dane dwa wierzchołki może łączyć co najwyżej jedna krawędź, zaś każda krawędź łączy dokładnie dwa wierzchołki (tak jak na powyższym rysunku \ref{rys3.1}).
+
+\subsection{Wierzchołki niezależne oraz problem \textit{Maximum Independent Set}}
+
+Dwa wierzchołki grafu nazywamy \textbf{niezależnymi}, wtedy i~tylko wtedy, gdy nie są one połączone krawędzią.
+Zbiór którego elementami są wierzchołki grafu, spełniające warunek, że każde dwa z nich są wzajemnie niezależne, nazywamy \textbf{zbiorem niezależnym} (ang. \textit{independent set})\cite{}.
+
+Dany zbiór niezależny $\mathcal{S}$ dla grafu $\mathcal{G}$ jest zbiorem \textit{maksymalnym} wtedy i tylko wtedy, gdy nie istnieje w $\mathcal{G}$ żaden zbiór $\mathcal{S}^*$ taki, że $\mathcal{S}^*$ ma więcej elementów niż $\mathcal{S}$.
+Liczbę elementów zbioru $\mathcal{S}$ nazywamy \textbf{numerem niezależności} (ang. \textit{independence number}) grafu $\mathcal{G}$.
+
+Warto zauważyć, że z definicji tej nie wynika w żaden sposób unikatowość maksymalnego zbioru niezależnego. 
+Istotnie, bardzo często, szczególnie w grafach mających wiele wierzchołków, istnieje kilka maksymalnych zbiorów niezależnych, których nie wszystkie elementy są wzajemnie identyczne. 
+Poniżej zaprezentowano jeden z możliwych maksymalnych zbiorów niezależnych dla przedstawionego wyżej grafu (na niebiesko zaznaczone zostały wierzchołki należące do tego zbioru, na czerwono - pozostałe).
+
+\begin{figure}[h]
+\centering 
+\caption{Maksymalny zbiór niezależny} 
+\label{rys3.2} 
+\vskip0.1cm
+\includegraphics[]{Example_MIS.png}
+\centerline{\scriptsize Źródło: Opracowanie własne.}
+\end{figure}
+
+Problem \textit{Maximum Independent Set} (czyli problem maksymalnego zbioru niezależnego) jest zadaniem optymalizacyjnym, którego celem jest aby dla zadanego dowolnie grafu znaleźć zbiór jego wierzchołków będący maksymalnym zbiorem niezależnym. 
+Jest to problem NP-trudny, a~zatem nie posiadający dokładnego, analitycznego rozwiązania. 
+Dokonując takiej optymalizacji, szczególnie dla większych grafów, można napotkać rozwiązania suboptymalne - będące zbiorami niezależnymi, lecz nie o~największej możliwej liczebności.
+
+
+\subsection{Grafy spójne, niespójne i zerowe}
+Grafy spójne są to grafy, w których dla każdych dwóch jego wierzchołków istnieje sekwencja krawędzi i wierzchołków (ścieżka), która łączy owa=e dwa wierzchołki. 
+Grafy niespójne zawierają w sobie pary wierzchołków, których w ten sposób połączyć się nie da. Każdy graf niespójny można rozłożyć na grafy spójne.
+
+Szczególnym rodzajem grafów są także grafy zerowe - takie, które zawierają pewną ilość wierzchołków (przynajmniej 1) lecz nie zawierają żadnej krawędzi (wizualnie jest to po prostu zbiór niepołączonych wzajemnie kropek).
+
+\subsection{Grafy rzadkie i gęste}
 
 \section{Dywersyfikacja jako problem \textit{MIS}}
 
 \section{Klasyczne rozwiązania problemu \textit{MIS}}
 
-\chapter{Elementy teorii kwantów}
+\chapter{Wprowadzenie do obliczeń kwantowych}
 
-Quantum Computing (QC) to stosunkowo młody obszar badań naukowych\footnote{P. Benioff, \textit{The computer as a physical system: A microscopic quantum mechanical Hamiltonian model of computers as represented by Turing machines}, Journal of Statistical Physics. 22 (5): 563–591, 1980.}, zajmujący się wykorzystaniem maszyn cyfrowych, które przetwarzają informacje używając tzw. \textit{qubitów}. Aby zrozumieć potencjał tych urządzeń dla współczesnej informatyki, niezbędne jest wprowadzenie pojęć \textit{superpozycji} oraz \textit{splątania kwantowego} - tematy te zostaną poruszone w dalszej części rozdziału. Ogólnie jednak przewaga komputerów kwantowych zasadza się w głównej mierze na dwóch aspektach. Pierwszy z nich polega na tym, że zjawiska kwantowe pozwalają takiemu komputerowi przeprowadzać wiele różnych obliczeń \textit{jednocześnie} na tej samej porcji pamięci. Druga zaś kwestia dotyczy szerokiej klasy problemów, które nie mogą być rozwiązane na komputerze klasycznym (lub przynajmniej nie w rozsądnym przedziale czasu), za to posiadają efektywną i naturalną implementacje na komputerach kwantowych\footnote{M.in symulowanie układów cząstek w nanoskali, znajdujące zastosowania w chemii oraz nanotechnologii.}. Niniejsza praca skupiać się będzie tylko i wyłącznie na zbadaniu pierwszego z wymienionych aspektów.
+Obliczenia Kwantowe (QC ang. \textit{Quantum Computing}) to stosunkowo młody obszar badań naukowych\footnote{P. Benioff, \textit{The computer as a~physical system: A~microscopic quantum mechanical Hamiltonian model of computers as represented by Turing machines}, Journal of Statistical Physics. 22 (5): 563–591, 1980.}, \todo[inline]{to powinno znalezc się w zbiorowej literaturze} zajmujący się wykorzystaniem efektów kwantowych, do przetwarzania informacji przy pomocy tzw. \textit{qubitów}. 
+Aby zrozumieć potencjał tych urządzeń dla współczesnej nauki, niezbędne jest wprowadzenie pojęć \textit{superpozycji} oraz \textit{splątania kwantowego} - tematy te zostaną poruszone w~dalszej części rozdziału.
+Ogólnie, przewaga komputerów kwantowych nad ich klasycznymi odpowiednikami zasadza się w~głównej mierze na dwóch aspektach. 
+Pierwszy z~nich polega na tym, że zjawiska kwantowe pozwalają przeprowadzać wiele różnych obliczeń \textit{jednocześnie} na tej samej porcji pamięci. 
+Druga zaś kwestia dotyczy szerokiej klasy problemów, które nie mogą być rozwiązane na komputerze klasycznym (przynajmniej nie w~rozsądnym horyzonie czasowym), za to posiadają efektywną i~naturalną implementacje na komputerach kwantowych\footnote{M.in symulowanie układów cząstek w~nanoskali, znajdujące zastosowania w~chemii oraz nanotechnologii.}. 
+Niniejsza praca skupiać się będzie tylko i~wyłącznie na zbadaniu pierwszego z~wymienionych aspektów.
 
-W następnej sekcji poruszony zostanie także temat ograniczeń, jakie prawa fizyki nakładają na klasyczne maszyny cyfrowe, a w szczególności na skalowalność ich mocy obliczeniowej. Istnienie tych restrykcji dostarcza dodatkowych powodów, dla których badania w obszarze kwantowej informatyki stanowić będą jeden z kluczowych zagadnień w rozwoju nowoczesnej technologii.
-
+W~następnej sekcji poruszony zostanie także temat ograniczeń, jakie prawa fizyki nakładają na klasyczne maszyny cyfrowe, a~w~szczególności na skalowalność ich mocy obliczeniowej.
+Istnienie tych restrykcji dostarcza dodatkowych powodów, dla których badania w~obszarze kwantowej informatyki stanowić będą jedno z~kluczowych zagadnień w~rozwoju nowoczesnej technologii.\todo[inline]{tutaj przekierowałbym to jeszcze na jakieś elementy obliczeniowe dla dużych danych i modeli ML czy DL}
+W szczególności, wyniki rozwoju tej dziedziny mogą znaleźć zastosowanie w analizie dużych zbiorów danych oraz budowie modeli uczenia maszynowego.
+Przykładem dla pierwszego aspektu jest tzw. \textit{algorytm Groover'a} - kwantowy algorytm do przeszukiwania zbiorów danych, osiągający lepszą niż najlepszy klasyczny odpowiednik złożoność obliczeniową - $\mathcal{O}(\sqrt{n})$ vs $\mathcal{O}(n)$ dla algorytmów klasycznych.
+W drugim wypadku wskazać można na powstałą już i prężnie rozwijającą się dziedzinę \textit{kwantowego uczenia maszynowego} oraz \textit{kwantowego uczenia głębokiego}. 
+Tu przykładem (nie jedynym oczywiście - wszak nawet temat niniejszej pracy, jakim jest optymalizacja jest kluczowym komponentem sztucznej inteligencji!) może być łatwość, efektywność oraz naturalność zastosowania komputerów kwantowych do losowania z trudnych (dla komputerów klasycznych) rozkładów prawdopodobieństwa, m.in z \textit{rozkładu Boltzmanna}.
 
 
 \section{Granice klasycznej informatyki}
 
 \subsection{Tranzystory i elektronika}
-Podstawą działania nie tylko komputerów, ale w zasadzie niemal całej współczesnej elektroniki są tranzystory – mikroskopijne „przełączniki”, które, w zależności od stanu w jakim się znajdują, mogą albo przepuszczać, albo zatrzymywać elektrony płynące przez obwody elektryczne. Te dwa stany koduje się jako 0 (przełącznik nie przepuszczający elektronów) oraz 1 (przełącznik przepuszczający elektrony). Takie podejście stanowi bazę kodu binarnego, na którym oparte jest działanie komputerów.
-Na bazie tranzystorów konstruowane są bramki logiczne, które z kolei pozwalają na przeprowadzanie podstawowych operacji arytmetycznych, wykonywanych na wyżej wspomnianym kodzie binarnym. Poprzez składanie ze sobą wielu różnych tego typu operacji otrzymujemy pożądane zachowania maszyn elektronicznych – obliczenia naukowe, grafikę komputerową, komunikację internetową etc.
-	Celem zwiększenia mocy obliczeniowych maszyny elektronicznej, konieczne jest zwiększenie liczby tranzystorów, które zawiera w sobie ta maszyna. Istotne jest jednak, aby nie wpłynęło to zbytnio na rozmiar urządzenia – powinno być najmocniejsze jak to tylko możliwe, będąc przy tym najmniejsze jak to tylko możliwe. Z tego względu na przestrzeni lat następował konsekwentny spadek rozmiaru tranzystora (patrz. Tabela 1).
+Podstawą działania nie tylko komputerów, ale w zasadzie niemal całej współczesnej elektroniki są tranzystory – mikroskopijne ,,przełączniki'', które, w~zależności od stanu w~jakim się znajdują, mogą albo przepuszczać, albo zatrzymywać elektrony płynące przez obwody elektryczne.
+Te dwa stany koduje się jako 0 (przełącznik nie przepuszczający elektronów) oraz 1 (przełącznik przepuszczający elektrony). 
+Takie podejście stanowi bazę kodu binarnego, na którym oparte jest działanie komputerów.
+Na bazie tranzystorów konstruowane są bramki logiczne, które z~kolei pozwalają na przeprowadzanie podstawowych operacji arytmetycznych, wykonywanych na wyżej wspomnianym kodzie binarnym \citep{} \todo[inline]{jakas literatura ? Ada pierwsze komutery jako maszyny, logika etc - Przykład może jakiś ? }.
+Poprzez składanie ze sobą wielu różnych tego typu operacji otrzymujemy pożądane zachowania maszyn elektronicznych – obliczenia naukowe, grafikę komputerową, komunikację internetową etc.
+W~celu zwiększenia mocy obliczeniowych maszyny elektronicznej, konieczne jest zwiększenie liczby tranzystorów, zawartych w~danej maszynie.
+Istotne jest jednak, aby nie wpłynęło to zbytnio na rozmiar urządzenia – powinno być najmocniejsze jak to tylko możliwe, będąc przy tym najmniejsze jak to tylko możliwe. 
+Z~tego względu na przestrzeni lat następował konsekwentny spadek rozmiaru tranzystora (patrz. rysunek \ref{graph-transis}).
+
+\begin{figure}[H] \label{graph-transis}
+\includegraphics{transistors.png}
+\caption{Wykres ilustrujący zmianę rozmiaru tranzystorów na przestrzeni lat}
+\end{figure}
 	
 
 
-\begin{table}[h]
-\centering
-\caption{Tranzystory na przestrzeni lat}
-\label{tab:przyklad}
-\footnotesize
-\begin{tabular}{|l|r|}
-\hline
-Rok & Rozmiar [nm]\\
-\hline
-1971 & 10000  \\
-1974 & 6000  \\
-1977 & 3000 \\
-1981 & 1500 \\
-1984 & 1000 \\
-1987 & 800 \\
-1990 & 600 \\
-1993 & 350 \\
-1996 & 250 \\
-1999 & 180 \\
-2001 & 130 \\
-2003 & 90 \\
-2005 & 65 \\
-2007 & 45 \\
-2009 & 32 \\
-2012 & 22 \\
-2014 & 14 \\
-2016 & 10 \\
-2018 & 7 \\
-2020 & 5 \\
 
-\hline
-\end{tabular} 
-\end{table}
+%\subsection{Tunelowanie kwantowe}
 
-\subsection{Tunelowanie kwantowe}
-
-Ten postępujący wzrost mocy obliczeniowej ma jednak granicę, wyznaczoną przez prawa fizyki kwantowej. W miarę jak tranzystory kurczą się coraz bardziej do rozmiarów porównywalnych z rozmiarami atomów, coraz istotniejszą rolę gra zjawisko \textit{tunelowania kwantowego}. Z pewnym prawdopodobieństwem, które rośnie odwrotnie do rozmiarów „przełącznika”, elektron jest w stanie pokonać barierę potencjału, nawet przy braku odpowiedniej ilości energii, której wymaga do tego fizyka klasyczna. Innymi słowy, istnieje zawsze niezerowe prawdopodobieństwo, że pomimo iż tranzystor będzie w stanie 0, to elektrony i tak będą mogły się przez niego przedostać . Oczywistą konsekwencją tego zjawiska jest niepoprawne działanie elektroniki – wyniki pracy maszyn nabrałyby charakteru probabilistycznego, a zatem nie można by było na nich polegać.
+Postępujący wzrost mocy obliczeniowej ma jednak granicę, wyznaczoną przez prawa fizyki kwantowej. \todo[inline]{czy juz osiągnięty ?} 
+W~miarę jak tranzystory kurczą się coraz bardziej do rozmiarów porównywalnych z rozmiarami atomów, coraz istotniejszą rolę zaczynają odgrywać zjawiska kwantowe. 
+Jednym z~podstawowych zjawisk mających duże znaczenie dla tak małych obiektów to zjawisko \textit{tunelowania kwantowego}. 
+Zjawisko to nie jest intuicyjne klasycznie.
+Polega ono na tym, iż z~pewnym prawdopodobieństwem, które rośnie odwrotnie do rozmiarów „przełącznika”, elektron jest w~stanie pokonać barierę potencjału, nawet przy braku odpowiedniej ilości energii.
+Innymi słowy, istnieje zawsze niezerowe prawdopodobieństwo, że pomimo iż tranzystor będzie w~stanie 0, to elektrony i~tak będą mogły się przez niego przedostać.
+Oczywistą konsekwencją tego zjawiska jest niepoprawne działanie elektroniki – wyniki pracy maszyn nabrałyby charakteru probabilistycznego, a~zatem nie można by było na nich polegać.
 	
 Prawdopodobieństwo zajścia kwantowego tunelowania zadane jest, przy pewnych założeniach, przez wzór\footnote{V. Silva, \textit{Practical Quantum Computing For Developers}, Apress 2018} :
 \begin{equation}
 e^{-\frac{4a\pi}{h}\sqrt{2m(V - E)}}
 \end{equation}
 gdzie: \\
-\indent a – grubość bariery (w naszym przypadku – rozmiar tranzystora) \\
+\indent a – grubość bariery (w~naszym przypadku – rozmiar tranzystora) \\
 \indent h – stała Planka ($ \approx 6.626 \cdots 10^{-34}  kg  \cdot m^2 / s$) \\
 \indent m – masa cząstki (dla elektronu $m \approx 9,109 3837015 \cdot 10^{-31} kg$) \\
 \indent V – energia potencjalna bariery \\ 
 \indent E – energia kinetyczna cząsteczki ( dla zjawiska tunelowania kwantowego E < V) \\
 
-Podstawiając za wartość energii elektronu 4.5 eV, a za wartość energii potencjalnej bariery 5 eV otrzymamy prawdopodobieństwo przejścia elektronu przez barierę o rozmiarze 5nm wynoszące około $ 2 \cdot 10^{-16} $. To bardzo mała wartość, jednak jeśli zmniejszymy rozmiar bariery do 0.5 nm (500 pm) – prawdopodobieństwo to przekroczy już 0.25 – wartość zdecydowanie nieakceptowalna z punktu widzenia praktycznych zastosowań. Jest więc wyraźnie widoczne, że już w niedalekiej przyszłości przestanie być możliwe zwiększanie mocy obliczeniowej komputerów w sposób, w jaki odbywa się to obecnie. Pojawia się zatem potrzeba zbadania alternatywnych metod, które pozwoliłyby ulepszać pracę urządzeń elektrycznych, bez nadwątlania rzetelności zwracanych przez nie rezultatów.
-
+Podstawiając za wartość energii elektronu $4.5 eV$, a~za wartość energii potencjalnej bariery $5 eV$ otrzymamy prawdopodobieństwo przejścia elektronu przez barierę o~rozmiarze $5 nm$ wynoszące około $ 2 \cdot 10^{-16} $. 
+To bardzo mała wartość, jednak jeśli zmniejszymy rozmiar bariery do $0.5 nm$ ($500 pm$) – prawdopodobieństwo to przekroczy już 0.25 – wartość zdecydowanie nieakceptowalna z~punktu widzenia praktycznych zastosowań. 
+Jest więc wyraźnie widoczne, że już w~niedalekiej przyszłości przestanie być możliwe zwiększanie mocy obliczeniowej komputerów w~sposób, w~jaki odbywa się to obecnie. 
+Pojawia się zatem potrzeba zbadania alternatywnych metod, które pozwoliłyby ulepszać pracę urządzeń elektrycznych, bez nadwątlania rzetelności zwracanych przez nie rezultatów.
 
 \section{Algebra liniowa jako język teorii kwantów}
 
@@ -218,23 +405,42 @@ Przestrzeń liniowa $\mathbb{V}$ jest do zbiór obiektów (\textbf{a}, \textbf{b
     \item wyniki tych działań również są elementami tej przestrzeni, i.e. $\textbf{a} + \textbf{b} \in \mathbb{V}$ oraz $\alpha\textbf{a} \in \mathbb{V}$ (przestrzeń jest zamknięta ze względu na te działania) \newline
     \item mnożenie elementów przestrzeni przez skalar jest:
     \begin{itemize}
-        \item rozdzielne względem dodawania elementów: \newline
-         $\alpha(\textbf{a} + \textbf{b}) = \alpha\textbf{a} + \alpha\textbf{b}$
-         \item rozdzielne względem dodawania skalarów: \newline
-         $(\alpha + \beta)\textbf{a} = \alpha\textbf{a} + \beta\textbf{a}$
-         \item łączne: \newline
-         $\alpha(\beta{b}\textbf{a}) = \alpha\beta\textbf{a}$ \newline
+        \item rozdzielne względem dodawania elementów:
+        \begin{equation}
+         \alpha(\textbf{a} + \textbf{b}) = \alpha\textbf{a} + \alpha\textbf{b}
+         \end{equation}
+         \item rozdzielne względem dodawania skalarów:
+         \begin{equation}
+         (\alpha + \beta)\textbf{a} = \alpha\textbf{a} + \beta\textbf{a}
+         \end{equation}
+         \item łączne:
+         \begin{equation}
+         \alpha(\beta\textbf{a}) = \alpha\beta\textbf{a}
+         \end{equation}
          
     \end{itemize}
     \item dodawanie elementów przestrzeni jest:
     \begin{itemize}
-        \item przemienne: \newline
+        \item przemienne:
+        \begin{equation}
         \textbf{a} + \textbf{b} = \textbf{b} + \textbf{a}
-        \item łączne: \newline
-        \textbf{a} + (\textbf{b} + \textbf{c}) = (\textbf{a} + \textbf{b}) + \textbf{c} \newline
+         \end{equation}
+        \item łączne:
+        \begin{equation}
+        \textbf{a} + (\textbf{b} + \textbf{c}) = (\textbf{a} + \textbf{b}) + \textbf{c}
+        \end{equation}
     \end{itemize}
-    \item istnieje element $\textbf{0}\in\mathbb{V}$ taki, że \newline $\forall(\textbf{a}\in\mathbb{V})$  $\textbf{a} + \textbf{0} = \textbf{a}$ \newline
-    \item dla każdego elementu \textbf{a} istnieje element przeciwny \textbf{-a} taki, że \newline $\forall(\textbf{a}\in\mathbb{V})$  $\textbf{a} + \textbf{-a} = \textbf{0}$ \newline
+    \item istnieje element $\textbf{0}\in\mathbb{V}$ taki, że
+    \begin{equation}
+    \forall(\textbf{a}\in\mathbb{V}) \;\;\;\;
+    \textbf{a} + \textbf{0} = \textbf{a}
+     \end{equation}
+    \item dla każdego elementu \textbf{a} istnieje element przeciwny
+    \textbf{-a} taki, że
+    \begin{equation}
+    \forall(\textbf{a}\in\mathbb{V}) \;\;\;\;
+    \textbf{a} + \textbf{-a} = \textbf{0}
+    \end{equation}
 \end{itemize}
 
 Pewnym szczególnie istotnym z punktu widzenia niniejszej pracy zbiorem przestrzeni liniowych, będą takie, dla których zdefiniowano dodatkowo \textit{iloczyn skalarny}.\newline
@@ -273,78 +479,79 @@ $\ket{V} = \begin{bmatrix}
 Wektor \textit{bra} z przestrzeni $\mathcal{H}^\ast$ otrzymujemy poprzez transpozycję oraz sprzężenie zespolone wektora \textit{ket} z przestrzeni $\mathcal{H}$.\newline
 
 Iloczyn skalarny dla przestrzeni Hilberta jest zdefiniowany, jako:
-\begin{center}
-$\bra{W}\ket{V} = \sum_{i=1}^{n} w^\ast \cdot v$
-\end{center}
+\begin{equation}
+\bra{W}\ket{V} = \sum_{i=1}^{n} w^\ast \cdot v
+\end{equation}
 Analogicznie definiujemy iloczyn skalarny w przestrzeni dualnej\footnote{Istotnie, także dalsze stwierdzenia na temat przestrzeni Hilberta będą prawdziwe dla przestrzeni dualnej, ze względu na izomorfizm tych przestrzeni.}.\newline
 
 Widać więc, że dla każdego $\ket{A}\in\mathcal{H}$, długość wektora $|\ket{A}|$ równa jest:
-\begin{center}
-    $|\ket{A}| = \sqrt{\braket{A}}$
-\end{center}
+\begin{equation}
+    |\ket{A}| = \sqrt{\braket{A}}
+\end{equation}
 
 Bazą ortonormalną w n-wymiarowej przestrzeni Hilberta nazywamy każdy zbiór elementów tej przestrzeni $\{\ket{1}, \ket{2}, \hdots, \ket{n}\}$, dla których:
-\begin{center}
-    $\bra{i}\ket{j} = \delta_{ij}$
-\end{center}
+\begin{equation}
+    \bra{i}\ket{j} = \delta_{ij}
+\end{equation}
 gdzie $\delta_{ij}$ jest \textit{deltą Kroneckera}\footnote{Dla wartości i, j \textit{delta Kroneckera} przyjmuje wartość 1, gdy $i = j$, oraz 0 - w przeciwnym przypadku}.
 
 Każdy wektor w przestrzeni Hilberta można zapisać jako kombinację liniową elementów bazy ortonormalnej tej przestrzeni:
-\begin{center}
-    $\forall_{\ket{V}\in\mathcal{H}}\ket{V} = \sum_{i=1}^{n}k_{i}\ket{i}$
-\end{center}
+\begin{equation}
+    \forall_{\ket{V}\in\mathcal{H}}\ket{V} = \sum_{i=1}^{n}k_{i}\ket{i}
+\end{equation}
 gdzie $k_{i}$ jest liczbą (w ogólności zespoloną).
 
 \subsection{Operatory liniowe}
 Przez operator liniowy określane będzie każde przekształcenie $\Omega$, które dowolnemu wektorowi $\ket{V} \in \mathcal{H}$ przyporządkowuje wektor $\ket{V'}$, który również należy do tej samej przestrzeni Hilberta. Takie przekształcenie spełnia ponadto warunki liniowości:
-\begin{center}
-    $\Omega\textit{a}\ket{V} = \textit{a}\Omega\ket{V}$ \\
-    $\Omega(\textit{a}\ket{V} + \textit{b}\ket{W}) = \textit{a}\Omega\ket{V} + \textit{b}\Omega\ket{W}$ \\
-    $\bra{V}\textit{a}\Omega = \bra{V}\Omega\textit{a}$ \\
-    $(\bra{V}\textit{a} + \bra{W}\textit{b})\Omega = \textit{a}\bra{V}\Omega + \textit{b}\bra{W}\Omega$
-\end{center}
+\begin{eqnarray}
+    \Omega\textit{a}\ket{V} &=& \textit{a}\Omega\ket{V} \\
+    \Omega(\textit{a}\ket{V} + \textit{b}\ket{W}) &=& \textit{a}\Omega\ket{V} + \textit{b}\Omega\ket{W} \\
+    \bra{V}\textit{a}\Omega &=& \bra{V}\Omega\textit{a} \\
+    (\bra{V}\textit{a} + \bra{W}\textit{b})\Omega &=& \textit{a}\bra{V}\Omega + \textit{b}\bra{W}\Omega
+\end{eqnarray}
 
 Operator liniowy w n-wymiarowej przestrzeni Hilberta można przedstawić jako macierz o rozmiarach $n\times n$. Odpowiednie elementy macierzowe operatora można poznać, analizując w jaki sposób działa on na wektory bazowe. Na przykład, operator $R(\dfrac{1}{2}\pi\textbf{i})$ (obrót o kąt prosty wokół wektora jednostkowego \textbf{i}) działa następująco:
-\begin{center}
-    $R(\dfrac{1}{2}\pi\textbf{i})\ket{1} = \ket{1}$ \\
-    $R(\dfrac{1}{2}\pi\textbf{i})\ket{2} = \ket{3}$ \\
-    $R(\dfrac{1}{2}\pi\textbf{i})\ket{3} = -\ket{2}$
-\end{center}
+\begin{eqnarray}
+    R\,(\dfrac{1}{2}\pi\textbf{i})\ket{1} &=& \ket{1} \\
+    R\,(\dfrac{1}{2}\pi\textbf{i})\ket{2} &=& \ket{3} \\
+    R\,(\dfrac{1}{2}\pi\textbf{i})\ket{3} &=& -\ket{2}
+\end{eqnarray}
 
 Stąd wynika, że
-\begin{center}
-    $R(\dfrac{1}{2}\pi\textbf{i}) = \begin{bmatrix}
+\begin{equation}
+R\,(\dfrac{1}{2}\pi\textbf{i}) = \begin{bmatrix}
 1 & 0 & 0\\
 0 & 0 & -1\\
 0 & 1 & 0
-\end{bmatrix}$
-\end{center}
+\end{bmatrix}
+\end{equation}
 
 Bardzo ważne w mechanice kwantowej są \textit{operatory sprzężone}. Ich istotność polega na tym, że jeśli dla jakiegoś równania w którym obecne są operatory liniowe konieczne jest znalezienie równania sprzężonego, to w tymże sprzężonym do wyjściowego równaniu oryginalne operatory zastępowane są właśnie swoimi sprzężonymi odpowiednikami. Dla przykładu, równaniem sprzężonym do równania
-\begin{center}
-    $\Omega\ket{V} = \alpha\ket{V}$
-\end{center}
+\begin{equation}
+    \Omega\ket{V} = \alpha\ket{V}
+\end{equation}
 będzie równanie
-\begin{center}
-    $\bra{V}\Omega^\dagger = \bra{V}\alpha^*$
-\end{center}
-Warto zwrócić również uwagę na pewną ogólną regułę, która wyłania się z tego prostego przykładu. Aby otrzymać równianie sprzężone, należy odwrócić kolejność wszystkich czynników, zamienić operatory na operatory sprzężone, a wektory ket (bra) na wektory bra (ket).
+\begin{equation}
+    \bra{V}\Omega^\dagger = \bra{V}\alpha^*
+\end{equation}
+Gdzie  $\Omega^\dagger$ (\textit{Omega dagger}) jest operatorem sprzężonym do operatora $\Omega$.
+Warto zwrócić również uwagę na pewną ogólną regułę, która wyłania się z~tego prostego przykładu. 
+Aby otrzymać równianie sprzężone, należy odwrócić kolejność wszystkich czynników, zamienić operatory na operatory sprzężone, a~wektory ket (bra) na wektory bra (ket).
 
-Operator sprzężony otrzymuje się poprzez transpozycję, a następnie sprzężenie zespolone wyjściowego operatora. Jeśli przez $\Omega_{ji}$ oznaczony zostanie element w j-tym rzędzie i i-tej kolumnie operatora $\Omega$, to można zapisać:
-\begin{center}
-    $\Omega^\dagger_{ij} = \Omega^*_{ji}$
-\end{center}
-
+Operator sprzężony otrzymuje się poprzez transpozycję, a następnie sprzężenie zespolone wyjściowego operatora. Jeśli przez $\Omega_{ji}$ oznaczony zostanie element w j-tym rzędzie i i-tej kolumnie operatora $\Omega$, to można zapisać: 
+\begin{equation}
+    \Omega^\dagger_{ij} = \Omega^*_{ji}
+\end{equation}
 Jeśli zachodzi tożsamość:
-\begin{center}
-    $\Omega^\dagger = \Omega$
-\end{center}
+\begin{equation}
+    \Omega^\dagger = \Omega
+\end{equation}
 to operator $\Omega$ nazywamy \textit{operatorem hermitowskim}.
 ~\\
 Jeśli zachodzi natomiast:
-\begin{center}
-    $\Omega^\dagger\Omega = \textit{I}$
-\end{center}
+\begin{equation}
+    \Omega^\dagger\Omega = \textit{I}
+\end{equation}
 to operator $\Omega$ nazywamy \textit{operatorem unitarnym}.
 ~\\
 
@@ -360,19 +567,28 @@ Przed omówieniem tych zjawisk konieczne jest jednak wyjaśnienie najpierw poję
 
 Podstawową jednostką danych w klasycznej informatyce jest bit. Fizyczną realizacją bitu jest każdy układ, który może w danej chwili znajdować się w jednym z dwóch stanów. W konwencjonalnych komputerach rolę bitów pełnią tranzystory - mogą one znajdować się w stanie niskiego (kodowanego jako 0) lub wysokiego (kodowanego jako 1) napięcia elektrycznego.
 
-W komputerach kwantowych analogiczną do bitu rolę pełnią \textit{kwantowe bity} (\textit{quantum bits}) - w skrócie \textit{qubity}. Ich fizyczną realizacją również są układy mogące przyjmować jeden z dwóch różnych stanów, nazywanych stanami bazowymi. Przykładem tego jest spin elektronu, który przyjmuje jedną z dwóch wartości (spin "w górę" ~albo spin "w dół"\footnote{Spin jest to wielkość fizyczna określająca moment pędu cząstki, który wynika z jej kwantowej natury, a nie jak w fizyce klasycznej z ruchu obrotowego.}). To co je odróżnia, a co jednocześnie przesądza o ich niezwykłej użyteczności w teorii informacji, jest fakt, że stan \textit{qubitu} może być także dowolną \textit{kombinacją liniową} jego stanów bazowych.
+W komputerach kwantowych analogiczną do bitu rolę pełnią \textit{kwantowe bity} (\textit{quantum bits}) - w skrócie \textit{qubity}. Ich fizyczną realizacją również są układy mogące przyjmować jeden z dwóch różnych stanów, nazywanych stanami bazowymi. Przykładem tego jest spin elektronu, który przyjmuje jedną z dwóch wartości (spin "w górę" ~albo spin "w dół"\footnote{Spin jest to wielkość fizyczna określająca moment pędu cząstki, który wynika z jej kwantowej natury, a nie jak w fizyce klasycznej z ruchu obrotowego.}). To co je odróżnia, a co jednocześnie przesądza o ich niezwykłej użyteczności w teorii informacji, jest fakt, że stan \textit{qubitu} może być także \textit{kombinacją liniową} jego stanów bazowych.
 
 W języku algebry liniowej oznacza to, że kwantowy bit można przedstawić, jako wektor w 2-wymiarowej przestrzeni Hilberta, a stany bazowe są wektorami bazy ortonormalnej tejże przestrzeni.
-\begin{center}
-    $\mathcal{H} \ni \ket{\textit{qubit}} = \alpha\ket{0} + \beta\ket{1}$
-\end{center}
+\begin{equation}
+    \mathcal{H} \ni \ket{\textit{qubit}} = \alpha\ket{0} + \beta\ket{1}
+\end{equation}
 gdzie $\alpha, \beta \in \mathbb{Z}$.
 
 Powyższe równianie interpretuje się w następujący sposób: \textbf{Stan kwantowego bitu}, wyrażony jako wektor w (2-wymiarowej) przestrzeni Hilberta, jest kombinacją liniową \textbf{stanu bazowego} $\ket{1}$ oraz \textbf{stanu bazowego} $\ket{2}$.
 
+Współczynniki tej kombinacji liniowej nie są zupełnie dowolne. Stan kwantowy oprócz bycia wektorem w przestrzeni Hilberta, musi być w szczególności wektorem jednostkowym w tej przestrzeni. Jeśli zatem wektor $\ket{V} = \alpha\ket{0} + \beta\ket{1}$ reprezentuje stan kwantowy, to musi być:
+\begin{equation}
+    \braket{V} = 1
+\end{equation}
+    skąd wynika:\\
+\begin{equation}
+    |\alpha|^2 + |\beta|^2 = 1
+\end{equation}
+
 \subsection{Superpozycja stanów kwantowych}
 
-Opisane powyżej algebraiczne wyrażenie stanu \textit{qubitu} jest czymś więcej, niż tylko zapisem matematycznym. Istotnie, fizyczna realizacja kwantowego bitu może się znajdować w stanie \textit{superpozycji kwantowej} - być jednocześnie w obu stanach bazowych. Elektron może mieć spin \textit{jednocześnie} "w górę" i "w dół". Jednakowoż, w momencie pomiaru spinu elektronu, eksperyment wskażę dokładnie jedną z tych dwóch wartości - nic pomiędzy. Wykonawszy ten eksperyment na dużej ilości elektronów otrzyma się pewną ilość wyników "góra" i pewną ilość "dół". W szczególności, dla stanu elektronu opisanego kombinacją liniową z poprzedniego podrozdziału, $|\alpha|^2$ elektronów będzie miało spin "w górę", a $|\beta|^2$ elektronów - "w dół". Współczynniki $\alpha$ oraz $\beta$ przy stanach bazowych interpretuje się jako amplitudy prawdopodobieństwa, natomiast kwadraty ich modułów - jako prawdopodobieństwa, że w momencie pomiaru stan \textit{qubitu} dozna \textit{kolapsu} do danego stanu bazowego.
+Opisane powyżej algebraiczne wyrażenie stanu \textit{qubitu} jest czymś więcej, niż tylko zapisem matematycznym. Istotnie, fizyczna realizacja kwantowego bitu może się znajdować w stanie \textit{superpozycji kwantowej} - być jednocześnie w obu stanach bazowych. Elektron może mieć spin \textit{jednocześnie} "w górę" i "w dół". Jednakowoż, w momencie pomiaru spinu elektronu, eksperyment wskażę dokładnie jedną z tych dwóch wartości - nic pomiędzy. Wykonawszy ten eksperyment na dużej ilości elektronów otrzyma się pewną ilość wyników "góra" i pewną ilość "dół". W szczególności, dla stanu elektronu opisanego kombinacją liniową z poprzedniego podrozdziału, $|\alpha|^2$ elektronów będzie miało spin "w górę", a $|\beta|^2$ elektronów - "w dół". Współczynniki $\alpha$ oraz $\beta$ przy stanach bazowych interpretuje się jako amplitudy prawdopodobieństwa, natomiast kwadraty ich modułów - jako prawdopodobieństwa, że w momencie pomiaru stan \textit{qubitu} dozna \textit{kolapsu} do danego stanu bazowego\footnote{Por. https://www.fuw.edu.pl/~matri/mechemq/QM\_SKryszewski.pdf (data dostępu: 12.11.2021), s. 18-20.}. Warto zauważyć, że, jak pokazano w poprzedniej sekcji, kwadraty modułów współczynników kombinacji liniowej sumują się do jedynki - tak jak powinno się dziać z prawdopodobieństwami.
 
 Kolaps zachodzi zawsze - nie można wprost zaobserwować superpozycji stanów kwantowych. Powstaje zatem pytanie, czy zjawisko to rzeczywiście ma miejsce. Być może pozorna losowość otrzymywanych wyników eksperymentów jest jedynie pozorna, wynika z chaotyczności generowanej przez \textit{zmienne ukryte} (jak to jest na przykład w przypadku rzutu monetą - pozorna losowość wyniku wiąże się ze zmiennymi, takimi jak opór powietrza, siła przyłożona do monety w momencie rzutu itp.). 
 
@@ -387,64 +603,764 @@ Poniżej opisany został pokrótce model matematyczny kwantowego splątania na p
 
 Układ dwóch \textit{qubitów} można opisać, jako kombinacja liniowa wektorów bazowych w przestrzeni Hilberta, będącą iloczynem tensorowym przestrzeni stanów dla tychże dwóch \textit{qubitów}:
 
-\begin{center}
-    $\mathcal{H} = \mathcal{H}_1 \otimes \mathcal{H}_2$
-\end{center}
+\begin{equation}
+    \mathcal{H} = \mathcal{H}_1 \otimes \mathcal{H}_2
+\end{equation}
 
 Niech $\ket{0}_1, \ket{1}_1$ oznaczają wektory bazy ortonormalnej przestrzeni $\mathcal{H}_1$, zaś $\ket{0}_2, \ket{1}_2$ - wektory bazy ortonormalnej przestrzeni $\mathcal{H}_2$. Wektory bazy ortonormalnej przestrzeni $\mathcal{H}$ zapiszemy, jako: 
-\begin{center}
-    $\{\ket{00}, \ket{01}, \ket{10}, \ket{11}\}$
-\end{center}
+\begin{equation}
+    \{\ket{00}, \ket{01}, \ket{10}, \ket{11}\}
+\end{equation}
 gdzie $\ket{ij} = \ket{i}_1 \otimes \ket{j}_2$ jest iloczynem tensorowym \textit{i}-tego wektora z pierwszej bazy i \textit{j}-tego wektora drugiej bazy.
 Układ dwóch \textit{qubitów} może, zgodnie z zasadą superpozycji, występować w stanie zadanym przez dowolną (z zachowaniem warunku o amplitudach prawdopodobieństwa) kombinację liniową:
-\begin{center}
-    $\ket{\Psi} = \sum_{ij} \textit{c}_{ij}\ket{ij}$
-\end{center}
+\begin{equation}
+    \ket{\Psi} = \sum_{ij} \textit{c}_{ij}\ket{ij}
+\end{equation}
 
 Taki stan będzie \textbf{stanem splątanym}, wtedy i tylko wtedy, gdy \textbf{nie jest możliwe} zapisanie go w postaci iloczynu tensorowego:
-\begin{center}
-    $\ket{\Psi} = \ket{\alpha}_1 \otimes \ket{\beta}_2$
-\end{center}
+\begin{equation}
+    \ket{\Psi} = \ket{\alpha}_1 \otimes \ket{\beta}_2
+\end{equation}
 gdzie $\ket{\alpha}_1 \in \mathcal{H}_1$ oraz $\ket{\beta}_2 \in \mathcal{H}_2$ są stanami kwantowymi (niekoniecznie bazowymi - mogą one reprezentować też superpozycje stanów bazowych odpowiednich przestrzeni)\footnote{G. Benenti, G. Casati, G. Strini, \textit{Principles of Quantum Computation
 and Information, Volume I}, World Scientific Publishing, 2004.}.
 Jeśli stan $\ket{\Psi}$ można zapisać jak wyżej, to stan ten nie jest stanem splątanym - pomiar jednego z \textit{qubitów} - dla prostoty niech będzie to \textit{qubit} z pierwszej przestrzeni - nie powoduje zmiany stanu drugiego \textit{qubitu}, zatem stan $\ket{\alpha}_1$ zapada się do jednego ze stanów bazowych ($\ket{0}$ lub $\ket{1}$), natomiast stan $\ket{\beta}_2$ pozostaje bez zmian (\textit{ceteris paribus}).
 
+\section{Spin}
 
+Jak zostało wyżej wyjaśnione, stan kwantowy pojedynczego kubitu jest pewną kombinacją liniową dwóch stanów bazowych, kodowanych jako $\ket{0}$ oraz $\ket{1}$.
+Spin jest zaś własnością cząstek elementarnych, która nadaje fizycznego znaczenia owym stanom bazowym.
 
 
 \chapter{Algorytm \textit{Quantum Annealing}}
 
+Niniejszy rozdział skupia się wyłącznie na opisie teoretycznych podstaw algorytmu kwantowego wyżarzania. U podstaw tego algorytmu leży tzw. model Isinga, pochodzący z fizyki statystycznej - przestawiono go w pierwszym podrozdziale. Następnie omówiony zostanie typ problemów, jaki jest rozwiązywany na maszynach implementujących algorytm.  W dalszej części rozdziału okaże się jak przetłumaczyć zadanie znajdowania maksymalnego niezależnego zbioru na tenże typ problemów, by na koniec pokazać jak maszyna kwantowa wykorzystana do celów tej pracy rozwiązuje to zadanie.
+
 \section{Model Isinga}
+
+W~1925 roku niemiecki naukowiec Ernst Ising zaproponował model, mający na celu wyjaśnienie działania magnesów.
+Model ten analizuje kratę (ang. \textit{lattice}) cząstek o~spinach przyjmujących wartość $+1$ lub $-1$, będącej jednocześnie w~obecności zewnętrznego pola magnetycznego. 
+Cząstki te ponadto mogą oddziaływać ze sobą nawzajem. 
+
+Układ ten opisywany jest za pomocą operatora zwanego Hamiltonianem. 
+Jest to niezwykle ważny operator. 
+Jego wartości własne opisują energie jaką może posiadać badany układ. 
+Spektrum wartości własnych hamiltonianiu przypisanemu układowi kwantowemu stanowi zbiór możliwych stanów energetycznych, w~którym układ ten może się znajdować. 
+Oznacza to, że są to jedyne wartości energii jakie układ może posiadać. 
+W~klasycznym modelu Isinga dla $N$~cząstek hamiltonian ma postać ogólną\citep{}:
+\begin{equation}
+    H(s_{1}, s_{2},\dots, s_{N}) = -\sum_{i < j}\, J_{ij}\,s_{i}\,s_{j} - \sum^N_{i=1}\, h_{i} s_{i}
+\end{equation}
+
+\noindent gdzie spiny cząstek $s_i = \pm1$, natomiast $h_i, J_{ij}$ to liczby rzeczywiste, które  wyrażają odpowiednio oddziaływanie cząstek z~zewnętrznym polem magnetycznym oraz oddziaływania wzajemne (między spinami). 
+\newpage \noindent W~algorytmie wyżarzania kwantowego wyróżnia się dwie główne składowe - hamiltonian początkowy $H_0$ oraz hamiltonian perturbacyjny (niewielki dodatek lub oddziaływanie) $H_p$:
+\begin{equation}
+   H(t) = \left(1-\frac{t}{T}\right) H_0 + \frac{t}{T}H_p
+\end{equation}
+Kwantowy hamiltonian opisujący układ kubitów użyty w~algorytmie \ref{} ma postać:
+\begin{equation}
+    H = -(1-\frac{t}{T})\, h_0\sum^N_{i=1}\sigma^x_i + \frac{t}{T}(-\sum_{i=1}^Nh_i\sigma^z_i - \sum_{i<j}J_{ij}\sigma^z_i\sigma^z_j) 
+\end{equation}
+Widać tutaj, że hamiltonian petrurbacyjny powstaje na skutek podstawienia $\sigma^z_i$ - tzw. operatora Pauliego związanego ze składową spinu dla osi~z $Z$ , oddziałującego na i-ty kubit - do wzoru na klasyczny hamiltonian modelu Isinga.
+Pierwszy człon wzoru natomiast - hamiltonian podstawowy - wyraża stan bazowy układu, od którego zaczyna się przebieg algorytmu w~chwili $t = 0$ ($T$ oznacza całkowity czas przebiegu procedury).
+Symbol $\sigma^x_i$ oznacza operator $X$ Pauliego działający na i-ty kubit.
+
+Algorytm wyżarzania kwantowego wykorzystuje do celów optymalizacyjnych kwantowy model Isinga oraz tzw. \textit{adiabatyczne obliczenia kwantowe}. 
+Jest to forma przeprowadzania obliczeń z~użyciem układów  kwantowych, gdzie zaczynając od systemu w~stanie bazowym powoli wprowadza się parametry związane z~zadanym problemem i~pozwala układowi kwantowemu ewoluować. 
+Jeśli stan bazowy odznaczał się niską energią, a~ewolucja układu w~czasie przebiegała dostatecznie powoli, to zgodnie z~postulatami teorii adiabatycznych obliczeń kwantowych stan końcowy tej ewolucji również będzie stanem o~niskiej energii.
+Dla $t = T$ (na koniec procedury) stan w~jakim znajduje się układ kubitów reprezentuje rozwiązanie problemu.
+
+Powolna ewolucja układu jest kluczowa z~następujących względów. 
+Jak już zostało wspomniane wyżej, wartości własne Hamiltonianiu tworzą spektrum energii układu na jakim on operuje. 
+Ilustruje to rysunek \ref{eigenspectrum}.
+
+\begin{figure}[h!]
+\includegraphics[scale=0.5]{eigenspectrum.png}
+\caption{Spektra wartości własnych Hamiltonianu dla różnych stanów energetycznych.}
+\label{eigenspectrum}
+\end{figure}
+
+Linie na wykresie reprezentują możliwe wartości energii, w~odpowiednich momentach czasowych, dla różnych stanów układu.
+Linia na dole odpowiada stanowi o~najniższej energii. 
+Intencją algorytmu jest aby w~trakcie wprowadzania hamiltonianu problemu pozostać w~tym stanie. 
+Wtedy na koniec otrzymane zostanie rozwiązanie odpowiadające najniższej energii, a~zatem minimalizujące funkcję celu rozwiązywanego problemu. 
+Niepożądany przeskok na wyższy poziom energetyczny może nastąpić na skutek zakłóceń układu (promieniowanie elektromagnetyczne, zakłócenia termiczne \dots), ale również ze względu na zbyt wysokie tempo przeprowadzania ewolucji układu. 
+Jeśli na koniec procedury system znajduje się w~jednym z~tych wyższych poziomów, to reprezentowane przezeń rozwiązanie jest suboptymalne.
+
 
 \section{Problemy klasy QUBO}
 
-\section{Zagadnienie \textit{MIS} w ujęciu \textit{QUBO}}
+QUBO jest akronimem, oznaczającym optymalizację kwadratową, nieograniczoną, binarną (\textit{ang. quadratic unconstraint binary optimization}).
+Problemy optymalizacyjne tej klasy są zatem za pomocą równań co najwyżej kwadratowych, bez nakładania ograniczeń na przestrzeń rozwiązań.
+Argumenty funkcji celu mają charakter binarny tzn. jeśli dziedziną funkcji celu $f(\textbf{X})$ jest zbiór $\mathbb{C}^n$, gdzie $n$ jest liczbą elementów wektora \textbf{X}, to dla każdego $0 \leq k \leq n$ \textit{k}-ty element argumentu funkcji $x_k \in {0, 1}$.
 
-\section{Implementacja algorytmu za pomocą solvera HSSv2}
+\subsection{Zagadnienie \textit{MIS} w ujęciu \textit{QUBO}}
+
+Zagadnienie znalezienia maksymalnego zbioru niezależnego w zadanym grafie jest w istocie problemem klasy QUBO.
+Aby się o tym przekonać wystarczy przyjrzeć się funkcji celu:
+
+\begin{equation} \label{mis-qubo}
+    f(\textbf{x}) = (-\sum_ix_i) + \lambda(\sum_{(u,v)\in E}x_u \cdot x_v)
+\end{equation}
+
+Wektor \textbf{x} będący argumentem funkcji składa się z elementów $x_i \in {0, 1}$, gdzie wartość 1 oznacza, że dany węzeł znajduje się w wynikowym zbiorze \textit{MIS}, natomiast 0 - że dany węzeł jest w tymże zbiorze nieobecny.
+Pierwszy człon wyrażenia po prawej stronie informuje algorytm, że celem jest znalezienie jak największej ilości węzłów (znak minus bierze się stąd, że algorytm będzie dążył do minimalizacji funkcji celu).
+Drugi człon wyraża sobą ograniczenie narzucone na funkcję celu.
+Ponieważ QUBO jest klasą problemów bez narzuconych ograniczeń, człon ten musi zostać "włączony" do wzoru funkcji.
+Jest on przy tym mnożony przez współczynnik $\lambda$ (współczynnik Lagrange'a) - ponieważ algorytm będzie minimalizował wartości \textit{f}, to takie mnożenie (zwłaszcza przy dobraniu odpowiednio dużej wartości $\lambda$) będzie kierowało algorytm w stronę takich rozwiązań, jak gdyby dziedzina funkcji \textit{de facto} była ograniczona. 
+
+Mnożenie parami elementów wektora wynikowego, które są połączone ze sobą krawędzią, a następnie sumowanie wyników narzuca algorytmowi wybór rozwiązań, dla których suma ta jest jak najmniejsza.
+Idealnie będą to takie wektory, gdzie suma ta będzie równa 0 - a zatem żadne dwa węzły w zbiorze wynikowym nie będą połączone krawędzią.
+Jest to nic innego, jak maksymalny zbiór niezależny!
+
+Równanie \ref{mis-qubo} jest sformułowaniem zagadnienia klasy QUBO.
+Zmienne występują co najwyżej w drugiej potędze i mają charakter binarny.
+Nie istnieje ponadto ograniczenie dziedziny funkcji \textit{sensu stricte} (jest ono zinternalizowane we wzorze funkcji celu).
+
+
+\section{Implementacja algorytmu na maszynie D-Wave}
 
 
 
 \chapter{Zastosowanie algorytmu \textit{QA} do problemu dywersyfikacji portfela}
+\label{sec:QA_prac}
 
 \section{Instalacja i konfiguracja biblioteki \textit{dwave-ocean-sdk}}
+
+Aby móc korzystać z~rozwiązań oferowanych przez firmę Dwave, należy założyć konto na stronie \textit{https://cloud.dwavesys.com/leap/}.
+Dostępne są tam różne plany taryfowe, w~zależności m.in. od potrzeby wsparcia technicznego, czy dostępnego czasu użytkowania jednostek \textit{QPU} w~skali miesiąca.
+Plan deweloperski pozwala na bezpłatne użytkowanie komputerów kwantowych przez łączny czas jednej minuty w~ciągu miesiąca.
+
+Po utworzeniu użytkownika oraz wyborze planu udostępniany jest token do API.
+Za jego pomocą można wysyłać zadania, które mają być rozwiązane przez maszyny Dwave.
+Po wykonaniu tych kroków można dokonać instalacji oraz konfiguracji środowiska umożliwiającego formułowanie oraz przesyłanie do Dwave problemów, za pomocą języka Python.
+
 \subsection{Instalacja}
+
+Zgodnie z~dokumentacją na stronie dwavesys bibliotekę \textit{dwave-ocean-sdk} można pobrać na dwa zalecane sposoby.
+Pierwszym z~nich (najprostszym) jest użycie menadżera pakietów \textit{pip}:
+
+\begin{minted}{bash}
+pip install dwave-ocean-sd,
+\end{minted}
+lub korzystając z repozytorium na github \begin{minted}{bash}
+pip install git+https://github.com/dwavesystems/dwave-ocean-sdk
+\end{minted}
+Drugim sposobem jest sklonowanie repozytorium GitHub i~zainstalowanie ręczne:
+
+\begin{minted}{bash}
+git clone https://github.com/dwavesystems/dwave-ocean-sdk.git
+cd dwave-ocean-sdk
+python setup.py install
+\end{minted}
+Instrukcje dotyczące instalacji indywidualnych komponentów biblioteki znajdują się w~pliku \textit{README} na powyższym repozytorium.
 
 \subsection{Konfiguracja i wybór solvera}
 
+Przed pierwszym użyciem biblioteki wymagane jest przeprowadzenie konfiguracji. Używa się do tego pliku \textit{dwave.exe}, który instalowany jest przy okazji wykonania opisanych wyżej czynności. Przy użyciu terminala należy wywołać:
+
+\begin{minted}{bash}
+dwave config create
+\end{minted}
+
+Uruchomi to program w terminalu, który będzie prosił użytkownika o podanie następujących informacji:
+\begin{itemize}
+    \item nazwa profilu użytkownika
+    \item token do API
+    \item solver
+    \item \textit{API endpoint}
+\end{itemize}
+
+Nazwa profilu jest łańcuchem znakowym wpisanym przez użytkownika, który w przyszłości będzie pomagał zidentyfikować dany zestaw konfiguracji.
+Solver oznacza domyślny identyfikator zasobów służących do rozwiązywania zadań postawionych przez użytkownika.
+W zależności od regionu oraz planu taryfowego użytkownik ma dostęp do określonego zestawu dostępnych solverów.
+Można to sprawdzić logując się na platformę Dwave.
+\textit{API endpoint} jest adresem internetowym używanym przez bibliotekę \textit{dwave-ocean-sdk} do wysyłania zadań do oraz odbierania rezultatów obliczeń na maszynach Dwave.
+Tutaj można w większości przypadków pozostawić wartość domyślną, oferowaną w terminalu.
+
 \section{Architektura projektu}
 
-\subsection{Załadowanie danych}
+Projekt opisywany w niniejszej pracy został skonstruowany na zasadzie tzw. \textit{data pipeline}.
+Dane wejściowe pozyskiwane są ze źródła zewnętrznego - w tym przypadku \textit{yahoo finance} - następnie są przygotowywane, a końcowe rezultaty zostają załadowane do bazy danych.
+Ten trzy-etapowy proces znany jest na ogół pod akronimem \textit{ETL}, od ang. \textit{Extract - Transform - Load}.
+Każdemu z tych etapów odpowiada pakiet kodu, który nosi nazwę danej fazy (tj. dla etapu pierwszego jest to pakiet \textit{extract} itd.)
+
+\subsection{Pozyskiwanie danych}
+Dane zasilające proces uzyskiwane ze źródła, jakim jest \textit{yahoo finance}.
+Dla zadanego zestawu aktywów oraz okresu czasu pobierane zostają dane dotyczące skorygowanej ceny zamknięcia.
+Etap ten został zaimplementowany za pomocą biblioteki \textit{pandas \textendash datareader}.
+Dodatkowo użyto pakietu \textit{concurrent} z biblioteki standardowej.
+Pozwoliło to na asynchroniczne wykonanie procesu pozyskania danych, co znacząco przyspieszyło jego zakończenie.
+Do implementacji stworzono klasę \textit{Scraper}, zawartą w pliku \textit{data\_load.py}.
+
+Klasa ta pozwala na wybór jednego z trzech dużych indeksów jako bazy do ściągnięcia danych - są to \textit{Dow Jones}, \textit{S\&P 500} oraz \textit{DAX}.
+Możliwe jest jednak przekazanie własnej listy \textit{tickerów} - pod warunkiem że będą to oznaczenia zgodne z nomenklaturą zastosowaną przez \textit{yahoo}.
+
+Na potrzeby części projektu związanej z wyłonieniem pewnego określonego portfela i porównania go z rynkiem oraz innymi metodami dywersyfikacji użyto indeksu \textit{Dow Jones}.
+Jednak w części pracy mającej na celu porównanie efektywności algorytmu \textit{quantum annealing} z jego klasycznym odpowiednikiem pozyskiwane są dane z indeksu \textit{S\&P 500}.
+Wybór ten podyktowany był przesłanką, iż być może pewne przewagi tej procedury mogą się ujawniać dopiero przy większych rozmiarach problemu.
+Weryfikacja tego następuje w dalszej części rozdziału.
+
 
 \subsection{Przygotowanie danych wejściowych}
+\label{subsection:data-prep}
+W pierwszym kroku przygotowania danych surowe ceny przekształcane są na dzienne zmiany kursowe.
+Wartości te informują o stosunku ceny za dany dzień w stosunku do dnia poprzedniego.
+Obiekt \textit{DataFrame} z biblioteki \textit{pandas} umożliwia szybkie wykonanie tego kroku za pomocą metody \textit{pct\_change}\footnote{Dokumentacja metody dostępna pod linkiem: \url{https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pct_change.html}}.
+
+Następnie dokonywana jest transformacja logarytmiczna - wartości w tabeli zastępowane są zgodnie z funkcją \textit{lambda x: np.log(1 + x)}\footnote{\textit{np.log} jest funkcją z pakietu \textit{numpy}, zwracającą logarytm dziesiętny z danego argumentu.}. Do wartości wewnątrz \textit{np.log} dodawana jest jedynka, aby zapobiec wyciąganiu logarytmu z wartości ujemnej. Powody stojące za wykonaniem tego kroku wytłuszczone zostały w rozdziale \ref{sec:ntp}.
+
+W kolejnym kroku liczona jest macierz korelacji pomiędzy zlogarytmowanymi dziennymi stopami zwrotu.
+Będzie on bazą do tworzenia grafów, przekazywanych następnie do maszyny \textit{Dwave}.
+Wynikiem tego etapu jest macierz rozmiarów $n \times n$, gdzie $n$ jest liczbą aktywów wybranych do procesu.
+
+Mając do dyspozycji matrycę korelacji, można sporządzić graf.
+Będzie on składał się z $n$ wierzchołków, połączonych wzajemnie wtedy i tylko wtedy, gdy współczynnik korelacji pomiędzy tymi wierzchołkami przekroczy pewien zadany z góry próg.
+Poniżej zamieszczono graf stworzony na podstawie notowań indeksu \textit{Dow Jones} za okres od 14 lutego 2020 do 14 lutego 2022. 
+Próg dla współczynnika korelacji ustalono na poziomie 0.5.
+
+\begin{figure}[h!]
+\includegraphics[scale=0.8]{dow_jones_graph.png}
+\caption{Spółki z indeksu \textit{Dow Jones} przedstawione na grafie.}
+\label{fig:dow-jones-graph}
+\end{figure}
+
 
 \subsection{Uruchomienie procedury i wizualizacja wyników}
 
-\section{Ostateczne wyniki procedury}
+Graf tworzony jest za pomocą biblioteki \textit{networkx}. 
+W pamięci jest on przechowywany jako obiekt typu \textit{networkx.classes.graph.Graph} i dokładnie w takiej formie przekazywany jest do \textit{annealera}.
+Celem przeprowadzenia procedury wyrzażania kwantowego, korzystamy z dwóch pakietów instalowanych razem z biblioteką \textit{ocean-sdk}:
+
+\begin{minted}{python}
+import dwave_networkx as dnx
+from dwave.system import LeapHybridSampler
+\end{minted}
+
+Pakiet \textit{dwave\_networkx} dostarcza funkcji odpowiedzialnych za wykonywanie różnych operacji na grafach za pomocą \textit{annealera} kwantowego, w tym interesującej z punktu widzenia tej pracy - \textit{maximum\_independent\_set}.
+Funkcja ta bierze jako argument graf oraz \textit{sampler} - tutaj wybrany został \textit{LeapHybridSampler}.
+\todo[inline]{Co to jest sampler? Czemu wybrałem ten?}
+
+Poniższa linia kodu służy wysłaniu grafu oraz typu problemu do rozwiązania do maszyny \textit{Dwave}.
+
+\begin{minted}{python}
+result = dnx.maximum_independent_set(
+    asset_graph,
+    sampler=LeapHybridSampler(), 
+    label="QPD"
+    )
+\end{minted}
+
+Po rozwiązaniu go, wynik zostanie zwrócony przez tę maszynę i poprzez API przesłany z powrotem do programu oraz zapisany do zmiennej \textit{result}.
+Typem tej zmiennej jest lista, której elementami są tickery spółek wybranych do portfela przez algorytm.
+Rezultat ten można zwizualizować, nakładając odpowiednią mapę kolorów na oryginalny graf, by zaznaczyć podane spółki (rysunek poniżej).
+
+\begin{figure}[h!]
+\includegraphics[scale=0.8]{dow_jones_solved.png}
+\caption{Wizualizacja wyników procedury. Na niebiesko zaznaczono spółki wybrane do portfela.}
+\end{figure}
+
+Jak widać, żadne dwa niebieskie węzły nie są ze sobą połączone krawędzią.
+Jest to przesłanka, iż rozwiązanie to może być rozwiązaniem optymalnym, jednakże ponieważ problem w swej naturze nie ma analitycznego rozwiązania, trudno jest tę przesłankę w pełni zweryfikować (nawet poprzez wyczerpujące przeszukanie przestrzeni rozwiązań).
+
+Mając listę spółek która powinna znaleźć się w portfelu należy dokonać kolejnego kroku transformacji danych, jakim będzie wyliczenie odpowiednich proporcji pomiędzy nimi.
+Procedura ta, wraz z załadowaniem wyników do bazy danych (etap \textit{Load} z procesu \textit{ETL}) zostanie opisana w rozdziale \ref{sec:orp}.
+W dalszej części niniejszego rozdziału dokonana zostanie analiza porównawcza algorytmu wyżarzania kwantowego, z jego klasycznym odpowiednikiem - wyżarzaniem symulowanym (\textit{ang. Simulated Annealing}).
+
+\section{Porównananie algorytmów \textit{Quantum Annealing} oraz \textit{Simmulated Annealing}}
+
+W niniejszym podrozdziale przeprowadzone zostanie porównanie dwóch metaheurystyk optymalizacyjnych - wyżarzania kwantowego i symulowanego.
+Zadaniem postawionym przed każdym z tych algorytmów będzie wybór maksymalnego niezależnego zbioru wierzchołków grafu.
+Procedura ta zostanie powtórzona na grafach utworzonych z losowo wybranych podzbiorów indeksu \textit{S\&P 500}.
+Podzbiory te będą liczyć od 10 do 500 wierzchołków - pozwoli to zbadać potencjał obu algorytmów w zakresie skalowania.
+Porównany zostanie czas potrzebny na wykonanie danego algorytmu oraz jakość otrzymanych rozwiązań.
+
+Najpierw jednak pokrótce przedstawiona zostanie idea stojąca za algorytmem wyżarzania symulowanego.
+
+\subsection{Krótko o algorytmie wyżarzania symulowanego}
+\label{subsection:simulated-annealing-desc}
+
+Wyżarzanie symulowane jest algorytmem trajektoryjnym.
+Oznacza to, że zaczynając z pewnego z góry ustalonego punktu startowego wyznaczana jest pewna trajektoria w przestrzeni rozwiązań prowadząca do punktu minimum (lub przynajmniej w jego okolice - bliższe lub dalsze) dla zadanej funkcji celu.
+
+Rozpoczynając w punkcie $x_0 = \begin{bmatrix}x_{01}, x_{02}, ..., x_{0n} \end{bmatrix}^T$ tworzone jest sąsiedztwo owego punktu.
+Jego szerokość $\epsilon$ jest parametrem egzogenicznym względem algorytmu.
+Z sąsiedztwa wybierany jest nowy punkt, będący 'rozwiązaniem-kandydatem' (\textit{ang. candidate solution}).
+W przypadku tzw. zachłannych algorytmów optymalizacyjnych decyzja o tym czy punkt ten powinien zostać nową bazą dla następnej iteracji procedury sprowadzałaby się kwestii czy punkt ten 'pogarsza', czy 'polepsza' funkcję celu (\textit{i. e.} czy funkcja celu dla tego punktu przyjmuje wartość mniejszą, niż dla punktu początkowego). 
+
+Algorytmy zachłanne jednak nie radzą sobie dobrze z funkcjami celu mającymi wiele minimów lokalnych - algorytm taki może 'utknąć' ~w studni minimum lokalnego, gdzie żaden z sąsiadujących punktów nie polepsza już funkcji celu.
+Poza sąsiedztwem może jednak istnieć minimum globalne, do którego algorytm nigdy nie dotrze.
+
+Aby zaradzić temu problemowi, wyżarzanie symulowane przyjmuje dwa parametry - temperaturę początkową \textit{$T_{0}$} oraz tempo ochładzania $\alpha$.
+Po wyłonieniu rozwiązania-kandydata algorytm podejmuje decyzje: jeśli kandydat polepsza funkcję celu, to punkt ten staje się nową bazą dla algorytmu - mówi się że algorytm 'przechodzi do punktu' jakim jest kandydat.
+W przeciwnym wypadku, algorytm przechodzi do tego punktu z pewnym prawdopodobieństwem.
+Prawdopodobieństwo to jest tym wyższe, im wyższa jest temperatura w danym momencie - a ta w każdej iteracji maleje zgodnie z przyjętym tempem ochładzania.
+
+Ta probabilistyczna tranzycja pozwala trajektorii rozwiązań na ucieczkę z pułapki minimum lokalnego i dalszą eksplorację przestrzeni rozwiązań.
+Jednocześnie fakt, że prawdopodobieństwo pogorszenia funkcji celu z iteracji na iteracje maleje, nadaje tej eksploracji coraz bardziej precyzyjny kierunek.
+Pozwala to na optymalizację znacznie bardziej wydajną niż metody czysto symulacyjne jak np. \textit{Monte Carlo}.
+
+Algorytmowi narzuca się również na ogół maksymalną liczbę iteracji, po której musi on zwrócić punkt będący aktualnie znalezionym rozwiązaniem.
+O ile dla nieskończonej liczby powtórzeń prawdopodobieństwo znalezienia globalnego minimum dąży asymptotycznie do jedności, to w rzeczywistości mogłoby to oznaczać wyczerpujące przeszukanie przestrzeni rozwiązań (lub wyczerpujące w zbyt dużym stopniu).
+Przeczyłoby to fundamentalnej idei stojącej za metaheurystykami optymalizacyjnymi.
+
+
+\subsection{Porównanie szybkości}
+\label{subsec:speed_comparison}
+
+Złożoność obliczeniowa algorytmów jest podstawową metryką, na podstawie której ocenia się ich jakość.
+Im ta złożoność mniejsza, tym lepiej skalowalny jest algorytm - a zatem tym lepszy.
+Skalowalność algorytmu określa w jakim tempie rośnie czas jego przebiegu, wraz ze zwiększającym się rozmiarem danych wejściowych. Od efektywnego algorytmu oczekuje się, że nawet przy dużym wzroście rozmiaru rozwiązywanego problemu czas potrzebny na przejście przez wszystkie kroki procedury nie wzrośnie \textit{za bardzo} - i.e. nie nastąpi \textit{eksplozja} czasu obliczeniowego.
+
+
+Aby zbadać empiryczną skalowalność algorytmu kwantowego wyżarzania, wykonano następującą symulację.
+Z indeksu giełdowego S\&P 500 wybierany był losowy podzbiór spółek.
+Ilość spółek w takim podzbiorze zwiększana była od 10 do 500 - wykonano zatem 490 rund tejże symulacji.
+Dla każdego takiego podzbioru konstruowany był graf (w eksperymencie próg korelacji ustalono na 0.3), a następnie wykonywana optymalizacja za pomocą badanego algorytmu kwantowego oraz jego klasycznego odpowiednika - wyżarzania symulowanego.
+Czas przebiegu obu algorytmów w zależności od stopnia złożoności rozwiązywanego problemu grafowego przedstawiono na wykresie \ref{fig:speed_comparison}.
+
+Jak widać, do pewnego progu złożoności grafu algorytm klasyczny okazuje się być szybszy od algorytmu kwantowego.
+Wykazuje też dużo mniejszą wariancję czasu obliczeniowego, co widać po gładszym przebiegu linii wykresu.
+Jednakże gdzieś w okolicach 160-180 węzłów tendencja ta zaczyna się dość gwałtownie odwracać.
+Czas potrzebny na wykonanie procedury wyżarzania kwantowego nie rośnie dalej, a wręcz zdaje się maleć.
+Zmniejsza się ponadto wariancja tego czasu tak, że w niektórych odcinkach wykres wydaje się być wręcz płaski.
+
+Odwrotnie dzieje się w przypadku algorytmu wyżarzania symulowanego.
+Empirycznie oszacowane tempo wzrostu czasu obliczeniowego przywodzi na myśl wzrost wykładniczy.
+Gwałtownie rośnie również wariancja dla tego algorytmu - ze spektakularnym "wystrzałem" w okolicach 400 węzłów (zarówno wyżarzanie kwantowe, jak i symulowane są algorytmami probabilistycznymi - spodziewane jest zatem napotkanie co jakiś czas tego typu anomalii).
+
+Wynik eksperymentu wskazuje na to, że algorytm kwantowy skaluje się zdecydowanie lepiej od algorytmu klasycznego.
+Bez względu zatem na to, na jakiej maszynie będą one uruchamiane, należy się spodziewać istnienia pewnego progu złożoności grafu, powyżej którego wyżarzanie kwantowe będzie systematycznie osiągać lepszy czas niż wyżarzanie kwantowe (celowo napisano \textit{systematycznie}, a nie \textit{zawsze}, ze względu na probabilistyczną naturę obu algorytmów). 
+
+Czas przebiegu algorytmu kwantowego jest ponadto relatywnie stabilny i przewidywalny.
+
+
+
+\begin{figure}[H]
+\includegraphics[scale=0.5]{time-vs-nodes.png}
+\caption{Porównanie szybkości przebiegu algorytmów wyżarzania symulowanego i kwantowego}
+\label{fig:speed_comparison}
+\end{figure}
+
+\subsection{Porównanie jakości rozwiązań}
+\label{subsection:quality-comp}
+
+Oprócz samej skalowalności czasu przebiegu interesującą metryką, przy porównywaniu algorytmu kwantowego z klasycznym odpowiednikiem będzie również \textit{jakość rozwiązań} generowanych przez każdy z tych algorytmów.
+
+
+Rozwiązywanym problemem jest problem największego zbioru niezależnego, dla każdego z grafów wejściowych.
+Implementacje obu algorytmów gwarantują, że zwrócone rezultaty (wektory \textit{boolowskie}, będące "maską" na zbiór wejściowych węzłów) reprezentują zbiory niezależne.
+Z tego wynika, że dla dwóch rozwiązań dotyczących tego samego grafu wejściowego "lepsze" (bliższe optimum globalnego) jest to, które zawiera w sobie więcej węzłów - a zatem bardziej liczny zbiór wynikowy.
+Liczebność zbioru wynikowego można zatem traktować jako metrykę, na podstawie której określa się "lepszość" danego algorytmu w danym przypadku.
+
+
+Podczas przeprowadzania eksperymentu opisanego w sekcji \ref{subsec:speed_comparison} prócz czasu przebiegu procedury zbierane były także dane dotyczące zwracanych przez nie wyników, w postaci list \textit{pythonowych} zawierających tekstowe reprezentacje wybranych z danego grafu spółek.
+Na wykresie \ref{fig:quality_comparison} przedstawiono porównanie długości tychże list (a zatem liczności zbiorów wynikowych) w zakresie od 10 do 500 węzłów w losowo wygenerowanych grafach.
+
+Dla tego eksperymentu algorytm kwantowy \textbf{zawsze} osiągał wyniki przynajmniej tak dobre jak algorytm klasyczny.
+W większości przypadków były to ponadto wyniki znacznie lepsze.
+W obu przypadkach liczba znajdowanych rozwiązań wykazywała się sporą wariancją, pamiętać jednak należy w tym przypadku o probabilistycznej naturze nie tylko samych algorytmów, ale także doboru składu grafów na bazie których owe algorytmy działały.
+
+
+
+\begin{figure}[H]
+\includegraphics[scale=0.5]{assetsFound-vs-nodes.png}
+\caption{Porównanie mocy zbiorów wynikowych dla algorytmów wyżarzania symulowanego i kwantowego.}
+\label{fig:quality_comparison}
+\end{figure}
+
+\subsection{Wnioski}
+
+Podstawowym wnioskiem płynącym z przeprowadzonej symulacji jest stwierdzenie, że dla dużych grafów algorytm kwantowy jest znacząco lepszy od wersji klasycznej, pod względem szybkości.
+Z wykresu wynika że ten próg złożoności grafu mieści się gdzieś pomiędzy 150 a 180 węzłami.
+Pomimo dużej wariancji można w algorytmie klasycznym dopatrywać się złożoności przynajmniej wielomianowej, zaś w wersji kwantowej wygląda to na złożoność stałą.
+Bez względu na liczbę węzłów w grafie wyżarzanie kwantowe osiąga systematycznie lepsze, pod względem liczebności zbiorów wynikowych, wyniki od wyżarzania symulowanego.
+
+
+Takie wyniki stanowią przyczynek do wnioskowania o wyższości algorytmu kwantowego nad klasycznym odpowiednikiem.
+Wniosek jest tym bardziej umocniony, że badana była skalowalność obu algorytmów, w zależności od rozmiaru rozwiązywanego problemu, nie zaś bezwzględny czas przebiegu obliczeń.
+Eliminuje to potencjalne wątpliwości dotyczące różnic sprzętowych w przypadku próby replikacji eksperymentu.
 
 \chapter{Analiza rezultatów}
-\label{sec:nast}
+\label{sec:ar}
 
-Bieżący rozdział (czyli rozdział~\ref{sec:nast}) zawiera odwołanie do samego siebie. Stosujmy odwołania automatyczne.
+Tak jak to zostało opisane w rozdziale \ref{sec:QA_prac}, analiza grafu pozwala na wyłonienie (prawdopodobnie) optymalnego zestawu spółek.
+To jednak nie wystarczy, żeby zbudować portfel inwestycyjny.
+Potrzebne są jeszcze proporcje udziałów poszczególnych aktywów.
+Bez odpowiedniej miary sukcesu portfela nie sposób jest porównać wyników różnych procedur jego tworzenia.
+W niniejszej pracy zdecydowano się zastosować metodę symulacyjną, opartą na wyborze portfela maksymalizującego \textit{Sharpe ratio}.
+
+W styczniu 2022 roku uruchomiono algorytm wyżarzania kwantowego oraz symulowanego, celem skonstruowania dwóch portfeli inwestycyjnych opartych na indeksie \textit{Dow Jones Industrial Average}.
+Przyjęto przy tym próg korelacji równy 0.5.
+Przeanalizowano wtedy składy owych portfeli pod kątem profili działalności wybranych spółek.
+Następnie za pomocą trzech dalej opisanych metod optymalizacyjnych dobrano dla portfeli odpowiednie proporcje pomiędzy ich komponentami.
+Pozostałą część analizy przeprowadzono w maju 2022 roku.
+Zebrane przez ten czas dane pozwoliły w pewnym stopniu porównać jakość obu portfeli, a zatem pośrednio - metod za pomocą których zostały wybrane.
+
+\section{Opis wybranych spółek}
+
+Uruchomienie algorytmu wyżarzania zarówno kwantowego, jak i symulowanego (klasycznego) zwróciło rezultaty w postaci dwóch zbiorów spółek jakie, według tychże algorytmów, powinny utworzyć portfel inwestycyjny.
+W niniejszym podrozdziale przybliżone zostaną komponenty owych zbiorów.
+
+\subsection{Spółki wybrane przez algorytm klasyczny}
+
+Spółki wybrane przez algorytm wyżarzania symulowanego wraz z informacją o profilu działalności zostały ujęte w tabeli \ref{table:assets-simulated}.
+
+\begin{table}[h!]
+\caption{Spółki wybrane przez algorytm wyżarzania symulowanego}
+\label{table:assets-simulated}
+\begin{tabularx}{0.8\textwidth} { 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedleft\arraybackslash}X | }
+ \hline
+ \textbf{Spółka} & \textbf{Branża} \\
+ \hline
+ Merck (MRK)  & Farmaceutyczna \\
+\hline
+Johnson \& Johnson (JNJ)  & Farmaceutyczna  \\
+\hline
+Intel (INTC)  & Hardware \\
+\hline
+Boeing (BA)  & Lotnicza \\
+\hline
+Amgen (AMGN)  & Farmaceutyczna \\
+\hline
+\end{tabularx}
+\end{table}
+
+
+
+Spośród pięciu wskazanych spółek aż trzy należą do tej samej branży.
+Aby upewnić się, że nie został popełniony błąd, zamieszczono poniżej fragment macierzy korelacji, uwzględniający wybrane spółki.
+
+
+\begin{figure}[H]
+\includegraphics{corr-simulated.PNG}
+\caption{Fragment macierzy korelacji uwzględniająca spółki wybrane przez algorytm klasyczny}
+\end{figure}
+
+Wygląda na to, że błędu nie ma, jednak rzucają się w oczy pary spółek, które są bardzo bliskie ustalonego progu.
+Najgorsza pod względem dywersyfikacji jest para \textit{Boeing} i \textit{Intel}.
+W przypadku firm z branży farmaceutycznej relatywnie wysokie współczynniki korelacji mają pary \textit{Johnson \& Johnson} i \textit{Merck} oraz \textit{Johnson \& Johnson} i \textit{Amgen}.
+
+Z podanej macierzy korelacji wynika, że jeśli z portfela usunięte zostałyby spółki \textit{Johnson \& Johnson} i \textit{Boeing}, to portfel ten byłby zbiorem niezależnym nawet przy progu korelacji 0.24 - byłby zatem wysoko zdywersyfikowany.
+W takim jednak przypadku w portfelu zostałyby tylko 3 spółki.
+
+\subsection{Spółki wybrane przez algorytm kwantowy}
+Spółki wybrane przez algorytm wyżarzania kwantowego wraz z informacją o profilu ich działalności zostały ujęte w tabeli \ref{table:assets-quantum}.
+
+\begin{table}[h!]
+\caption{Spółki wybrane przez algorytm wyżarzania kwantowego}
+\label{table:assets-quantum}
+\begin{tabularx}{0.8\textwidth} { 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedleft\arraybackslash}X | }
+ \hline
+ \textbf{Spółka} & \textbf{Branża} \\
+ \hline
+ Merck (MRK)  & Farmaceutyczna \\
+\hline
+UnitedHealth (UNH)  & Opieka zdrowotna  \\
+\hline
+Verizon (VZ)  & Telekomunikacja \\
+\hline
+Boeing (BA)  & Lotnicza \\
+\hline
+Intel (INTC)  & Hardware \\
+\hline
+
+\end{tabularx}
+\end{table}
+
+Wyraźnie widać, że żadne dwie spółki nie działają w tej samej branży - jest to atut, którego nie posiadał portfel wybrany przez algorytm klasyczny.
+Jedynym zastrzeżeniem może być tu para \textit{Merck} i \textit{UnitedHealth}, które działają w szeroko pojętym medycznym, segmencie rynku.
+Tak jak poprzednio, także dla tego portfela zamieszczono odpowiedni fragment macierzy korelacji.
+
+\begin{figure}[H]
+\includegraphics{corr-quant.PNG}
+\caption{Fragment macierzy korelacji uwzględniająca spółki wybrane przez algorytm kwantowy}
+\end{figure}
+
+Tym niemniej współczynnik korelacji pomiędzy ich notowaniami z ostatnich dwóch lat wyniósł 0.4339, jest to wynik mieszczący się poniżej założonego w procedurze progu 0.5 - aczkolwiek jest on dość blisko tego progu.
+
+Także w przypadku tego portfela obecnych jest kilka dość bliskich progowi par spółek.
+Usunięcie spółek \textit{Boeing} (podobnie jak w przypadku poprzedniego portfela) oraz \textit{UnitedHealth} pozostawiłoby zbiór spółek niezależny nawet przy progu równym 0.27.
+Jest to nieco gorszy wynik niż przy portfelu wybranym przez algorytm klasyczny, jednak wciąż taki zestaw spółek charakteryzowałby się dobrym zdywersyfikowaniem.
+Jednakże, tak jak poprzednio, portfel taki składałby się tylko z 3 komponentów.
+
+Tak jak zostało zaobserwowane w sekcji \ref{subsection:quality-comp}, algorytm kwantowy systematycznie znajduje rozwiązania o liczebności nie niższej, niż algorytm klasyczny (a zatem przynajmniej tak samo blisko maksymalnego zbioru niezależnego).
+Stało się tak również w tym przypadku - oba algorytmy zwróciły wektory o 5 elementach.
+
+\section{Dobór proporcji spółek w portfelu}
+
+W następnym kroku analizy wykonana została procedura doboru proporcji, w jakich wybrane przez algorytmy spółki powinny występować w odpowiednich portfelach.
+Istnieje wiele metod pozwalających na osiągnięcie tego celu.
+W niniejszej pracy zdecydowano się wykorzystać 3 algorytmy, a następnie spośród wyników przez nie sugerowanych wybrać portfel który będzie miał najwyższą wartość \textit{Sharpe ratio}.
+Algorytmy te, to metoda \textit{efficient frontier}, algorytm \textit{taboo search} oraz algorytm \textit{simulated annealing}.
+Pierwsze dwa zostały poniżej pokrótce opisany.
+Opis trzeciego algorytmu znajduje się w sekcji \ref{subsection:simulated-annealing-desc}.
+
+\subsection{Metoda \textit{efficient frontier}}
+
+Teoria stojąca za metodą \textit{efficient frontier} została stworzona w 1952 roku przez amerykańskiego ekonomistę Harry'ego Markowitza.
+Jest ona w istocie kamieniem węgielnym leżącym u podstaw nowoczesnej teorii portfolio.
+
+Krzywa \textit{efficient frontier} przedstawia ocenę portfeli inwestycyjnej na wykresie zwrotu z inwestycji (oś Y) od poziomu ryzyka (oś X).
+Miarą ryzyka jest tutaj wskaźnik \textit{Volatility} danego portfela.
+Odpowiednio manipulując wagami komponentów portfela można stworzyć różne kombinacje zwrotu dla danego poziomu ryzyka i odwrotnie - różne kombinacje ryzyka dla danego poziomu zwrotu z inwestycji.
+\textit{Efficient frontier} zawiera w sobie portfele które dla danego poziomu ryzyka oferują najwyższy poziom zwrotu oraz te, które dla danego poziomu zwrotu pociągają za sobą najmniejsze ryzyko.
+Portfele leżące poza krzywą EF są suboptymalne.
+
+Metoda optymalizacji przy pomocy krzywej \textit{efficient frontier} polega na losowym wygenerowaniu określonej (najlepiej dużej) ilości różnych portfeli inwestycyjnych, a następnie wybraniu takiego, który maksymalizuje \textit{Sharpe ratio}.
+Portfel o największej wartości tego wskaźnika będzie miał najwyższy poziom zwrotu, a jednocześnie najmniejszy poziom ryzyka.
+Z tego też powodu wskaźnik ten jest podstawą funkcji celu dla pozostałych algorytmów optymalizacyjnych użytych w niniejszej pracy.
+Omawiane tu metoda jest najszybsza i najmniej obciążająca obliczeniowo, jednak jest to w istocie po prostu metoda \textit{Monte Carlo}.
+
+\subsection{Algorytm \textit{tabu search}}
+
+Przeszukiwanie tabu (ang. \textit{tabu search}) jest kolejną metaheurystyką optymalizacyjną.
+Podobnie jak wyżarzanie symulowane, algorytm ten pozwala na uniknięcie pułapki lokalnego minimum poprzez dopuszczenie możliwości tymczasowego pogorszenia wartości funkcji celu.
+W przeciwieństwie jednak do wyżarzania, w algorytmie tabu odbywa się to w sposób deterministyczny, poprzez implementację struktur pamięciowych do lokalnego przeszukiwania.
+
+Przeszukiwanie tabu to kolejny algorytm o charakterze trajektoryjnym.
+Rozpoczynając od pewnego punktu początkowego, następuje krokowa eksploracja przestrzeni rozwiązań.
+Praca algorytmu kończy się po zadanej z góry liczbie iteracji, chyba że wcześniej osiągnięte zostało inne kryterium zatrzymania - np. jeśli wartość funkcji celu dla danego rozwiązania jest mniejsza niż pewien zadany z góry próg.
+W niniejszej pracy nie zdecydowano się na użycie tego typu warunków, gdyż wartość funkcji celu jaką jest $-1*(Sharpe-ratio)$ (algorytm dąży do minimalizacji funkcji celu - stąd minus) nie ma dolnej granicy.
+
+W każdej iteracji wybierane jest sąsiedztwo aktualnego rozwiązania.
+Ponieważ przestrzeń rozwiązań w analizowanym w tej pracy problemie ma charakter ciągły, zdecydowano się na wariant w którym wybierany jest losowy podzbiór sąsiedztwa o zadanej z góry liczebności.
+
+Spośród wszystkich elementów sąsiedztwa wybierany jest punkt, dla którego wartość funkcji celu jest najmniejsza.
+Jeśli dodatkowo wartość funkcji celu w tym punkcie jest mniejsza niż w najlepszym do tej pory rozwiązaniu, to punkt ten zostaje "zapamiętany" jako najlepsze rozwiązanie.
+Bez względu jednak na ten warunek następuje przejście algorytmu do tegoż punktu.
+
+Na tym etapie iteracji następuje krok, który jest sednem działania tego algorytmu.
+Przez cały czas wykonywania, algorytm utrzymuje w pamięci listę odwiedzony rozwiązań, o zadanej z góry długości.
+Lista ta, zwana listą tabu, działa na zasadzie FIFO (ang. \textit{First In, First Out}).
+Jeśli liczba odwiedzonych punktów przekracza długość listy tabu, to przed dodaniem go "na koniec kolejki" usuwany jest z listy punkt, który znajduje się tam najdłużej. 
+Ponadto jeśli dane rozwiązanie znalazło się już wcześniej na liście tabu, to nie zostaje ono odwiedzone ponownie (o ile nie zostało dotychczas z tej listy usunięte).
+Mechanizm ten zmniejsza prawdopodobieństwo zapętlania się algorytmu w jednej sekwencji ruchów.
+
+Dodatkowym parametrem algorytmu jest tzw. kryterium aspiracji.
+Jest to warunek który musi spełnić dane rozwiązanie, żeby można było do niego przejść \textbf{nawet gdy znajduje się na liście tabu}.
+Ten mechanizm z kolei zmniejsza prawdopodobieństwo stagnacji algorytmu - sytuacji gdy nie może on wykonać żadnego ruchu, bo np. wszystkie punkty z sąsiedztwa są już na liście tabu.
+W niniejszej pracy zdecydowano się zastosować dość proste kryterium aspiracji.
+Jeśli dany punkt zapewnia wartość funkcji celu mniejszą, niż obecne najlepsze rozwiązanie, to można do niego przejść nawet, gdy znajduje się na liście tabu.
+
+
+\subsection{Wyniki optymalizacji}
+
+W celu przeprowadzenia optymalizacji proporcji w obu portfelach posłużono się zbudowanym na potrzeby niniejszej pracy API.
+Zostało ono napisane we \textit{Flasku}, a obliczenia optymalizacyjne zaimplementowano w dużej mierze za pomocą biblioteki \textit{numpy}.
+Repozytorium z kodem oraz dokumentacją znaleźć można na \textit{GitHubie} autora, pod adresem \url{https://github.com/AleksanderWWW/optimization-api/}.
+Poniższy fragment kodu definiuje parametry niezbędne do nawiązania połączenia z API.
+
+\begin{minted}{python}
+    import json
+    import requests
+    
+    # API connection parameters
+    root_url = "http://192.168.8.118:5000/"
+    base_api = "api/optimize/"
+    
+    eff_frontier_route = "effFrontier"
+    tabu_route = "tabu"
+    annealing_route = "simAnnealing"
+    
+    # portfolio components
+    tickers_classic = ["MRK", "INTC", "JNJ", "BA", "AMGN"]
+    tickers_quantum = ["MRK", "UNH", "VZ", "BA", "INTC"]
+\end{minted}
+
+Łącznie wykonane zostało sześć wywołań interfejsu programistycznego - dla każdego z dwóch portfeli użyto trzech algorytmów optymalizacyjnych.
+Wyniki zostały następnie zapisane w formacie \textit{json}.
+Poniżej znajduje się kod użyty do wywołania algorytmu \textit{efficient frontier}.
+
+\begin{minted}{python}
+    # efficient frontier
+    eff_params = {
+    "tickers": [],
+    "years": 2,
+    "num": 10_000,
+    "rfr": 0.01
+    }
+    
+    url = root_url + base_api + eff_frontier_route
+
+    ## classic portfolio
+    eff_params["tickers"] = tickers_classic
+    
+    res_classic = requests.post(url, json=eff_params)
+    
+    RESULTS["eff_classic"] = res_classic.json()
+    
+    ## quantum portfolio
+    eff_params["tickers"] = tickers_quantum
+    
+    res_quantum = requests.post(url, json=eff_params)
+    
+    RESULTS["eff_quantum"] = res_quantum.json()
+\end{minted}
+
+Algorytm ten zwrócił następujące dwa portfele:
+
+\begin{minted}{json}
+    {
+        "eff_classic": {
+            "AMGN weight": 0.18303495029190187,
+            "BA weight": 0.004601382934985848,
+            "INTC weight": 0.017837248045064952,
+            "JNJ weight": 0.31042207171783515,
+            "MRK weight": 0.4841043470102122,
+            "Returns": 0.09002104988829579,
+            "Sharpe Ratio": 0.4976010480167923,
+            "Volatility": 0.16081366831364746
+        },
+        "eff_quantum": {
+            "BA weight": 0.0011363686333293306,
+            "INTC weight": 0.017001715704734698,
+            "MRK weight": 0.5312609037533779,
+            "Returns": 0.14625833593459056,
+            "Sharpe Ratio": 0.7589351407791971,
+            "UNH weight": 0.41940508650517483,
+            "VZ weight": 0.031195925403383413,
+            "Volatility": 0.1795388414808338
+        }
+    }
+\end{minted}
+
+Wywołanie algorytmu wyżarzania symulowanego wykonane zostało za pomocą poniższego fragmentu kodu.
+
+\begin{minted}{python}
+    # simulated annealing
+    sa_params = {
+        "tickers": [],
+        "years": 2,
+        "rfr": 0.01,
+        "temp_0": 100,
+        "neighbourhood_size": 0.1,
+        "alpha": 0.95,
+        "max_iter": 10_000
+    }
+    
+    url = root_url + base_api + annealing_route
+
+    # classic portfolio
+    sa_params["tickers"] = tickers_classic
+    
+    res_classic = requests.post(url, json=sa_params)
+    
+    RESULTS["annealing_classic"] = res_classic.json()
+    
+    # quantum portfolio
+    sa_params["tickers"] = tickers_quantum
+    
+    res_quantum = requests.post(url, json=sa_params)
+    
+    RESULTS["annealing_quantum"] = res_quantum.json()
+\end{minted}
+
+Portfele zwrócone przez wywołanie tego algorytmu:
+
+\begin{minted}{json}
+    {
+        "annealing_classic": {
+            "AMGN weight": 0.007518513106577348,
+            "BA weight": 0.00012271814035396092,
+            "INTC weight": 0.002704273632005467,
+            "JNJ weight": 0.4793506917687295,
+            "MRK weight": 0.5103038033523337,
+            "Returns": 0.09675121041033993,
+            "Sharpe ratio": 0.5354456176910981,
+            "Volatility": 0.16201684642489175
+        },
+        "annealing_quantum": {
+            "BA weight": 6.316173155994194e-06,
+            "INTC weight": 0.00017320928716346221,
+            "MRK weight": 0.20989283037509204,
+            "Returns": 0.18238868615496906,
+            "Sharpe ratio": 0.8518030284910988,
+            "UNH weight": 0.7825667847988083,
+            "VZ weight": 0.0073608593657803045,
+            "Volatility": 0.20238092656273116
+        }
+    }
+\end{minted}
+
+Podobnie dla algorytmu \textit{tabu search}, został on wywołany za pomocą poniższego kodu.
+
+\begin{minted}{python}
+    # tabu search
+    tabu_params = {
+        "tickers": [],
+        "years": 2,
+        "rfr": 0.01,
+        "tenure": 100,
+        "max_iter": 10_000,
+        "neighbourhood_size": 0.1,
+        "no_neighbours": 10
+    }
+    
+    url = root_url + base_api + tabu_route
+
+    # classic portfolio
+    tabu_params["tickers"] = tickers_classic
+    
+    res_classic = requests.post(url, json=tabu_params)
+    
+    RESULTS["tabu_classic"] = res_classic.json()
+    
+    # quantum portfolio
+    tabu_params["tickers"] = tickers_quantum
+    
+    res_quantum = requests.post(url, json=tabu_params)
+    
+    RESULTS["tabu_quantum"] = res_quantum.json()
+\end{minted}
+
+Algorytm ten wygenerował następujące portfele:
+
+\begin{minted}{json}
+    {
+        "tabu_classic": {
+            "AMGN weight": 0.01867212913720604,
+            "BA weight": 0.00016011678200606477,
+            "INTC weight": 0.0016982034224344406,
+            "JNJ weight": 0.38616036722988584,
+            "MRK weight": 0.5933091834284677,
+            "Returns": 0.10294390782798021,
+            "Sharpe ratio": 0.5511673680640428,
+            "Volatility": 0.16863100613964618
+        },
+        "tabu_quantum": {
+            "BA weight": 0.0022451437804210527,
+            "INTC weight": 0.0004473814905723882,
+            "MRK weight": 0.2915722960339376,
+            "Returns": 0.1779911114406527,
+            "Sharpe ratio": 0.8601145484268158,
+            "UNH weight": 0.7040637956229262,
+            "VZ weight": 0.0016713830721427605,
+            "Volatility": 0.19531248686342442
+        }
+    }
+\end{minted}
+
+Z powyższych wyników wyłania się wniosek, że wyżarzanie kwantowe pozwoliło na wybranie lepszych komponentów portfela niż jego klasyczny odpowiednik.
+Widać to wyraźnie po fakcie, iż dla komponentów wybranych przez algorytm kwantowy każdy algorytm optymalizacyjny był w stanie osiągnąć znacząco lepsze \textit{Sharpe ratio}.
+
+Ostatecznie najlepszy w doborze proporcji w obu przypadkach okazał się algorytm wyszukiwania tabu.
+W związku z tym dalsza część analizy zostanie oparta o ten właśnie portfele.
+
+\section{Porównanie performance'u obu portfeli}
+
+Niniejszy podrozdział zawiera analizę porównawczą wyników osiągniętych przez dwa, opisane wyżej portfele inwestycyjne przez okres od 1 stycznia do XX maja 2022 roku.
+
+\subsection{Całkowity zwrot z inwestycji}
+
+\subsection{Zaktualizowane \textit{Sharpe ratio}}
+
+
 
 \clearpage
 
@@ -454,9 +1370,18 @@ Bieżący rozdział (czyli rozdział~\ref{sec:nast}) zawiera odwołanie do sameg
 \addcontentsline{toc}{chapter}{Bibliografia}
 \begin{thebibliography}{99}
 \setlength{\itemsep}{0pt}%
-\bibitem[Shankar R.(2006)]{shankar2006} Shankar R.(2006), Mechanika Kwantowa, Wydawnictwo Naukowe PWN SA, s.~19--29
-\bibitem[Wakker i Zhank(1999)]{wakker1999} Wakker P., H.~Zank (1999), A Unified Derivation (...), \textit{Journal of  Mathematical Economics}, 32, s.~1-19
-\bibitem[Drummond et al.(1997)]{drummond1997} Drummond M.F., B.J.~O'Brien, G.L.~Stoddart, G.W.~Torrance (1997), Methods for Economic Evaluation (...), Oxford University Press
+\bibitem[Markowitz H.(1952)]{markowitz1952} Markowitz H. (1952), Portfolio Selection, The Journal of Finance, Vol. 7, No. 1 (Mar., 1952), s. 77-91
+\bibitem[Wilson R.J.(1996)]{wilson1996} Wilson R. J. (1996), Introduction to Graph Theory, Fourth Edition, \textit{Longman Group Ltd}
+\bibitem[Benioff P.(1980)]{benioff1980}P. Benioff, The computer as a physical system: A microscopic quantum mechanical Hamiltonian model of
+computers as represented by Turing machines, Journal of Statistical Physics. 22 (5): 563–591, 1980
+\bibitem[Shankar R.(2006)]{shankar2006} Shankar R. (2006), Mechanika Kwantowa, Wydawnictwo Naukowe PWN SA, s.~19--29
+\bibitem[Bernhardt C.(2020)]{bernhardt2020}  Bernhardt C. (2020), Obliczenia kwantowe dla każdego, Wydawnictwo Naukowe PWN SA
+\bibitem[Ising E.(1925)]{Ising1925} Ising, E. (1925), Beitrag zur Theorie des Ferromagnetismus, Z. Phys., 31 (1): 253–258
+\bibitem[Casquilho J.(2014)]{Casquilho2014} Casquilho J., P. Teixeira (2014), The Ising model. In Introduction to Statistical Physics. Cambridge
+University Press
+
+
+
 \end{thebibliography}
 
 \clearpage
@@ -471,19 +1396,429 @@ Bieżący rozdział (czyli rozdział~\ref{sec:nast}) zawiera odwołanie do sameg
 \chapter*{Kody źródłowe}
 \addcontentsline{toc}{chapter}{Kody źródłowe}
 
-\section*{Analiza 1}
+\section*{Pakiet \textit{quant\_div}}
+\subsection*{\textit{data\_load.py}}
+\begin{minted}{python}
+    
+
+from pytickersymbols import PyTickerSymbols
+from dataclasses import dataclass, field
+import pandas as pd
+import datetime as dt
+import pandas_datareader as pdr
+from concurrent.futures import ThreadPoolExecutor as Executor
+
+
+@dataclass
+class Scraper:
+    """Zadaniem tego obiektu jest pobieranie notowań spółek z określonego zestawu za zadany okres czasu
+    oraz zapisywanie ich do formatu pandasowej ramki danych"""
+    start: dt.date
+    end: dt.date
+    all_dfs: list = field(default_factory=list)
+    data = pd.DataFrame()
+    tickers: list = field(default_factory=list)
+
+    @property
+    def details(self):
+        return f"Scraper(tickers_loaded: {len(self.tickers)}, data columns loaded: {len(self.all_dfs)})"
+
+    def pull_tickers(self, index="Dow Jones"):
+        """Funkcja ściąga aktualny skład wskazanego indeksu i zapisuje do listy tickerów. Dostępne opcje to 'Dow Jones',
+        'S&P 500' oraz 'DAX'."""
+        stock_data = PyTickerSymbols()
+
+        if index == "Dow Jones":
+            tickers = stock_data.get_dow_jones_nyc_yahoo_tickers()
+
+        elif index == "S&P 500":
+            tickers = stock_data.get_sp_500_nyc_yahoo_tickers()
+
+        elif index == "DAX":
+            tickers = stock_data.get_dax_frankfurt_yahoo_tickers()
+
+        else:
+            raise ValueError(f"Brak wsparcia dla indeksu {index}. Możliwe opcje: 'Dow Jones', 'S&P 500', 'DAX'")
+
+        self.tickers += list(tickers)
+
+    def set_tickers(self, tickers):
+        """Obiekt dopuszcza podanie customowego zestawu tickerów do analizy"""
+        self.tickers = tickers
+
+    def get_time_series(self, ticker, provider="yahoo"):
+        """Dla danego tickera funkcja pobierze notowania na zadany w konstruktorze okres czasu"""
+        df = pdr.DataReader(ticker, provider, self.start, self.end)[
+            "Adj Close"]  # bierzemy tylko kolumnę Adjusted Close
+        df = df.rename(ticker)
+        self.all_dfs.append(df)  # obiekty zbieramy do listy, która posłuży potem do utworzenia jednej tabeli zbiorczej
+
+    def scrape_data(self):
+        with Executor(max_workers=30) as executor:  # używamy concurrent computingu żeby przyspieszyć ściąganie danych
+            executor.map(self.get_time_series, self.tickers)
+        self.data = self.merge_data_frames(self.all_dfs)
+        self.data = self.data.sort_index(axis=1)  # sortujemy nazwy kolumn alfabetycznie (trafiają w losowym porządku)
+
+    @staticmethod
+    def merge_data_frames(dfs) -> pd.DataFrame:
+        df = pd.concat(dfs,
+                       axis=1)  # funkcja pandas.concat bierze listę obiektów typu DataFrame i tworzy jedną ramkę danych
+        return df
+\end{minted}
+
+\subsection*{\textit{data\_preparation.py}}
 \begin{verbatim}
-x <- 1:10
-y <- x + rnorm(10)
-summary(lm(y ~ x))
+import networkx as nx
+
+
+def get_corr_matrix(df):
+    df_ret = df.pct_change()
+    corr_matrix = df_ret.corr()
+    return corr_matrix
+
+
+def produce_graph(corr_matrix, corr_threshold):
+    nodes = []
+    assets = corr_matrix.columns
+    for i in assets:
+        for j in assets:
+            if i == j:
+                continue
+            corr = corr_matrix.loc[i, j]
+            if corr >= corr_threshold:
+                pair = (i, j)
+                nodes.append(pair)
+
+    graph = nx.Graph()
+    graph.add_edges_from(nodes)
+
+    return graph
 \end{verbatim}
 
-\section*{Analiza 2}
+\subsection*{\textit{data\_vis.py}}
 \begin{verbatim}
-x <- rnorm(10000)
-plot(density(x))
+import matplotlib.pyplot as plt
+import seaborn as sns
+import networkx as nx
+from quant_div.data_preparation import get_corr_matrix, produce_graph
+
+
+class Visual:
+    def __init__(self, df):
+        self.df = df
+        self.corr_matrix = get_corr_matrix(self.df)
+        self.graph = None
+
+    def heatmap(self, figsize: tuple):
+        plt.figure(figsize=figsize)
+        sns.heatmap(self.corr_matrix, cmap="Blues", annot=False)
+        plt.show()
+
+    def main_graph(self, corr_threshold: float, figsize: tuple):
+        self.graph = produce_graph(self.corr_matrix, corr_threshold)
+
+        plt.figure(figsize=figsize)
+        nx.draw(self.graph, node_color="r")
+        plt.show()
+
+    def coloured_graph(self, tickers: list, figsize: tuple):
+        color_map = []
+        for node in self.graph:
+            if node in tickers:
+                color_map.append("blue")
+            else:
+                color_map.append('red')
+
+        plt.figure(figsize=figsize)
+        nx.draw(self.graph, node_color=color_map, with_labels=True)
+        plt.show()
+
+
 \end{verbatim}
 
+\subsection*{\textit{quant\_solver.py}}
+\begin{verbatim}
+import dwave_networkx as dnx
+from dwave.system import LeapHybridSampler
+import json
+
+
+class TickerSelector:
+    sampler = LeapHybridSampler()
+
+    def __init__(self, graph):
+        self.graph = graph
+
+    def choose_tickers(self, problem_label: str = None) -> list:
+        return dnx.maximum_independent_set(self.graph, sampler=self.sampler, label=problem_label)
+
+
+class SolutionManager:
+    def __init__(self, algo_chosen: list, others: list, **kwargs):
+        self.algo_chosen = algo_chosen
+        self.others = others
+        self.kwargs = kwargs
+
+    def save_results(self, path: str) -> dict:
+        data = {
+            "tickers": self.algo_chosen + self.others,
+            **self.kwargs
+        }
+        with open(path, 'w') as fp:
+            json.dump(data, fp)
+
+        return data
+
+\end{verbatim}
+
+\section*{Portfolio-Optimization-API}
+
+\subsection*{\textit{load.py}}
+
+
+
+\begin{verbatim}
+import pandas as pd
+
+
+def load_data(tickers, years) -> pd.DataFrame:
+    end = dt.date.today()
+    start = end - dt.timedelta(days=365 * years)
+
+    sc = Scraper(start=start, end=end)
+    sc.set_tickers(tickers)
+
+    sc.scrape_data()
+
+    return sc.data
+\end{verbatim}
+
+\subsection*{\textit{computing.py}}
+
+
+\begin{verbatim}
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from abc import ABC
+
+
+class Calculator(ABC):
+
+    def calculate(self):
+        ...
+
+
+@dataclass
+class Data:
+    table: pd.DataFrame
+    objects: dict = field(default_factory=dict)
+
+    @property
+    def pct_data(self):
+        if "pct" not in self.objects.keys():
+            self.objects["pct"] = self.table.pct_change().apply(lambda x: np.log(1 + x))
+        return self.objects["pct"]
+
+    @property
+    def cov_matrix(self):
+        if "cov" not in self.objects.keys():
+            self.objects["cov"] = self.pct_data.cov()
+        return self.objects["cov"]
+
+
+@dataclass
+class VolatilityCalculator(Calculator):
+    data: Data
+    weights: list
+
+    def calculate(self) -> float:
+        var = self.data.cov_matrix.mul(self.weights, axis=0).mul(self.weights, axis=1).sum().sum()  # Portfolio Variance
+        sd = np.sqrt(var)  # Daily standard deviation
+        ann_sd = sd * np.sqrt(250)  # Annual standard deviation = volatility
+        return ann_sd
+
+
+@dataclass
+class ExpectedReturnsCalculator(Calculator):
+    data: Data
+    weights: list
+
+    def calculate(self) -> float:
+        ind_er = self.data.table.resample('Y').last().pct_change().mean()
+        return np.dot(self.weights, ind_er)  # Returns are the product of individual expected returns of asset and its
+                                             # weights
+
+
+@dataclass
+class SharpeRatioCalculator(Calculator):
+    data: Data
+    weights: list
+    risk_free_rate: float = 0.01
+
+    def calculate(self):
+        vol = VolatilityCalculator(self.data, self.weights).calculate()
+        er = ExpectedReturnsCalculator(self.data, self.weights).calculate()
+
+        return (er - self.risk_free_rate) / vol
+
+\end{verbatim}
+
+
+\subsection*{\textit{ef\_simulation.py}}
+
+
+\begin{verbatim}
+from computing import VolatilityCalculator, ExpectedReturnsCalculator, Data
+import numpy as np
+import pandas as pd
+
+
+def generate_portfolios(table, num_portfolios):
+    data = Data(table)
+    num_assets = len(table.columns)
+    p_ret = []  # Define an empty array for portfolio returns
+    p_vol = []  # Define an empty array for portfolio volatility
+    p_weights = []  # Define an empty array for asset weights
+
+    for portfolio in range(num_portfolios):
+        weights = np.random.random(num_assets)
+        weights = weights / np.sum(weights)
+        p_weights.append(weights)
+
+        returns = ExpectedReturnsCalculator(data, weights).calculate()
+        p_ret.append(returns)
+
+        vol = VolatilityCalculator(data, weights).calculate()  # Annual standard deviation = volatility
+        p_vol.append(vol)
+
+    df = pd.DataFrame({'Returns': p_ret, 'Volatility': p_vol})
+
+    for counter, symbol in enumerate(data.table.columns.tolist()):
+        # print(counter, symbol)
+        df[symbol + ' weight'] = [w[counter] for w in p_weights]
+
+    return df
+
+
+def simulate(table, num_portfolios=10_000, rf=0.01):
+    portfolios = generate_portfolios(table, num_portfolios)
+    portfolios["Sharpe Ratio"] = (portfolios['Returns'] - rf) / portfolios['Volatility']
+    optimal_risky_port = portfolios.iloc[portfolios["Sharpe Ratio"].idxmax()]
+    return optimal_risky_port.to_dict()
+
+\end{verbatim}
+
+
+\subsection*{\textit{app.py}}
+
+
+\begin{verbatim}
+from load.py import load_data
+from ef_simulation import simulate
+
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Portfolio optimization api: 'awojnarowicz.pythonanywhere.com/api/optimize'"
+
+
+@app.route('/api/optimize', methods=['GET', 'POST'])
+def optimize_portfolio():
+    content = request.json
+    tickers = content["tickers"]
+    years = content["years"]
+    try:
+        num_portfolios = content["num"]
+    except KeyError:
+        num_portfolios = 10_000
+
+    try:
+        rf = content["risk_free_rate"]
+    except KeyError:
+        rf = 0.01
+    df = load_data(tickers, years)
+    result = simulate(df, num_portfolios, rf)
+    return jsonify(result)
+
+
+if __name__ == '__main__':
+    app.run(host= '0.0.0.0', debug=True)
+
+\end{verbatim}
+
+
+\section*{\textit{API-to-Database}}
+\subsection*{\textit{saver.py}}
+
+
+\begin{verbatim}
+import pymongo
+from dataclasses import dataclass
+import json
+import requests
+from datetime import datetime
+import certifi
+
+
+class Config:
+    with open("config.json", "r") as fp:
+        config = json.load(fp)
+    ca = certifi.where()
+    user: str = config["user"]
+    password: str = str(config["password"])
+    client = pymongo.MongoClient(
+        f"mongodb+srv://{user}:{password}@test.s8kmr.mongodb.net", 
+        tlsCAFile=ca)
+    db = client["portfolios"]
+    url: str = "https://awojnarowicz.pythonanywhere.com/api/optimize"
+
+
+@dataclass
+class ResultSaver(Config):
+    json_data: dict
+
+    def fetch_results(self):
+        timestamp = datetime.now()
+        print("***Sending request")
+        r = requests.post(self.url, json=self.json_data)
+        print(f"***Received response. OK: {r.ok}")
+        if not r.ok:
+            return
+        document = r.json()
+        document["timestamp"] = timestamp
+        return document
+
+    def run(self, collection):
+        document = self.fetch_results()
+        if document is None:
+            print("***Failed to extract data")
+            return
+        col = self.db[collection]
+        col.insert_one(document)
+        print("***Document inserted")
+\end{verbatim}
+
+\subsection*{\textit{task.py}}
+
+
+\begin{verbatim}
+import time
+from saver import ResultSaver
+
+
+def execute(json_data, collection, time_offset):
+    sc = ResultSaver(json_data)
+
+    while True:
+        print("Beginning the process")
+        sc.run(collection)
+        print("Process finished")
+        print("Waiting for the next execution...")
+        time.sleep(time_offset)
+\end{verbatim}
 \clearpage
 
 \chapter*{Streszczenie}
